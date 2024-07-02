@@ -1,26 +1,20 @@
 "use client";
 
+import { clashFont } from "@/utils/fonts";
 import { AnimatePresence, motion } from "framer-motion";
-import { Roboto_Mono } from "next/font/google";
 import { useEffect, useState } from "react";
-
-const roboto_mono = Roboto_Mono({
-  subsets: ["latin"],
-  display: "swap",
-});
 
 const moveUp = {
   visible: { y: 0 },
   hidden: {
-    y: "-100vh",
-    transition: { duration: 1, ease: [0.76, 0, 0.24, 1] },
+    y: "-120vh",
+    transition: { duration: 1, ease: [0.76, 0, 0.24, 1], delay: 1.6 },
   },
 };
 
 const fadeInOut = {
   hidden: { opacity: 0 },
-  visible: { opacity: 0.75, transition: { duration: 1, delay: 0.2 } },
-  exit: { opacity: 0, transition: { delay: 0.2 } },
+  visible: { opacity: 0.75, transition: { duration: 1.2 } },
 };
 
 const InitialLoading = () => {
@@ -30,7 +24,7 @@ const InitialLoading = () => {
   useEffect(() => {
     setDimension({ width: window.innerWidth, height: window.innerHeight });
 
-    const timeoutId = setTimeout(() => setIsLoading(false), 2000);
+    const timeoutId = setTimeout(() => setIsLoading(false), 300);
     return () => clearTimeout(timeoutId);
   }, []);
 
@@ -40,7 +34,7 @@ const InitialLoading = () => {
     },
     hidden: {
       d: `M0 0 L${dimension.width} 0 L${dimension.width} ${dimension.height} Q${dimension.width / 2} ${dimension.height} 0 ${dimension.height}  L0 0`,
-      transition: { duration: 0.7, delay: 0.3 },
+      transition: { duration: 1, ease: [0.76, 0, 0.24, 1], delay: 2 },
     },
   };
 
@@ -51,29 +45,25 @@ const InitialLoading = () => {
           variants={moveUp}
           initial="visible"
           exit="hidden"
-          className="fixed z-10 flex h-screen w-screen items-center justify-center bg-white"
-        >
+          className="fixed z-10 flex h-screen w-screen items-center justify-center bg-dark"
+          style={{ filter: "drop-shadow(0px 30px 39px #000000)" }}>
           <motion.p
             variants={fadeInOut}
             initial="hidden"
             animate="visible"
-            exit="exit"
-            className={`${roboto_mono.className} align-center absolute z-10 flex text-4xl text-black`}
-          >
-            pedro.dev
+            className={`${clashFont.className} align-center absolute z-10 flex text-4xl text-beige`}>
+            pedro.software
           </motion.p>
 
           {dimension.width > 0 && (
             <svg
               className="absolute top-0 w-full"
-              style={{ height: "calc(100dvh + 300px)" }}
-            >
+              style={{ height: "calc(100dvh + 300px)" }}>
               <motion.path
                 variants={bottomCurvesAnimation}
                 initial="visible"
                 exit="hidden"
-                className="fill-white"
-              ></motion.path>
+                className="fill-dark"></motion.path>
             </svg>
           )}
         </motion.div>

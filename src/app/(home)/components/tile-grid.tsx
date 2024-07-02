@@ -4,13 +4,12 @@ import { motion } from "framer-motion";
 const TileGrid = ({ borderRadius }: { borderRadius: number }) => {
   return (
     <div
-      className="absolute grid h-screen w-full overflow-hidden"
+      className="absolute left-0 top-0 grid h-screen w-full overflow-hidden bg-beige"
       style={{
         gridTemplateColumns: "repeat(auto-fill, minmax(70px, 1fr))",
         gridTemplateRows: "repeat(auto-fill, minmax(70px, 1fr))",
         borderRadius: `${borderRadius}px ${borderRadius}px 0 0`,
-      }}
-    >
+      }}>
       {Array(500)
         .fill(null)
         .map((_, i) => (
@@ -33,7 +32,7 @@ const Tile = () => {
       style={{
         backgroundImage:
           "linear-gradient(currentcolor 1px, transparent 1px), linear-gradient(to right, currentcolor 1px, transparent 1px)",
-        color: "rgba(113, 113, 113, 0.04)",
+        color: "rgba(113, 113, 113, 0.03)",
       }}
     />
   );
