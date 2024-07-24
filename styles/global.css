@@ -1,0 +1,77 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --header-animation-color: rgba(106, 180, 216, 0.15);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  /* scroll-behavior: smooth; */
+  /* overscroll-behavior: none; */
+  /* cursor: url('/images/cursor.svg'), auto; */
+}
+
+html {
+  scrollbar-color: var(--header-animation-color) #0f172a;
+  scrollbar-width: thin;
+}
+
+body::-webkit-scrollbar {
+  width: 8px;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: var(--header-animation-color);
+  border-radius: 5px;
+}
+
+body::-webkit-scrollbar-track {
+  background: #0f172a;
+}
+
+@layer utilities {
+  .animation-delay-1 {
+    animation-delay: 2s;
+  }
+
+  .animation-delay-2 {
+    animation-delay: 3s;
+  }
+}
+
+/* body::before,
+body::after {
+  position: absolute;
+  left: 0;
+  top: 0;
+  content: '';
+  width: 100%;
+  height: 100%;
+  z-index: 30;
+  opacity: 20%;
+}
+
+body::before {
+  filter: url(#grainy);
+} */
+
+/* body::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url(/images/noise.png);
+  background-size: 100px;
+  background-position: center;
+  background-repeat: repeat;
+  z-index: 30;
+  opacity: 1;
+} */
