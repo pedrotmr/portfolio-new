@@ -1,6 +1,6 @@
 import '@/styles/glitch.css';
-import { GradientText, IgProfilePicture } from '@/ui';
-import { clashFont, thunderFont } from '@/utils/fonts';
+import { GradientText, IgProfilePicture, MagneticWrapper } from '@/ui';
+import { clashFont, thunderFont } from '@/utils';
 import { MotionValue, motion } from 'framer-motion';
 import {
   descriptionAnimation,
@@ -15,11 +15,14 @@ const HeroText = ({ scrollYProgress }: { scrollYProgress: MotionValue }) => {
 
   return (
     <motion.div style={wrapperStyle} className="flex scale-110 flex-col gap-4 p-6 text-beige">
-      <IgProfilePicture
-        initial={profilePictureAnimation.initial}
-        animate={profilePictureAnimation.animate}
-        transition={profilePictureAnimation.transition}
-      />
+      <MagneticWrapper ratio={4}>
+        <IgProfilePicture
+          initial={profilePictureAnimation.initial}
+          animate={profilePictureAnimation.animate}
+          transition={profilePictureAnimation.transition}
+          className="cursor-none select-none"
+        />
+      </MagneticWrapper>
 
       <div className="mb-2 w-full overflow-hidden">
         <motion.h1
@@ -28,21 +31,24 @@ const HeroText = ({ scrollYProgress }: { scrollYProgress: MotionValue }) => {
           transition={nameAnimation.transition}
           className={`text-3xl text-beige ${clashFont.className}`}
         >
-          Hey, I'm Pedro 👋
+          Hey, I'm Pedro{' '}
+          <span className="inline-block origin-bottom-right animate-hand-wave select-none">👋</span>
         </motion.h1>
       </div>
 
-      <div className="w-full overflow-hidden">
-        <motion.h2
-          className={`glitch text-9xl font-bold leading-none tracking-normal text-beige ${thunderFont.className}`}
-          initial={titleAnimation.initial}
-          animate={titleAnimation.animate}
-          transition={titleAnimation.transition}
-          data-text="Frontend Developer"
-        >
-          Frontend Developer
-        </motion.h2>
-      </div>
+      <MagneticWrapper>
+        <div className="w-full overflow-hidden">
+          <motion.h2
+            className={`glitch cursor-none text-9xl font-bold leading-none tracking-normal text-beige ${thunderFont.className}`}
+            initial={titleAnimation.initial}
+            animate={titleAnimation.animate}
+            transition={titleAnimation.transition}
+            data-text="Frontend Developer"
+          >
+            Frontend Developer
+          </motion.h2>
+        </div>
+      </MagneticWrapper>
 
       <motion.h3
         initial={descriptionAnimation.initial}

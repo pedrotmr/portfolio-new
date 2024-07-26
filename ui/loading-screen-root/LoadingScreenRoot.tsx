@@ -1,6 +1,6 @@
 'use client';
 
-import { clashFont } from '@/utils/fonts';
+import { clashFont } from '@/utils';
 import { AnimatePresence, motion } from 'framer-motion';
 import ReactLenis from 'lenis/react';
 import { useEffect, useState } from 'react';
@@ -48,7 +48,28 @@ const LoadingScreenRoot = () => {
                   className="fill-dark"
                 />
               </svg>
+
+              // <svg className="absolute top-0 w-full" style={{ height: 'calc(100dvh + 300px)' }}>
+              //   <defs>
+              //     <linearGradient id="loadingGradient" gradientTransform="rotate(99.9)">
+              //       <stop offset="0%" stopColor="rgba(0,1,10,1)" />
+              //       <stop offset="20%" stopColor="rgba(2,6,30,1)" />
+              //       <stop offset="40%" stopColor="rgba(15,8,40,1)" />
+              //       <stop offset="60%" stopColor="rgba(40,10,60,1)" />
+              //       <stop offset="80%" stopColor="rgba(25,5,45,1)" />
+              //       <stop offset="100%" stopColor="rgba(0,1,10,1)" />
+              //     </linearGradient>
+              //   </defs>
+              //   <path
+              //     d={`M0 0 L${dimension.width} 0 L${dimension.width} ${dimension.height} Q${dimension.width / 2} ${dimension.height + 300} 0 ${dimension.height} L0 0`}
+              //     fill="url(#loadingGradient)"
+              //   />
+              // </svg>
             )}
+            {/* <StarsBackground starDensity={0.00001} /> */}
+
+            {/* <ShootingStars />
+            <StarsBackground /> */}
           </motion.div>
         )}
       </AnimatePresence>

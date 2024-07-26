@@ -1,6 +1,6 @@
 'use client';
 
-import { cn } from '@/utils/cs';
+import { cn } from '@/utils';
 import { AnimationProps, motion } from 'framer-motion';
 import Image from 'next/image';
 

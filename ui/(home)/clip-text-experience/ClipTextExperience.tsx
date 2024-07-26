@@ -15,7 +15,7 @@ const ClipTextExperience = () => {
       <motion.div ref={scrollRef} style={wrapperStyle} className="-mt-60 h-[220dvh] bg-slate-900">
         <motion.div
           style={textStyle}
-          className="sticky top-1/2 mx-auto flex justify-center text-5xl font-bold leading-normal text-beige"
+          className="sticky top-1/2 z-20 mx-auto flex justify-center text-5xl font-bold leading-normal text-beige"
         >
           <div className="relative z-20">
             <motion.div style={{ clipPath: useMotionTemplate`inset(-280px ${clip1}% 0 -150px)` }}>
@@ -79,7 +79,10 @@ const ClipTextExperience = () => {
             </motion.div>
 
             <motion.div style={{ clipPath: useMotionTemplate`inset(-280px ${clip4}% 0 -150px)` }}>
-              with websites attracting 700K monthly visitors.
+              with websites{' '}
+              <GradientText color="silver" glow>
+                attracting 700K monthly visitors.
+              </GradientText>
             </motion.div>
           </div>
 

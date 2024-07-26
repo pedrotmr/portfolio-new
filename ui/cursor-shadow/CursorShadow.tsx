@@ -1,6 +1,6 @@
 'use client';
 
-import { HEADER_ANIMATION_COLOR } from '@/utils/constants';
+import { HEADER_ANIMATION_COLOR } from '@/utils';
 import { MotionValue, motion, useMotionTemplate } from 'framer-motion';
 import { useEffect, useState } from 'react';
 

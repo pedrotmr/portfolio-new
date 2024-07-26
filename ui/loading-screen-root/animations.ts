@@ -5,7 +5,7 @@ export const moveUpPageAnimtion: AnimationProps = {
     y: 0,
   },
   exit: {
-    y: '-120vh',
+    y: '-120%',
   },
   transition: {
     duration: 1,

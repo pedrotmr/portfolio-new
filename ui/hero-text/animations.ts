@@ -13,7 +13,7 @@ export const useAnimations = (scrollYProgress: MotionValue<number>) => {
     restDelta: 0.001,
   });
 
-  const scale = useTransform(scrollYProgress, [0.3, 1], [1.1, 0.8]);
+  const scale = useTransform(scrollYProgress, [0.3, 1], [1.15, 0.8]);
   const opacity = useTransform(scrollYProgress, [0.3, 1], [1, 0]);
   const position = useTransform(scrollYProgress, (pos) => (pos >= 1 ? 'relative' : 'fixed'));
 

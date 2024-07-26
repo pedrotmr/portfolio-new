@@ -1,4 +1,4 @@
-import { BEIGE } from '@/utils/constants';
+import { BEIGE } from '@/utils';
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 

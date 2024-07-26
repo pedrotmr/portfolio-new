@@ -52,7 +52,7 @@ export const useAnimations = (scrollRef: RefObject<HTMLElement>) => {
         an.imageStartOut,
         an.imageEndOut,
       ],
-      ['300%', '65%', '60%', '-65%', '-60%', '65%', '60%', '80%', '300%'],
+      ['300%', '65%', '60%', '-65%', '-70%', '65%', '60%', '80%', '300%'],
     ),
   };
 
@@ -90,7 +90,7 @@ export const useAnimations = (scrollRef: RefObject<HTMLElement>) => {
     x: useTransform(
       scrollYProgress,
       [an.imagePanRight, an.imagePlaceLeft, an.imagePanLeft, an.imagePlaceRightSecond],
-      ['300%', '70%', '65%', '300%'],
+      ['300%', '60%', '55%', '300%'],
     ),
     opacity: useTransform(
       scrollYProgress,
