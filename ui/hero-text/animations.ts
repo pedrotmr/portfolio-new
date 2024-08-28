@@ -1,12 +1,18 @@
 import {
   AnimationProps,
-  MotionValue,
   useMotionTemplate,
+  useScroll,
   useSpring,
   useTransform,
 } from 'framer-motion';
+import { RefObject } from 'react';
 
-export const useAnimations = (scrollYProgress: MotionValue<number>) => {
+export const useAnimations = (scrollRef: RefObject<HTMLDivElement>) => {
+  const { scrollYProgress } = useScroll({
+    target: scrollRef,
+    offset: ['end end', 'end center'],
+  });
+
   const y = useSpring(useTransform(scrollYProgress, [0, 0.3], ['0%', '-100px']), {
     stiffness: 100,
     damping: 30,
@@ -19,7 +25,6 @@ export const useAnimations = (scrollYProgress: MotionValue<number>) => {
 
   const blur = useTransform(scrollYProgress, [0.3, 1], [0, 20]);
   const filter = useMotionTemplate`blur(${blur}px)`;
-
 
   const wrapperStyle = {
     y,

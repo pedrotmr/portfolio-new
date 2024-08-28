@@ -1,7 +1,8 @@
 import '@/styles/glitch.css';
 import { GradientText, IgProfilePicture, MagneticWrapper } from '@/ui';
 import { clashFont, thunderFont } from '@/utils';
-import { MotionValue, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
+import { RefObject } from 'react';
 import {
   descriptionAnimation,
   nameAnimation,
@@ -10,11 +11,11 @@ import {
   useAnimations,
 } from './animations';
 
-const HeroText = ({ scrollYProgress }: { scrollYProgress: MotionValue }) => {
-  const wrapperStyle = useAnimations(scrollYProgress);
+const HeroText = ({ scrollRef }: { scrollRef: RefObject<HTMLDivElement> }) => {
+  const wrapperStyle = useAnimations(scrollRef);
 
   return (
-    <motion.div style={wrapperStyle} className="flex scale-110 flex-col gap-4 p-6 text-beige">
+    <motion.div style={wrapperStyle} className="z-20 flex scale-110 flex-col gap-4 p-6 text-beige">
       <MagneticWrapper ratio={4}>
         <IgProfilePicture
           initial={profilePictureAnimation.initial}

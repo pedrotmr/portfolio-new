@@ -1,6 +1,8 @@
+'use client';
+
 import { BEIGE } from '@/utils';
-import { motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { RefObject, useEffect, useState } from 'react';
 
 function calculateTileCount() {
   const screenWidth = window.innerWidth;
@@ -11,8 +13,14 @@ function calculateTileCount() {
   return columns * rows;
 }
 
-const TileGrid = () => {
+const TileGrid = ({ scrollRef }: { scrollRef: RefObject<HTMLDivElement> }) => {
   const [tileCount, setTileCount] = useState(() => calculateTileCount());
+
+  const { scrollYProgress } = useScroll({
+    target: scrollRef,
+    offset: ['end end', 'end center'],
+  });
+  const opacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
 
   useEffect(() => {
     const handleResize = () => setTileCount(calculateTileCount());
@@ -21,7 +29,10 @@ const TileGrid = () => {
   }, []);
 
   return (
-    <div className="absolute left-0 top-0 grid h-full w-full grid-cols-auto-fill-70 grid-rows-auto-fill-70 overflow-hidden bg-slate-900">
+    <motion.div
+      className="absolute left-0 top-0 grid h-full w-full grid-cols-auto-fill-70 grid-rows-auto-fill-70 overflow-hidden bg-slate-900"
+      style={{ opacity }}
+    >
       {Array(tileCount)
         .fill(null)
         .map((_, i) => (
@@ -40,7 +51,7 @@ const TileGrid = () => {
             }}
           />
         ))}
-    </div>
+    </motion.div>
   );
 };
 
