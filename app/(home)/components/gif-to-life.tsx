@@ -1,6 +1,6 @@
 const GifToLife = ({ url }: { url: string }) => {
   return (
-    <div className="w-full overflow-hidden bg-slate-900 text-justify font-serif text-[5px] opacity-80">
+    <div className="w-full overflow-hidden bg-slate-900 text-justify font-serif text-[5px] opacity-70">
       <p
         style={{
           background: `url(${url}) no-repeat`,
@@ -9,7 +9,8 @@ const GifToLife = ({ url }: { url: string }) => {
           backgroundAttachment: 'fixed',
           WebkitBackgroundClip: 'text',
           WebkitTextFillColor: 'transparent',
-        }}>
+        }}
+      >
         Lorem ipsum dolor sit, amet consectetur adipisicing elit. Esse dicta quibusdam ut
         necessitatibus quae porro enim quidem praesentium iure, hic expedita laudantium. Odio eaque
         minus repellendus, laborum odit labore neque aliquam modi maxime voluptatum. Commodi illum
