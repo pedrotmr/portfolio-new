@@ -18,7 +18,7 @@ const Home = () => {
 
   const ref = useRef<HTMLDivElement>(null);
 
-  const inView = useInView(ref, { margin: '-500px' });
+  const inView = useInView(ref);
 
   return (
     <ReactLenis root>
@@ -29,13 +29,16 @@ const Home = () => {
         <div ref={ref}>
           <AboutMe />
           <ClipTextExperience />
+          <div className="h-screen w-screen bg-slate-900"></div>
+          <div className="h-screen w-screen bg-slate-900"></div>
           {inView && <RenderStars />}
         </div>
 
-        <div>
-          {/* <GifToLife url="https://media.giphy.com/media/U8mf1vmVzEMmOqU4D8/giphy.gif" /> */}
-          {/* <GifToLife url="https://media.giphy.com/media/bGgsc5mWoryfgKBx1u/giphy.gif" /> */}
-          {/* <div className="relative z-10 w-full overflow-x-clip"></div> */}
+        {/* <GifToLife url="https://media.giphy.com/media/U8mf1vmVzEMmOqU4D8/giphy.gif" /> */}
+        {/* <GifToLife url="https://media.giphy.com/media/bGgsc5mWoryfgKBx1u/giphy.gif" /> */}
+        {/* <div className="relative z-10 w-full overflow-x-clip"></div> */}
+
+        {/* <div>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -52,19 +55,17 @@ const Home = () => {
               </filter>
             </svg>
           </motion.div>
-        </div>
+        </div> */}
       </main>
     </ReactLenis>
   );
 };
 
-const RenderStars = () => {
-  return (
-    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 2 }}>
-      <ShootingStars className="fixed top-0 z-0 h-screen" />
-      <StarsBackground className="fixed top-0 z-0 h-screen" />
-    </motion.div>
-  );
-};
+const RenderStars = () => (
+  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 2 }}>
+    <ShootingStars className="fixed top-0 z-0 h-screen" />
+    <StarsBackground className="fixed top-0 z-0 h-screen" />
+  </motion.div>
+);
 
 export default Home;
