@@ -30,7 +30,7 @@ const LoadingScreenRoot = () => {
             initial={moveUpPageAnimtion.initial}
             exit={moveUpPageAnimtion.exit}
             transition={moveUpPageAnimtion.transition}
-            className="fixed top-0 z-50 flex h-screen w-screen items-center justify-center bg-dark"
+            className="fixed top-0 z-50 flex h-screen w-screen items-center justify-center bg-slate-900"
           >
             <motion.p
               initial={fadeInTextAnimation.initial}
@@ -41,7 +41,7 @@ const LoadingScreenRoot = () => {
               pedro.ramos
             </motion.p>
 
-            {dimension.width > 0 && (
+            {/* {dimension.width > 0 && (
               <svg className="absolute top-0 w-full" style={{ height: 'calc(100dvh + 300px)' }}>
                 <path
                   d={`M0 0 L${dimension.width} 0 L${dimension.width} ${dimension.height} Q${dimension.width / 2} ${dimension.height + 300} 0 ${dimension.height} L0 0`}
@@ -65,7 +65,7 @@ const LoadingScreenRoot = () => {
               //     fill="url(#loadingGradient)"
               //   />
               // </svg>
-            )}
+            )} */}
             {/* <StarsBackground starDensity={0.00001} /> */}
 
             {/* <ShootingStars />
