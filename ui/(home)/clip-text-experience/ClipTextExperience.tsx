@@ -8,11 +8,11 @@ import { useAnimations } from './animation';
 const ClipTextExperience = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  const { wrapperStyle, textStyle, clip1, clip2, clip3, clip4 } = useAnimations(scrollRef);
+  const { textStyle, clip1, clip2, clip3, clip4 } = useAnimations(scrollRef);
 
   return (
     <section className="h-full bg-beige">
-      <motion.div ref={scrollRef} style={wrapperStyle} className="-mt-60 h-[220dvh] bg-slate-900">
+      <motion.div ref={scrollRef} className="h-[150dvh] bg-slate-900">
         <motion.div
           style={textStyle}
           className="sticky top-1/2 z-20 mx-auto flex justify-center text-5xl font-bold leading-normal text-beige"
@@ -79,10 +79,7 @@ const ClipTextExperience = () => {
             </motion.div>
 
             <motion.div style={{ clipPath: useMotionTemplate`inset(-280px ${clip4}% 0 -150px)` }}>
-              with websites{' '}
-              <GradientText color="silver" glow>
-                attracting 700K monthly visitors.
-              </GradientText>
+              with websites attracting 1M monthly visitors.
             </motion.div>
           </div>
 
@@ -90,7 +87,7 @@ const ClipTextExperience = () => {
             <p>I have built software for an e-commerce startup</p>
             <p>a crypto wallet, a lead generation agency</p>
             <p>a NFT marketplace and a media conglomerate</p>
-            <p>with websites attracting 700K monthly visitors.</p>
+            <p>with websites attracting 1M monthly visitors.</p>
           </div>
         </motion.div>
       </motion.div>

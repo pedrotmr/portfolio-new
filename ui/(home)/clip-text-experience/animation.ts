@@ -1,44 +1,25 @@
-import useMediaQuery from '@/hooks/use-media-query';
 import { useMotionTemplate, useScroll, useTransform } from 'framer-motion';
 import { RefObject } from 'react';
 
 export const useAnimations = (scrollRef: RefObject<HTMLElement>) => {
-  const { isMobile } = useMediaQuery();
-
   const { scrollYProgress } = useScroll({
     target: scrollRef,
-    offset: ['start end', 'end start'],
+    offset: ['start center', 'end 0.7'],
   });
 
-  const margin = useTransform(scrollYProgress, [0.66, 1], [0, isMobile ? 18 : 40]);
-  const borderRadius = isMobile ? 18 : 32;
-
-  const wrapperStyle = {
-    borderRadius: `0 0 ${borderRadius}px ${borderRadius}px`,
-    marginTop: margin,
-    marginRight: margin,
-    marginLeft: margin,
-  };
-
-  const y = useTransform(scrollYProgress, [0, 0.15], ['0%', '-50%']);
-  const blur = useTransform(scrollYProgress, [0, 0.15], [40, 0]);
-  const opacity = useTransform(scrollYProgress, [0, 0.15], [0, 1]);
-
+  const y = useTransform(scrollYProgress, [0, 0.1], ['0%', '-50%']);
+  const blur = useTransform(scrollYProgress, [0, 0.1], [40, 0]);
+  const opacity = useTransform(scrollYProgress, [0, 0.1], [0, 1]);
   const textStyle = {
     y,
-    opacity,
     filter: useMotionTemplate`blur(${blur}px)`,
+    opacity,
   };
 
-  const { scrollYProgress: textScrollYProgress } = useScroll({
-    target: scrollRef,
-    offset: ['start center', 'end end'],
-  });
+  const clip1 = useTransform(scrollYProgress, [0.1, 0.4], [100, -50]);
+  const clip2 = useTransform(scrollYProgress, [0.4, 0.6], [100, -50]);
+  const clip3 = useTransform(scrollYProgress, [0.6, 0.8], [100, -50]);
+  const clip4 = useTransform(scrollYProgress, [0.8, 1], [100, -50]);
 
-  const clip1 = useTransform(textScrollYProgress, [0, 0.25], [100, -50]);
-  const clip2 = useTransform(textScrollYProgress, [0.25, 0.5], [100, -50]);
-  const clip3 = useTransform(textScrollYProgress, [0.5, 0.75], [100, -50]);
-  const clip4 = useTransform(textScrollYProgress, [0.75, 1], [100, -50]);
-
-  return { wrapperStyle, textStyle, clip1, clip2, clip3, clip4 };
+  return { textStyle, clip1, clip2, clip3, clip4 };
 };
