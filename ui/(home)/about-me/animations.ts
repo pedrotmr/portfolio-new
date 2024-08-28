@@ -97,12 +97,18 @@ export const useAnimations = (scrollRef: RefObject<HTMLElement>) => {
       [an.imagePanRight, an.imagePlaceLeft, an.imagePanLeft, an.imagePlaceRightSecond - 0.05],
       [0, 1, 1, 0],
     ),
+    blur: useTransform(
+      scrollYProgress,
+      [an.imagePanRight, an.imagePlaceLeft, an.imagePanLeft, an.imagePlaceRightSecond - 0.05],
+      [30, 0, 0, 30],
+    ),
   };
 
   const secondTextStyles = {
     position: allElementsPosition,
     x: secontTextAnimations.x,
     opacity: secontTextAnimations.opacity,
+    filter: useMotionTemplate`blur(${secontTextAnimations.blur}px)`,
   };
 
   const thirdTextAnimation = {
@@ -122,7 +128,17 @@ export const useAnimations = (scrollRef: RefObject<HTMLElement>) => {
       [an.imagePanLeft, an.imagePlaceRightSecond, an.imagePanRightSecond, an.imageEndOut],
       [0, 1, 1, 0],
     ),
-    blur: useTransform(scrollYProgress, [an.imageStartOut, an.imageEndOut], [0, 40]),
+    blur: useTransform(
+      scrollYProgress,
+      [
+        an.imagePanLeft,
+        an.imagePlaceRightSecond,
+        an.imagePanRightSecond,
+        an.imageStartOut,
+        an.imageEndOut,
+      ],
+      [30, 0, 0, 0, 40],
+    ),
   };
 
   const thirdTextStyles = {
