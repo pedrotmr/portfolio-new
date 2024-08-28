@@ -44,13 +44,10 @@ const GradientText = ({
   underline?: boolean;
   glow?: boolean;
 }) => {
-  const gradient = colorToGradient[color];
-
   const style = {
     borderBottom: underline ? '1px solid transparent' : 'none',
-    borderImage: gradient,
+    borderImage: colorToGradient[color],
     borderImageSlice: 1,
-    ...(color === 'silver' && glow && { textShadow: '0 0 1.5px #FFF' }),
   };
 
   return (
