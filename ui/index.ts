@@ -3,7 +3,7 @@
 export { default as AboutMe } from './(home)/about-me';
 export { default as ClipTextExperience } from './(home)/clip-text-experience';
 export { default as Header } from './(home)/header';
-export { default as CursorShadow } from './cursor-shadow';
+export { default as GradientCursorArea } from './gradient-cursor-area';
 export { default as GradientText } from './gradient-text';
 export { default as HeroText } from './hero-text';
 export { default as IgProfilePicture } from './ig-profile-picture';
