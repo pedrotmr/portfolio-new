@@ -1,7 +1,7 @@
 import { useMotionTemplate, useScroll, useTransform } from 'framer-motion';
 import { RefObject } from 'react';
 
-const an = {
+const time = {
   start: 0,
   imagePlaceRight: 0.125,
   imagePanRight: 0.25,
@@ -26,31 +26,31 @@ export const useAnimations = (scrollRef: RefObject<HTMLElement>) => {
   const imageAnimations = {
     blur: useTransform(
       scrollYProgress,
-      [an.start, an.imagePlaceRight, an.imageStartOut, an.imageEndOut],
+      [time.start, time.imagePlaceRight, time.imageStartOut, time.imageEndOut],
       [40, 0, 0, 40],
     ),
     scale: useTransform(
       scrollYProgress,
-      [an.start, an.imagePlaceRight, an.imageStartOut, an.imageEndOut],
+      [time.start, time.imagePlaceRight, time.imageStartOut, time.imageEndOut],
       [2.5, 1, 1, 2.5],
     ),
     opacity: useTransform(
       scrollYProgress,
-      [an.start, an.imagePlaceRight, an.imageStartOut, an.imageEndOut],
+      [time.start, time.imagePlaceRight, time.imageStartOut, time.imageEndOut],
       [0, 1, 1, 0],
     ),
     x: useTransform(
       scrollYProgress,
       [
-        an.start,
-        an.imagePlaceRight,
-        an.imagePanRight,
-        an.imagePlaceLeft,
-        an.imagePanLeft,
-        an.imagePlaceRightSecond,
-        an.imagePanRightSecond,
-        an.imageStartOut,
-        an.imageEndOut,
+        time.start,
+        time.imagePlaceRight,
+        time.imagePanRight,
+        time.imagePlaceLeft,
+        time.imagePanLeft,
+        time.imagePlaceRightSecond,
+        time.imagePanRightSecond,
+        time.imageStartOut,
+        time.imageEndOut,
       ],
       ['300%', '65%', '60%', '-65%', '-70%', '65%', '60%', '80%', '300%'],
     ),
@@ -67,15 +67,15 @@ export const useAnimations = (scrollRef: RefObject<HTMLElement>) => {
   const firstTextAnimations = {
     x: useTransform(
       scrollYProgress,
-      [an.start, an.imagePlaceRight, an.imagePanRight, an.imagePlaceLeft],
+      [time.start, time.imagePlaceRight, time.imagePanRight, time.imagePlaceLeft],
       ['-300%', '-55%', '-50%', '-300%'],
     ),
     opacity: useTransform(
       scrollYProgress,
-      [an.start, an.imagePlaceRight, an.imagePanRight, an.imagePlaceLeft - 0.05],
+      [time.start, time.imagePlaceRight, time.imagePanRight, time.imagePlaceLeft - 0.05],
       [0, 1, 1, 0],
     ),
-    blur: useTransform(scrollYProgress, [an.start, an.imagePlaceRight], [40, 0]),
+    blur: useTransform(scrollYProgress, [time.start, time.imagePlaceRight], [40, 0]),
   };
 
   const firstTextStyles = {
@@ -89,17 +89,27 @@ export const useAnimations = (scrollRef: RefObject<HTMLElement>) => {
   const secontTextAnimations = {
     x: useTransform(
       scrollYProgress,
-      [an.imagePanRight, an.imagePlaceLeft, an.imagePanLeft, an.imagePlaceRightSecond],
+      [time.imagePanRight, time.imagePlaceLeft, time.imagePanLeft, time.imagePlaceRightSecond],
       ['300%', '60%', '55%', '300%'],
     ),
     opacity: useTransform(
       scrollYProgress,
-      [an.imagePanRight, an.imagePlaceLeft, an.imagePanLeft, an.imagePlaceRightSecond - 0.05],
+      [
+        time.imagePanRight,
+        time.imagePlaceLeft,
+        time.imagePanLeft,
+        time.imagePlaceRightSecond - 0.05,
+      ],
       [0, 1, 1, 0],
     ),
     blur: useTransform(
       scrollYProgress,
-      [an.imagePanRight, an.imagePlaceLeft, an.imagePanLeft, an.imagePlaceRightSecond - 0.05],
+      [
+        time.imagePanRight,
+        time.imagePlaceLeft,
+        time.imagePanLeft,
+        time.imagePlaceRightSecond - 0.05,
+      ],
       [30, 0, 0, 30],
     ),
   };
@@ -115,27 +125,27 @@ export const useAnimations = (scrollRef: RefObject<HTMLElement>) => {
     x: useTransform(
       scrollYProgress,
       [
-        an.imagePanLeft,
-        an.imagePlaceRightSecond,
-        an.imagePanRightSecond,
-        an.imageStartOut,
-        an.imageEndOut,
+        time.imagePanLeft,
+        time.imagePlaceRightSecond,
+        time.imagePanRightSecond,
+        time.imageStartOut,
+        time.imageEndOut,
       ],
       ['-300%', '-55%', '-50%', '-60%', '-300%'],
     ),
     opacity: useTransform(
       scrollYProgress,
-      [an.imagePanLeft, an.imagePlaceRightSecond, an.imagePanRightSecond, an.imageEndOut],
+      [time.imagePanLeft, time.imagePlaceRightSecond, time.imagePanRightSecond, time.imageEndOut],
       [0, 1, 1, 0],
     ),
     blur: useTransform(
       scrollYProgress,
       [
-        an.imagePanLeft,
-        an.imagePlaceRightSecond,
-        an.imagePanRightSecond,
-        an.imageStartOut,
-        an.imageEndOut,
+        time.imagePanLeft,
+        time.imagePlaceRightSecond,
+        time.imagePanRightSecond,
+        time.imageStartOut,
+        time.imageEndOut,
       ],
       [30, 0, 0, 0, 40],
     ),

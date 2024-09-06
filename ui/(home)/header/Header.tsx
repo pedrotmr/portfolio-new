@@ -10,16 +10,16 @@ const Header = () => {
   const { initialMarginStyles } = useSlidingMarginsAnimatons(scrollRef);
 
   return (
-    <motion.section className="h-full bg-beige">
-      <motion.div
-        ref={scrollRef}
-        style={initialMarginStyles}
-        className="relative flex h-screen flex-col items-center justify-center overflow-hidden bg-slate-900 p-16"
-      >
-        <TileGrid scrollRef={scrollRef} />
-        <HeroText scrollRef={scrollRef} />
-      </motion.div>
-    </motion.section>
+    <motion.header
+      className={`
+        relative flex h-screen flex-col items-center justify-center overflow-hidden bg-slate-900
+      `}
+      ref={scrollRef}
+      style={initialMarginStyles}
+    >
+      <HeroText scrollRef={scrollRef} />
+      <TileGrid scrollRef={scrollRef} />
+    </motion.header>
   );
 };
 
