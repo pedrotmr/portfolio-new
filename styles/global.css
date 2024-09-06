@@ -12,8 +12,6 @@
 }
 
 html {
-  /* scroll-behavior: smooth; */
-  /* overscroll-behavior: none; */
   cursor: url('/images/cursor.svg'), auto;
   scrollbar-color: var(--header-animation-color) #0f172a;
   scrollbar-width: thin;
