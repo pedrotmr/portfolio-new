@@ -1,8 +1,17 @@
 import '@/styles/glitch.css';
+import { cn } from '@/utils';
 import { motion } from 'framer-motion';
 import { ReactNode, useState } from 'react';
 
-function MagneticWrapper({ children, ratio = 20 }: { children: ReactNode; ratio?: number }) {
+function MagneticWrapper({
+  children,
+  className,
+  ratio = 20,
+}: {
+  children: ReactNode;
+  className?: string;
+  ratio?: number;
+}) {
   const [isHovering, setIsHovering] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
@@ -28,7 +37,7 @@ function MagneticWrapper({ children, ratio = 20 }: { children: ReactNode; ratio?
       onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className="relative w-max"
+      className={cn('relative', className)}
       style={{
         transition: 'transform 0.1s ease-out',
         transform: isHovering ? `translate3d(${x}px, ${y}px, 0) ` : 'translate3d(0px, 0px, 0) ',

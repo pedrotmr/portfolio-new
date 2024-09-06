@@ -1,6 +1,8 @@
 const GifToLife = ({ url }: { url: string }) => {
   return (
-    <div className="w-full overflow-hidden bg-slate-900 text-justify font-serif text-[5px] opacity-70">
+    <div
+      className={`w-full overflow-hidden bg-slate-900 text-justify font-serif text-[5px] opacity-70`}
+    >
       <p
         style={{
           background: `url(${url}) no-repeat`,

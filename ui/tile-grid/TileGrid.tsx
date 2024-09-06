@@ -1,5 +1,3 @@
-'use client';
-
 import { BEIGE } from '@/utils';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { RefObject, useEffect, useState } from 'react';
@@ -14,12 +12,13 @@ function calculateTileCount() {
 }
 
 const TileGrid = ({ scrollRef }: { scrollRef: RefObject<HTMLDivElement> }) => {
-  const [tileCount, setTileCount] = useState(() => calculateTileCount());
+  const [tileCount, setTileCount] = useState(calculateTileCount);
 
   const { scrollYProgress } = useScroll({
     target: scrollRef,
     offset: ['end end', 'end center'],
   });
+
   const opacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
 
   useEffect(() => {

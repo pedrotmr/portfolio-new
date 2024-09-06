@@ -1,5 +1,3 @@
-'use client';
-
 import useTrackCursor from '@/hooks/use-track-cursor';
 import { HEADER_ANIMATION_COLOR } from '@/utils';
 import { motion, useMotionTemplate } from 'framer-motion';
@@ -13,7 +11,7 @@ const GradientCursorArea = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <main onMouseMove={handleMouseMove} className="bg-slate-900">
+    <main onMouseMove={handleMouseMove}>
       <motion.div
         className="pointer-events-none fixed inset-0 z-10 transition duration-300"
         style={cursorShadowStyle}
