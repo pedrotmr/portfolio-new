@@ -15,9 +15,16 @@
     "plugins": [{ "name": "next" }],
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"],
-    },
+      "@/*": ["./*"]
+    }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "ui/globe/World.jsx", "ui/planet-earth/PlanetEarth.tsx"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "ui/globe/World.jsx",
+    "ui/planet-earth/PlanetEarth.tsx"
+  ],
   "exclude": ["node_modules"]
 }

@@ -1,7 +1,18 @@
 {
-  "extends": "next/core-web-vitals",
+  "parser": "@typescript-eslint/parser",
+  "extends": [
+    "next/core-web-vitals",
+    "plugin:readable-tailwind/warning",
+    "plugin:readable-tailwind/error"
+  ],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": "latest"
+  },
+  "plugins": ["readable-tailwind"],
   "rules": {
-    "react/no-unescaped-entities": "false",
-    "no-undef": "error"
+    "readable-tailwind/multiline": ["warn", { "printWidth": 100, "group": "never" }]
   }
 }
