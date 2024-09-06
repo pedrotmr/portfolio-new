@@ -1,3 +1,5 @@
+'use client';
+
 import useFitTextToContainer from '@/hooks/use-fit-text-to-container';
 import '@/styles/glitch.css';
 import { GradientText, IgProfilePicture, MagneticWrapper } from '@/ui';

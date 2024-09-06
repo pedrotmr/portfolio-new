@@ -1,18 +1,11 @@
+'use client';
+
 import { BEIGE } from '@/utils';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { RefObject, useEffect, useState } from 'react';
 
-function calculateTileCount() {
-  const screenWidth = window.innerWidth;
-  const screenHeight = window.innerHeight;
-  const tileSize = 70;
-  const columns = Math.ceil(screenWidth / tileSize);
-  const rows = Math.ceil(screenHeight / tileSize);
-  return columns * rows;
-}
-
 const TileGrid = ({ scrollRef }: { scrollRef: RefObject<HTMLDivElement> }) => {
-  const [tileCount, setTileCount] = useState(calculateTileCount);
+  const [tileCount, setTileCount] = useState(0);
 
   const { scrollYProgress } = useScroll({
     target: scrollRef,
@@ -22,14 +15,29 @@ const TileGrid = ({ scrollRef }: { scrollRef: RefObject<HTMLDivElement> }) => {
   const opacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
 
   useEffect(() => {
-    const handleResize = () => setTileCount(calculateTileCount());
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    function calculateTileCount() {
+      const screenWidth = window.innerWidth;
+      const screenHeight = window.innerHeight;
+      const tileSize = 70;
+      const columns = Math.ceil(screenWidth / tileSize);
+      const rows = Math.ceil(screenHeight / tileSize);
+      return columns * rows;
+    }
+
+    if (typeof window !== 'undefined') {
+      const handleResize = () => setTileCount(calculateTileCount());
+      handleResize();
+      window.addEventListener('resize', handleResize);
+      return () => window.removeEventListener('resize', handleResize);
+    }
   }, []);
 
   return (
     <motion.div
-      className="absolute left-0 top-0 grid h-full w-full grid-cols-auto-fill-70 grid-rows-auto-fill-70 overflow-hidden bg-slate-900"
+      className={`
+        absolute left-0 top-0 grid h-full w-full grid-cols-auto-fill-70 grid-rows-auto-fill-70
+        overflow-hidden bg-slate-900
+      `}
       style={{ opacity }}
     >
       {Array(tileCount)
