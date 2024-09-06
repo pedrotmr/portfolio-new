@@ -1,6 +1,6 @@
 import '@/styles/global.css';
 import { InitialLoadingScreen } from '@/ui';
-import { avantGarde } from '@/utils';
+import { avantGarde, clashFont, interFont } from '@/utils';
 import { Metadata } from 'next';
 import { ReactNode } from 'react';
 
@@ -14,7 +14,7 @@ const RootLayout = ({ children }: { children: ReactNode }) => {
     <html lang="en">
       <body
         className={`
-          ${avantGarde.className}
+          ${interFont.className}
           relative overflow-x-hidden bg-beige leading-relaxed text-slate-400 antialiased
         `}
       >

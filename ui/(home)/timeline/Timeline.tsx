@@ -1,6 +1,6 @@
 import useFitTextToContainer from '@/hooks/use-fit-text-to-container';
 import { GradientText, TracingBeam } from '@/ui';
-import { thunderFont } from '@/utils';
+import { interFont, thunderFont } from '@/utils';
 import { motion, useInView } from 'framer-motion';
 import { useLenis } from 'lenis/react';
 
@@ -85,7 +85,7 @@ const data: TimelineEntry[] = [
     bulletPoints: [
       'Worked with a team of 10 to manage full app life cycle using GitLab.',
       'Built user interfaces for decentralized apps with React, Next.js, and Material UI.',
-      'Integrated smart contracts with Web3.js and Ether.js for seamless blockchain interactions.',
+      'Integrated smart contracts with Web3.js and Ether.js for blockchain interactions.',
       'Collaborated with designers and backend to sync UI/UX with backend structures.',
       'Stayed at the forefront of blockchain and frontend development technologies.',
       'Participated in code reviews to maintain standards and best practices.',
@@ -277,7 +277,11 @@ const Timeline = () => {
                 <h4 className="text-xl text-neutral-500 md:hidden">{item.position}</h4>
                 <p className="text-xl text-neutral-500 md:hidden">{item.date}</p>
 
-                <div>
+                <div
+                  className={`
+                    ${interFont.className}
+                  `}
+                >
                   <p className="mb-6 text-base text-beige">{item.description}</p>
 
                   <ul className="mb-8 space-y-2">

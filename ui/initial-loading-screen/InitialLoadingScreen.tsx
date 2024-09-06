@@ -4,7 +4,7 @@ import { clashFont } from '@/utils';
 import { AnimatePresence, motion } from 'framer-motion';
 import ReactLenis from 'lenis/react';
 import { useEffect, useState } from 'react';
-import { fadeInTextAnimation, moveUpPageAnimtion } from './animations';
+import { fadeInTextAnimation, getSvgPathAnimation, moveUpPageAnimtion } from './animations';
 
 const InitialLoadingScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -19,6 +19,8 @@ const InitialLoadingScreen = () => {
     return () => clearTimeout(timeoutId);
   }, []);
 
+  const svgPathAnimation = getSvgPathAnimation(dimension);
+
   return (
     <ReactLenis>
       <AnimatePresence>
@@ -27,9 +29,7 @@ const InitialLoadingScreen = () => {
             initial={moveUpPageAnimtion.initial}
             exit={moveUpPageAnimtion.exit}
             transition={moveUpPageAnimtion.transition}
-            className={`
-              fixed top-0 z-50 flex h-screen w-screen items-center justify-center bg-slate-900
-            `}
+            className={`fixed top-0 z-50 flex h-screen w-screen items-center justify-center bg-dark`}
           >
             <motion.p
               initial={fadeInTextAnimation.initial}
@@ -44,9 +44,11 @@ const InitialLoadingScreen = () => {
             </motion.p>
 
             {dimension.width > 0 && (
-              <svg className="absolute top-0 w-full" style={{ height: 'calc(100dvh + 200px)' }}>
-                <path
-                  d={`M0 0 L${dimension.width} 0 L${dimension.width} ${dimension.height + 200} Q${dimension.width / 2} ${dimension.height} 0 ${dimension.height + 200} L0 0`}
+              <svg className="absolute top-0 w-full" style={{ height: 'calc(100dvh + 500px)' }}>
+                <motion.path
+                  initial={svgPathAnimation.initial}
+                  animate={svgPathAnimation.animate}
+                  transition={svgPathAnimation.transition}
                   className="fill-dark"
                 />
               </svg>

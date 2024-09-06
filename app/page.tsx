@@ -18,7 +18,7 @@ const Home = () => {
         <StarsBackgroundArea>
           <AboutMe />
           <ClipTextExperience />
-          <Timeline />
+          {/* <Timeline /> */}
           <div className="h-screen w-screen bg-blue-900"></div>
           <div className="h-screen w-screen bg-slate-900"></div>
         </StarsBackgroundArea>

@@ -4,26 +4,19 @@ import { BEIGE } from '@/utils';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { RefObject, useEffect, useState } from 'react';
 
+function calculateTileCount() {
+  const screenWidth = window.innerWidth;
+  const screenHeight = window.innerHeight;
+  const tileSize = 70;
+  const columns = Math.ceil(screenWidth / tileSize);
+  const rows = Math.ceil(screenHeight / tileSize);
+  return columns * rows;
+}
+
 const TileGrid = ({ scrollRef }: { scrollRef: RefObject<HTMLDivElement> }) => {
   const [tileCount, setTileCount] = useState(0);
 
-  const { scrollYProgress } = useScroll({
-    target: scrollRef,
-    offset: ['end end', 'end center'],
-  });
-
-  const opacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
-
   useEffect(() => {
-    function calculateTileCount() {
-      const screenWidth = window.innerWidth;
-      const screenHeight = window.innerHeight;
-      const tileSize = 70;
-      const columns = Math.ceil(screenWidth / tileSize);
-      const rows = Math.ceil(screenHeight / tileSize);
-      return columns * rows;
-    }
-
     if (typeof window !== 'undefined') {
       const handleResize = () => setTileCount(calculateTileCount());
       handleResize();
@@ -31,6 +24,13 @@ const TileGrid = ({ scrollRef }: { scrollRef: RefObject<HTMLDivElement> }) => {
       return () => window.removeEventListener('resize', handleResize);
     }
   }, []);
+
+  const { scrollYProgress } = useScroll({
+    target: scrollRef,
+    offset: ['end end', 'end center'],
+  });
+
+  const opacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
 
   return (
     <motion.div

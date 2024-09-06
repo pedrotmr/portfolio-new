@@ -13,7 +13,7 @@ export const useAnimations = (scrollRef: RefObject<HTMLDivElement>) => {
     offset: ['end end', 'end center'],
   });
 
-  const y = useSpring(useTransform(scrollYProgress, [0, 0.3], ['0%', '-100px']), {
+  const y = useSpring(useTransform(scrollYProgress, [0, 0.3], ['0%', '-150px']), {
     stiffness: 100,
     damping: 30,
     restDelta: 0.001,

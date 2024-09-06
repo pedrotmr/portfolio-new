@@ -17,8 +17,12 @@ const Header = () => {
       ref={scrollRef}
       style={initialMarginStyles}
     >
-      <HeroText scrollRef={scrollRef} />
-      <TileGrid scrollRef={scrollRef} />
+      {scrollRef.current && (
+        <>
+          <HeroText scrollRef={scrollRef} />
+          <TileGrid scrollRef={scrollRef} />
+        </>
+      )}
     </motion.header>
   );
 };

@@ -12,7 +12,7 @@
 }
 
 html {
-  cursor: url('/images/cursor.svg'), auto;
+  /* cursor: url('/images/cursor.svg'), auto; */
   scrollbar-color: var(--header-animation-color) #0f172a;
   scrollbar-width: thin;
 }
