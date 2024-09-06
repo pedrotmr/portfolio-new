@@ -1,5 +1,5 @@
 import '@/styles/global.css';
-import { LoadingScreenRoot } from '@/ui';
+import { InitialLoadingScreen } from '@/ui';
 import { avantGarde } from '@/utils';
 import { Metadata } from 'next';
 import { ReactNode } from 'react';
@@ -13,9 +13,12 @@ const RootLayout = ({ children }: { children: ReactNode }) => {
   return (
     <html lang="en">
       <body
-        className={`${avantGarde.className} relative overflow-x-hidden bg-beige leading-relaxed text-slate-400 antialiased`}
+        className={`
+          ${avantGarde.className}
+          relative overflow-x-hidden bg-beige leading-relaxed text-slate-400 antialiased
+        `}
       >
-        <LoadingScreenRoot />
+        <InitialLoadingScreen />
         {children}
       </body>
     </html>

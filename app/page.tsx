@@ -1,44 +1,34 @@
 'use client';
 
-import useTrackCursor from '@/hooks/use-track-cursor';
 import {
   AboutMe,
   ClipTextExperience,
-  CursorShadow,
+  GradientCursorArea,
   Header,
-  ShootingStars,
-  StarsBackground,
+  StarsBackgroundArea,
+  Timeline,
 } from '@/ui';
-import { motion, useInView } from 'framer-motion';
 import { ReactLenis } from 'lenis/react';
-import { useRef } from 'react';
 
 const Home = () => {
-  const { mouseX, mouseY, handleMouseMove } = useTrackCursor();
-
-  const ref = useRef<HTMLDivElement>(null);
-
-  const inView = useInView(ref);
-
   return (
     <ReactLenis root>
-      <main onMouseMove={handleMouseMove} className="bg-slate-900">
-        <CursorShadow mouseX={mouseX} mouseY={mouseY} />
+      <GradientCursorArea>
         <Header />
-
-        <div ref={ref}>
+        <StarsBackgroundArea>
           <AboutMe />
           <ClipTextExperience />
+          <Timeline />
+          <div className="h-screen w-screen bg-blue-900"></div>
           <div className="h-screen w-screen bg-slate-900"></div>
-          <div className="h-screen w-screen bg-slate-900"></div>
-          {inView && <RenderStars />}
-        </div>
+        </StarsBackgroundArea>
+      </GradientCursorArea>
 
-        {/* <GifToLife url="https://media.giphy.com/media/U8mf1vmVzEMmOqU4D8/giphy.gif" /> */}
-        {/* <GifToLife url="https://media.giphy.com/media/bGgsc5mWoryfgKBx1u/giphy.gif" /> */}
-        {/* <div className="relative z-10 w-full overflow-x-clip"></div> */}
+      {/* <GifToLife url="https://media.giphy.com/media/U8mf1vmVzEMmOqU4D8/giphy.gif" /> */}
+      {/* <GifToLife url="https://media.giphy.com/media/bGgsc5mWoryfgKBx1u/giphy.gif" /> */}
+      {/* <div className="relative z-10 w-full overflow-x-clip"></div> */}
 
-        {/* <div>
+      {/* <div>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -56,16 +46,8 @@ const Home = () => {
             </svg>
           </motion.div>
         </div> */}
-      </main>
     </ReactLenis>
   );
 };
-
-const RenderStars = () => (
-  <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 2 }}>
-    <ShootingStars className="fixed top-0 z-0 h-screen" />
-    <StarsBackground className="fixed top-0 z-0 h-screen" />
-  </motion.div>
-);
 
 export default Home;
