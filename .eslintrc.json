@@ -13,6 +13,7 @@
   },
   "plugins": ["readable-tailwind"],
   "rules": {
-    "readable-tailwind/multiline": ["warn", { "printWidth": 100, "group": "never" }]
+    "readable-tailwind/multiline": ["warn", { "printWidth": 100, "group": "never" }],
+    "react/no-unescaped-entities": "off"
   }
 }
