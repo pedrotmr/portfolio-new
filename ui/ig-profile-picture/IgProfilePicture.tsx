@@ -2,7 +2,6 @@
 
 import { cn } from '@/utils';
 import { AnimationProps, motion } from 'framer-motion';
-import Image from 'next/image';
 
 type IgProfilePictureProps = {
   className?: string;
@@ -21,7 +20,7 @@ const IgProfilePicture = ({
 }: IgProfilePictureProps) => {
   return (
     <motion.div
-      className={cn('relative w-[60px] animate-ig-stroke', className)}
+      className={cn('relative z-20 w-max animate-ig-stroke', className)}
       style={style}
       initial={initial}
       animate={animate}
@@ -55,14 +54,15 @@ const IgProfilePicture = ({
             <stop offset="1" stopColor="#8134AF"></stop>
           </linearGradient>
         </defs>
+        <image
+          x="7"
+          y="7"
+          width="60"
+          height="60"
+          href="/images/perfil_3.jpg"
+          clipPath="circle(30)"
+        />
       </svg>
-      <Image
-        className="absolute left-7 top-7 w-full translate-x-[-21px] translate-y-[-21px] rounded-full"
-        src="/images/perfil_3.jpg"
-        alt="Profile"
-        width={300}
-        height={300}
-      />
     </motion.div>
   );
 };
