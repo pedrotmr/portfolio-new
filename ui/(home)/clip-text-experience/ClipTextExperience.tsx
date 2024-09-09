@@ -19,7 +19,6 @@ const ClipTextExperience = () => {
         style={textStyle}
         className={`sticky top-1/2 z-20 mx-auto flex justify-center text-left text-[clamp(2rem,3.6vw,3rem)] font-bold leading-normal text-beige will-change-transform`}
       >
-        =
         <div className="relative z-20">
           <motion.div style={{ clipPath: useMotionTemplate`inset(-280px ${clip1}% 0 -150px)` }}>
             I have built software for an
