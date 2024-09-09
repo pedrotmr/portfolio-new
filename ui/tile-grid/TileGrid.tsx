@@ -34,10 +34,7 @@ const TileGrid = ({ scrollRef }: { scrollRef: RefObject<HTMLDivElement> }) => {
 
   return (
     <motion.div
-      className={`
-        absolute left-0 top-0 grid h-full w-full grid-cols-auto-fill-70 grid-rows-auto-fill-70
-        overflow-hidden bg-slate-900
-      `}
+      className="absolute left-0 top-0 grid h-full w-full grid-cols-auto-fill-70 grid-rows-auto-fill-70 overflow-hidden bg-slate-900"
       style={{ opacity }}
     >
       {Array(tileCount)

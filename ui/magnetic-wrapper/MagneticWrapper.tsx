@@ -37,7 +37,7 @@ function MagneticWrapper({
       onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className={cn('relative', className)}
+      className={cn('relative select-none', className)}
       style={{
         transition: 'transform 0.1s ease-out',
         transform: isHovering ? `translate3d(${x}px, ${y}px, 0) ` : 'translate3d(0px, 0px, 0) ',
