@@ -7,7 +7,7 @@ const config: Config = {
     './app/**/*.{js,ts,jsx,tsx,mdx}',
     './ui/**/*.{js,ts,jsx,tsx,mdx}',
   ],
-  theme: {
+theme: {
     extend: {
       colors: {
         darkLight: '#090908',
@@ -16,7 +16,6 @@ const config: Config = {
         orangeDark: '#783D19',
         orangeLight: '#C4661F',
         greyCustom: '#555555',
-        // yellow: '#F9EBC7',
         greenLight: '#A9B388',
         greenDark: '#5F6F52',
         pinkDark: '#DD2A7B',

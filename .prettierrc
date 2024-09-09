@@ -1,5 +1,5 @@
 {
-  "plugins": ["eslint-plugin-readable-tailwind"],
+  "plugins": ["prettier-plugin-tailwindcss"],
   "semi": true,
   "singleQuote": true,
   "bracketSameLine": false,

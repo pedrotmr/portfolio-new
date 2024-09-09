@@ -1,19 +1,27 @@
+// {
+//   "parser": "@typescript-eslint/parser",
+//   "extends": [
+//     "next/core-web-vitals",
+//     "plugin:readable-tailwind/warning",
+//     "plugin:readable-tailwind/error"
+//   ],
+//   "parserOptions": {
+//     "ecmaFeatures": {
+//       "jsx": true
+//     },
+//     "ecmaVersion": "latest"
+//   },
+//   "plugins": ["readable-tailwind"],
+//   "rules": {
+//     "readable-tailwind/multiline": ["warn", { "printWidth": 100, "group": "never" }],
+//     "react/no-unescaped-entities": "off"
+//   }
+// }
+
 {
-  "parser": "@typescript-eslint/parser",
-  "extends": [
-    "next/core-web-vitals",
-    "plugin:readable-tailwind/warning",
-    "plugin:readable-tailwind/error"
-  ],
-  "parserOptions": {
-    "ecmaFeatures": {
-      "jsx": true
-    },
-    "ecmaVersion": "latest"
-  },
-  "plugins": ["readable-tailwind"],
+  "extends": "next/core-web-vitals",
   "rules": {
-    "readable-tailwind/multiline": ["warn", { "printWidth": 100, "group": "never" }],
-    "react/no-unescaped-entities": "off"
+    "react/no-unescaped-entities": "false",
+    "no-undef": "error"
   }
 }
