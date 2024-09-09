@@ -20,13 +20,13 @@ export const useAnimations = (scrollRef: RefObject<HTMLElement>) => {
   const y = useTransform(
     scrollYProgress,
     [timing.start, timing.step1, timing.step5, timing.end],
-    ['0%', '-50%', '-50%', '-100%'],
+    ['0%', '-50%', '-50%', '-50%'],
   );
 
   const scale = useTransform(
     scrollYProgress,
     [timing.start, timing.step1, timing.step5, timing.end],
-    [0.8, 1, 1, 0.8],
+    [0.6, 1, 1, 0.6],
   );
 
   const blur = useTransform(
@@ -44,7 +44,7 @@ export const useAnimations = (scrollRef: RefObject<HTMLElement>) => {
   const textStyle = {
     y,
     filter: useMotionTemplate`blur(${blur}px)`,
-    opacity,
+    opacity, 
     scale,
   };
 
