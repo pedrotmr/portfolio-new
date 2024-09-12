@@ -3,7 +3,7 @@ import { cn } from '@/utils';
 import { motion } from 'framer-motion';
 import { ReactNode, useState } from 'react';
 
-function MagneticWrapper({
+const MagneticWrapper = ({
   children,
   className,
   ratio = 20,
@@ -11,7 +11,7 @@ function MagneticWrapper({
   children: ReactNode;
   className?: string;
   ratio?: number;
-}) {
+}) => {
   const [isHovering, setIsHovering] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
@@ -46,6 +46,6 @@ function MagneticWrapper({
       {children}
     </motion.div>
   );
-}
+};
 
 export default MagneticWrapper;

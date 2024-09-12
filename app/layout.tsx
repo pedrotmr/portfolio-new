@@ -1,6 +1,6 @@
 import '@/styles/global.css';
 import { InitialLoadingScreen } from '@/ui';
-import { avantGarde, clashFont, interFont } from '@/utils';
+import { interFont } from '@/utils';
 import { Metadata } from 'next';
 import { ReactNode } from 'react';
 
@@ -13,10 +13,8 @@ const RootLayout = ({ children }: { children: ReactNode }) => {
   return (
     <html lang="en">
       <body
-        className={`
-          ${interFont.className}
-          relative overflow-x-hidden bg-beige leading-relaxed text-slate-400 antialiased
-        `}
+        className={`${interFont.className} relative bg-beige leading-relaxed text-slate-400 selection:bg-pinkLight
+          selection:text-beige`}
       >
         <InitialLoadingScreen />
         {children}
