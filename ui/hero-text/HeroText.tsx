@@ -22,7 +22,7 @@ const HeroText = ({ scrollRef }: { scrollRef: RefObject<HTMLDivElement> }) => {
     <motion.div
       ref={containerRef}
       style={wrapperStyle}
-      className={`z-20 mx-auto grid w-full max-w-[70dvw] select-none gap-2 text-beige lg:max-w-3xl`}
+      className="z-20 mx-auto grid w-full max-w-[70dvw] select-none gap-2 text-beige lg:max-w-3xl"
     >
       <MagneticWrapper ratio={6} className="w-max">
         <motion.div
@@ -56,7 +56,8 @@ const HeroText = ({ scrollRef }: { scrollRef: RefObject<HTMLDivElement> }) => {
       <MagneticWrapper>
         <div className="w-full overflow-hidden">
           <motion.h2
-            className={`glitch cursor-none whitespace-nowrap font-bold leading-none tracking-normal text-beige ${thunderFont.className} `}
+            className={`glitch cursor-none whitespace-nowrap font-bold leading-none tracking-normal text-beige
+              ${thunderFont.className}`}
             initial={titleAnimation.initial}
             animate={titleAnimation.animate}
             transition={titleAnimation.transition}
