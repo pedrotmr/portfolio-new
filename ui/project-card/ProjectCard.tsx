@@ -61,7 +61,7 @@ const ProjectCard = ({
             </GradientText>
             <div className="space-y-4 text-base leading-relaxed">
               {project.description.map((description, idx) => (
-                <p>{description}</p>
+                <p key={idx}>{description}</p>
               ))}
             </div>
             <Link

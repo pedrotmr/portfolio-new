@@ -1,4 +1,5 @@
 import { cn } from '@/utils';
+import { ReactNode } from 'react';
 import { tv } from 'tailwind-variants';
 
 const variants = tv({
@@ -37,7 +38,7 @@ const GradientText = ({
   className,
   underline = false,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
   color: 'purple' | 'orange' | 'yellow' | 'sky' | 'green' | 'lightGreen' | 'pink' | 'silver';
   className?: string;
   underline?: boolean;

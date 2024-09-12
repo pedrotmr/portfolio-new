@@ -1,7 +1,7 @@
 import useFitTextToContainer from '@/hooks/use-fit-text-to-container';
 import { MagneticWrapper, ProjectCard, TracingBeam } from '@/ui';
 import { thunderFont } from '@/utils';
-import { motion, useScroll } from 'framer-motion';
+import { motion, useInView, useScroll } from 'framer-motion';
 import { projects } from './project-data';
 
 const Projects = () => {
@@ -11,6 +11,8 @@ const Projects = () => {
     target: containerRef,
     offset: ['start start', 'end start'],
   });
+
+  const inView = useInView(containerRef);
 
   return (
     <motion.section
@@ -24,7 +26,7 @@ const Projects = () => {
           data-text="Personal Projects"
         >
           <span>Personal Projects</span>
-          <TracingBeam containerRef={textRef} isHorizontal />
+          {inView && <TracingBeam containerRef={textRef} isHorizontal />}
         </p>
       </MagneticWrapper>
 

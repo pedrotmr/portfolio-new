@@ -1,7 +1,7 @@
 import useFitTextToContainer from '@/hooks/use-fit-text-to-container';
 import { GradientText, MagneticWrapper, TagList, TracingBeam } from '@/ui';
 import { avantGarde, thunderFont } from '@/utils';
-import { motion } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -13,6 +13,8 @@ const Timeline = () => {
 
   const timeLineRef = useRef<HTMLDivElement>(null);
 
+  const inView = useInView(timeLineRef);
+
   return (
     <motion.section ref={containerRef} className="mx-auto grid w-full max-w-6xl text-beige">
       <MagneticWrapper>
@@ -22,7 +24,7 @@ const Timeline = () => {
           data-text="Relevant Experiences"
         >
           <span>Relevant Experiences</span>
-          <TracingBeam containerRef={textRef} isHorizontal />
+          {inView && <TracingBeam containerRef={textRef} isHorizontal />}
         </p>
       </MagneticWrapper>
 
@@ -89,7 +91,7 @@ const Timeline = () => {
           </div>
         ))}
 
-        <TracingBeam containerRef={timeLineRef} />
+        {inView && <TracingBeam containerRef={timeLineRef} />}
       </motion.section>
     </motion.section>
   );
