@@ -7,7 +7,7 @@ const config: Config = {
     './app/**/*.{js,ts,jsx,tsx,mdx}',
     './ui/**/*.{js,ts,jsx,tsx,mdx}',
   ],
-theme: {
+  theme: {
     extend: {
       colors: {
         darkLight: '#090908',
@@ -18,7 +18,7 @@ theme: {
         greyCustom: '#555555',
         greenLight: '#A9B388',
         greenDark: '#5F6F52',
-        pinkDark: '#DD2A7B',
+        pinkDark: '#dd2a7b',
         pinkLight: '#cd486b',
       },
       cursor: {
@@ -39,10 +39,15 @@ theme: {
           '60%': { transform: 'rotate(0deg)' },
           '100%': { transform: 'rotate(0deg)' },
         },
+        'border-spin': {
+          '0%': { transform: 'rotate(var(--x)) scale(3)' },
+          '100%': { transform: 'rotate(var(--y)) scale(3)' },
+        },
       },
       animation: {
         'ig-stroke': 'ig-stroke 15s ease-out alternate 3s',
         'hand-wave': 'hand-wave 5s ease-out infinite 3s',
+        'border-spin': 'border-spin 5s linear infinite',
       },
       gridTemplateColumns: {
         'auto-fill-70': 'repeat(auto-fill, minmax(70px, 1fr))',
