@@ -1,6 +1,7 @@
 'use client';
 
 import { GradientText, LinkPreview } from '@/ui';
+import { avantGarde } from '@/utils';
 import { motion, useMotionTemplate } from 'framer-motion';
 import { useRef } from 'react';
 import { useAnimations } from './animation';
@@ -13,11 +14,12 @@ const ClipTextExperience = () => {
   return (
     <motion.section
       ref={scrollRef}
-      className="mx-auto -mb-[20rem] h-[200dvh] max-w-7xl px-6 md:px-16"
+      className={`${avantGarde.className} mx-auto -mb-[22rem] h-[200dvh] max-w-7xl px-6 md:px-16`}
     >
       <motion.div
         style={textStyle}
-        className={`sticky top-1/2 z-20 mx-auto flex justify-center text-left text-[clamp(2rem,3.6vw,3rem)] font-bold leading-normal text-beige will-change-transform`}
+        className="sticky top-1/2 z-20 mx-auto flex justify-center text-left text-[clamp(2rem,3.6vw,3rem)] font-bold
+          leading-normal text-beige will-change-transform"
       >
         <div className="relative z-20">
           <motion.div style={{ clipPath: useMotionTemplate`inset(-280px ${clip1}% 0 -150px)` }}>

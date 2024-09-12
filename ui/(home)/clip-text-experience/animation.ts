@@ -44,7 +44,7 @@ export const useAnimations = (scrollRef: RefObject<HTMLElement>) => {
   const textStyle = {
     y,
     filter: useMotionTemplate`blur(${blur}px)`,
-    opacity, 
+    opacity,
     scale,
   };
 

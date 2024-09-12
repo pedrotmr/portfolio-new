@@ -11,9 +11,7 @@ const Header = () => {
 
   return (
     <motion.header
-      className={`
-        relative flex h-screen flex-col items-center justify-center overflow-hidden bg-slate-900
-      `}
+      className="relative flex h-screen flex-col items-center justify-center overflow-hidden bg-slate-900"
       ref={scrollRef}
       style={initialMarginStyles}
     >
