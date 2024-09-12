@@ -22,14 +22,15 @@ const AboutMe = () => {
           </motion.p>
 
           <motion.p style={secondTextStyles} className="w-[40%] will-change-transform">
-            I blend design with the <br />
+            I blend UI/UX with the
+            <br />
             <GradientText color="purple">technical skills</GradientText> of a <br />
             <GradientText color="orange">software engineer.</GradientText>
           </motion.p>
 
-          <motion.p style={thirdTextStyles} className="w-[41%] will-change-transform">
-            Creating solutions that are <br />
-            <GradientText color="purple">visually appealing</GradientText> and <br />
+          <motion.p style={thirdTextStyles} className="w-[42%] will-change-transform">
+            Creating solutions that  <br />
+            are <GradientText color="purple">clean, polished</GradientText> and <br />
             <GradientText color="orange">robust under the hood.</GradientText>
           </motion.p>
 
