@@ -40,35 +40,12 @@ body::-webkit-scrollbar-track {
   .animation-delay-2 {
     animation-delay: 3s;
   }
+
+  .card-wrapper:before {
+    background: conic-gradient(#dd2a7b 40deg, #3b82f6 70deg, transparent 160deg);
+  }
+
+  .noise {
+    background-image: url(/images/noise.png);
+  }
 }
-
-/* body::before,
-body::after {
-  position: absolute;
-  left: 0;
-  top: 0;
-  content: '';
-  width: 100%;
-  height: 100%;
-  z-index: 30;
-  opacity: 20%;
-}
-
-body::before {
-  filter: url(#grainy);
-} */
-
-/* body::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: url(/images/noise.png);
-  background-size: 100px;
-  background-position: center;
-  background-repeat: repeat;
-  z-index: 30;
-  opacity: 1;
-} */

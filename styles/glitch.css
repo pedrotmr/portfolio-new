@@ -13,7 +13,7 @@
 }
 
 .glitch:after {
-  text-shadow: #dd2a7b 3px 2px 0px;
+  text-shadow: #dd2a7b 3px 3px 0px;
 }
 
 @media (width <= 800px) {
