@@ -103,7 +103,7 @@ interface TracingBeamProps {
 }
 
 const TracingBeam = ({ containerRef, isHorizontal = false }: TracingBeamProps) => {
-  const [size, setSize] = useState(0);
+  const [size, setSize] = useState<string | number>(0);
 
   const { scrollYProgress, scrollXProgress } = useScroll({
     target: containerRef,
