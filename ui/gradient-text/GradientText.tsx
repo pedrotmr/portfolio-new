@@ -12,6 +12,7 @@ const variants = tv({
       green: 'from-green-500 to-green-200',
       lightGreen: 'from-[#e5fa95] to-[#f3ffcc]',
       pink: 'from-pink-500 to-pink-200',
+      silver: 'from-white to-[rgba(255,255,255,0.6)]',
     },
   },
   defaultVariants: {
@@ -27,6 +28,7 @@ const colorToGradient = {
   green: 'linear-gradient(to right, #22c55e, #dcfce7, #38029B00)',
   lightGreen: 'linear-gradient(to right, #e5fa95, #f3ffcc, #38029B00)',
   pink: 'linear-gradient(to right, #ec4899, #fda4af, #38029B00)',
+  silver: 'linear-gradient(to right, #fff, #e6e6e6, #38029B00)',
 };
 
 const GradientText = ({
@@ -36,7 +38,7 @@ const GradientText = ({
   underline = false,
 }: {
   children: React.ReactNode;
-  color: 'purple' | 'orange' | 'yellow' | 'sky' | 'green' | 'lightGreen' | 'pink';
+  color: 'purple' | 'orange' | 'yellow' | 'sky' | 'green' | 'lightGreen' | 'pink' | 'silver';
   className?: string;
   underline?: boolean;
 }) => {
