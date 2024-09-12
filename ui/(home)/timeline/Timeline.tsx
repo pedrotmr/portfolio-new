@@ -1,8 +1,8 @@
 import useFitTextToContainer from '@/hooks/use-fit-text-to-container';
-import { GradientText, MagneticWrapper, TracingBeam } from '@/ui';
-import { thunderFont } from '@/utils';
-import { ArrowUpRightIcon } from '@heroicons/react/16/solid';
+import { GradientText, MagneticWrapper, TagList, TracingBeam } from '@/ui';
+import { avantGarde, thunderFont } from '@/utils';
 import { motion } from 'framer-motion';
+import { ArrowUpRight } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRef } from 'react';
@@ -41,9 +41,12 @@ const Timeline = () => {
                 className="group grid gap-2 md:pl-20"
               >
                 <GradientText color={item.color} className="hidden text-4xl font-bold md:block">
-                  <div className="flex items-end gap-1">
+                  <div className={`flex items-end gap-1 font-normal ${avantGarde.className}`}>
                     {item.company_name}
-                    <ArrowUpRightIcon className="size-7 -translate-y-0.5 duration-300 group-hover:-translate-y-2 group-hover:translate-x-1 group-hover:text-beige md:block" />
+                    <ArrowUpRight
+                      className="size-7 -translate-y-0.5 duration-300 group-hover:-translate-y-2 group-hover:translate-x-1
+                        group-hover:text-beige md:block"
+                    />
                   </div>
                 </GradientText>
                 <h4 className="hidden text-2xl font-semibold text-neutral-200 md:block">
@@ -68,16 +71,7 @@ const Timeline = () => {
                     </li>
                   ))}
                 </ul>
-                <ul className="mb-8 flex flex-wrap gap-3">
-                  {item.tags.map((tag, i) => (
-                    <li
-                      key={i}
-                      className="flex items-center rounded-full bg-slate-400/10 px-3 py-1.5 text-sm font-medium leading-5 text-slate-300"
-                    >
-                      {tag}
-                    </li>
-                  ))}
-                </ul>
+                <TagList tags={item.tags} className="mb-8" />
                 <div className="grid grid-cols-2 gap-4">
                   {item?.imageUrls?.map((url, i) => (
                     <Image

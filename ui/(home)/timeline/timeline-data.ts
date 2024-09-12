@@ -58,9 +58,8 @@ export const timelineData: TimelineEntry[] = [
       'Built reusable components for a multi-vendor platform with StrapiCMS.',
       'Authored test cases to improve reliability and reduce bugs.',
       'Integrated Sentry for error tracking and performance monitoring.',
-      'Handled version control with GitHub and deployments via Vercel.',
     ],
-    tags: ['Next.js', 'TailwindCSS', 'StrapiCMS', 'Sentry', 'Vercel'],
+    tags: ['Next.js', 'TailwindCSS', 'Sentry', 'StrapiCMS', 'Vercel'],
     imageUrls: ['/images/timeline/vendo-1.png', '/images/timeline/vendo-2.png'],
   },
   {
@@ -75,10 +74,9 @@ export const timelineData: TimelineEntry[] = [
       'Developed a robust DeFi crypto wallet with seamless smart contract integration.',
       'Implementd token sending and swapping functionalities.',
       'Built reusable React components styles with Saas.',
-      'Contributed to the project’s success with steady growth and positive feedback.',
-      'Ensured security, reliability, and adaptability throughout the developmen',
+      'Ensured security, reliability, and adaptability throughout the development',
     ],
-    tags: ['React', 'Saas', 'Typescript', 'Ethereum', 'Ethers.js', 'Solidity'],
+    tags: ['React', 'Saas', 'Typecript', 'Ethereum', 'Ethers.js', 'Solidity'],
     imageUrls: ['/images/timeline/clutch-1.png', '/images/timeline/clutch-2.png'],
   },
 ];
