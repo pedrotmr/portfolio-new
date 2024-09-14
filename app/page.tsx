@@ -5,9 +5,13 @@ import { AboutMe, ClipTextExperience, Header, Projects, StarsBackgroundArea, Tim
 import { HEADER_ANIMATION_COLOR } from '@/utils';
 import { motion, useMotionTemplate } from 'framer-motion';
 import { ReactLenis } from 'lenis/react';
-import GifToLife from './(home)/components/gif-to-life';
+import ReactGA from 'react-ga4';
+
+ReactGA.initialize('G-4YSBBYPLQZ');
 
 const Home = () => {
+  ReactGA.send({ hitType: 'pageview', page: '/', title: 'Home' });
+
   const { mouseX, mouseY, handleMouseMove } = useTrackCursor();
 
   const cursorShadowStyle = {
@@ -30,7 +34,7 @@ const Home = () => {
         </StarsBackgroundArea>
       </main>
 
-            {/* <GifToLife url="https://media.giphy.com/media/bGgsc5mWoryfgKBx1u/giphy.gif" /> */}
+      {/* <GifToLife url="https://media.giphy.com/media/bGgsc5mWoryfgKBx1u/giphy.gif" /> */}
       {/* <GifToLife url="https://media.giphy.com/media/U8mf1vmVzEMmOqU4D8/giphy.gif" />z */}
 
       {/* <div className="relative z-10 w-full overflow-x-clip"></div> */}

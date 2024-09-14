@@ -19,6 +19,7 @@
     "qss": "^3.0.0",
     "react": "^18",
     "react-dom": "^18",
+    "react-ga4": "^2.1.0",
     "tailwind-merge": "^2.4.0",
     "tailwind-variants": "^0.2.1"
   },
