@@ -2,14 +2,12 @@ import { AnimationProps } from 'framer-motion';
 
 export const moveUpPageAnimtion: AnimationProps = {
   initial: {
-    x: 0,
-    // opacity: 1,
-    // filter: 'blur(0px)',
+    opacity: 1,
+    filter: 'blur(0px)',
   },
   exit: {
-    y: '-100vh',
-    // opacity: 0,
-    // filter: 'blur(100px)',
+    opacity: 0,
+    filter: 'blur(100px)',
   },
   transition: {
     duration: 1,
@@ -20,7 +18,7 @@ export const moveUpPageAnimtion: AnimationProps = {
 
 export const getSvgPathAnimation = (dimension: { width: number; height: number }) => ({
   initial: {
-    d: `M0 0 L${dimension.width} 0 L${dimension.width} ${dimension.height + 500} Q${dimension.width / 2} ${dimension.height} 0 ${dimension.height + 500} L0 0`,
+    d: `M0 0 L${dimension.width} 0 L${dimension.width} ${dimension.height + 700} Q${dimension.width / 2} ${dimension.height} 0 ${dimension.height + 700} L0 0`,
   },
   animate: {
     d: `M0 0 L${dimension.width} 0 L${dimension.width} ${dimension.height + 0} Q${dimension.width / 2} ${dimension.height} 0 ${dimension.height + 0} L0 0`,
