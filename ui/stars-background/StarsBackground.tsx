@@ -21,11 +21,11 @@ type StarProps = {
 };
 
 export const StarsBackground = ({
-  starDensity = 0.00006,
+  starDensity = 0.00003,
   allStarsTwinkle = true,
   twinkleProbability = 0.7,
-  minTwinkleSpeed = 0.5,
-  maxTwinkleSpeed = 1,
+  minTwinkleSpeed = 2,
+  maxTwinkleSpeed = 4,
   className,
 }: StarsBackgroundProps) => {
   const [stars, setStars] = useState<StarProps[]>([]);
@@ -68,28 +68,14 @@ export const StarsBackground = ({
         resizeObserver.unobserve(containerRef.current);
       }
     };
-  }, [
-    starDensity,
-    allStarsTwinkle,
-    twinkleProbability,
-    minTwinkleSpeed,
-    maxTwinkleSpeed,
-    generateStars,
-  ]);
+  }, [starDensity, allStarsTwinkle, twinkleProbability, minTwinkleSpeed, maxTwinkleSpeed, generateStars]);
 
   return (
     <div ref={containerRef} className={cn('absolute inset-0 h-full w-full', className)}>
       <svg preserveAspectRatio="none" className="h-full w-full bg-transparent">
         <rect width="100%" height="100%" fill="none" />
         {stars.map((star, index) => (
-          <circle
-            key={index}
-            cx={star.x}
-            cy={star.y}
-            r={star.radius}
-            fill="white"
-            opacity={star.opacity}
-          >
+          <circle key={index} cx={star.x} cy={star.y} r={star.radius} fill="white" opacity={star.opacity}>
             {star.twinkleSpeed !== null && (
               <animate
                 attributeName="opacity"
