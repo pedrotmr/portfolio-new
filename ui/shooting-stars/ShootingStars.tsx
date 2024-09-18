@@ -45,8 +45,8 @@ const getRandomStartPoint = () => {
 const ShootingStars: React.FC<ShootingStarsProps> = ({
   minSpeed = 10,
   maxSpeed = 30,
-  minDelay = 1200,
-  maxDelay = 4200,
+  minDelay = 3000,
+  maxDelay = 6000,
   starColor = '#9E00FF',
   trailColor = '#2EB9DF',
   starWidth = 10,
@@ -88,12 +88,7 @@ const ShootingStars: React.FC<ShootingStarsProps> = ({
           const newY = prevStar.y + prevStar.speed * Math.sin((prevStar.angle * Math.PI) / 180);
           const newDistance = prevStar.distance + prevStar.speed;
           const newScale = 1 + newDistance / 100;
-          if (
-            newX < -20 ||
-            newX > window.innerWidth + 20 ||
-            newY < -20 ||
-            newY > window.innerHeight + 20
-          ) {
+          if (newX < -20 || newX > window.innerWidth + 20 || newY < -20 || newY > window.innerHeight + 20) {
             return null;
           }
           return {
