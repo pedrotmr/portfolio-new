@@ -1,7 +1,7 @@
 import '@/styles/glitch.css';
 import { cn } from '@/utils';
 import { motion } from 'framer-motion';
-import { ReactNode, useState } from 'react';
+import { MouseEvent, ReactNode, useState } from 'react';
 
 const MagneticWrapper = ({
   children,
@@ -15,7 +15,7 @@ const MagneticWrapper = ({
   const [isHovering, setIsHovering] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
-  const handleMouseMove = (event: React.MouseEvent<HTMLElement>) => {
+  const handleMouseMove = (event: MouseEvent<HTMLElement>) => {
     const { clientX, clientY } = event;
     const rect = event.currentTarget.getBoundingClientRect();
     const x = (clientX - (rect.left + rect.width / 2)) / ratio;
