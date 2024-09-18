@@ -1,27 +1,7 @@
-// {
-//   "parser": "@typescript-eslint/parser",
-//   "extends": [
-//     "next/core-web-vitals",
-//     "plugin:readable-tailwind/warning",
-//     "plugin:readable-tailwind/error"
-//   ],
-//   "parserOptions": {
-//     "ecmaFeatures": {
-//       "jsx": true
-//     },
-//     "ecmaVersion": "latest"
-//   },
-//   "plugins": ["readable-tailwind"],
-//   "rules": {
-//     "readable-tailwind/multiline": ["warn", { "printWidth": 100, "group": "never" }],
-//     "react/no-unescaped-entities": "off"
-//   }
-// }
-
 {
   "extends": "next/core-web-vitals",
   "rules": {
-    "react/no-unescaped-entities": "false",
+    "react/no-unescaped-entities": "off",
     "no-undef": "error"
   }
 }
