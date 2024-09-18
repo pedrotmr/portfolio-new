@@ -24,7 +24,7 @@ const HeroText = ({ scrollRef }: { scrollRef: RefObject<HTMLDivElement> }) => {
       style={wrapperStyle}
       className="z-20 mx-auto grid w-full max-w-[70dvw] select-none gap-2 text-beige lg:max-w-3xl"
     >
-      <MagneticWrapper ratio={6} className="w-max">
+      <MagneticWrapper ratio={4} className="w-max">
         <motion.div
           className="mb-4 origin-bottom-left scale-50 cursor-grab active:cursor-grabbing sm:scale-100"
           drag
@@ -48,16 +48,14 @@ const HeroText = ({ scrollRef }: { scrollRef: RefObject<HTMLDivElement> }) => {
           transition={nameAnimation.transition}
           className={`text-[clamp(12px,2vw,1.875rem)] leading-tight text-beige ${clashFont.className} `}
         >
-          Hey, I'm Pedro{' '}
-          <span className="inline-block origin-bottom-right animate-hand-wave">👋</span>
+          Hey, I'm Pedro <span className="inline-block origin-bottom-right animate-hand-wave">👋</span>
         </motion.h1>
       </div>
 
       <MagneticWrapper>
-        <div className="w-full overflow-hidden">
+        <div className="w-full cursor-none overflow-hidden">
           <motion.h2
-            className={`glitch cursor-none whitespace-nowrap font-bold leading-none tracking-normal text-beige
-              ${thunderFont.className}`}
+            className={`glitch whitespace-nowrap font-bold leading-none tracking-normal text-beige ${thunderFont.className}`}
             initial={titleAnimation.initial}
             animate={titleAnimation.animate}
             transition={titleAnimation.transition}

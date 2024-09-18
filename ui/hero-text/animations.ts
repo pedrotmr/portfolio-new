@@ -1,10 +1,4 @@
-import {
-  AnimationProps,
-  useMotionTemplate,
-  useScroll,
-  useSpring,
-  useTransform,
-} from 'framer-motion';
+import { AnimationProps, useMotionTemplate, useScroll, useSpring, useTransform } from 'framer-motion';
 import { RefObject } from 'react';
 
 export const useAnimations = (scrollRef: RefObject<HTMLDivElement>) => {
