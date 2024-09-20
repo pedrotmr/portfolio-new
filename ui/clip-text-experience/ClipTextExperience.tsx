@@ -14,21 +14,17 @@ const ClipTextExperience = () => {
   return (
     <motion.section
       ref={scrollRef}
-      className={`${avantGarde.className} mx-auto -mb-[22rem] h-[200dvh] max-w-7xl px-6 md:px-16`}
+      className={`${avantGarde.className} mx-auto -mb-[22rem] h-[200dvh] bg-slate-900`}
     >
       <motion.div
         style={textStyle}
-        className="sticky top-1/2 z-20 mx-auto flex justify-center text-left text-[clamp(2rem,3.6vw,3rem)] font-bold
-          leading-normal text-beige will-change-transform"
+        className="top-1/2 z-20 mx-auto flex justify-center text-left text-[clamp(2rem,3.6vw,3rem)] font-bold leading-normal
+          text-beige will-change-transform"
       >
         <div className="relative z-20">
           <motion.div style={{ clipPath: useMotionTemplate`inset(-280px ${clip1}% 0 -150px)` }}>
             I have built software for an
-            <LinkPreview
-              url="https://www.getvendo.com/"
-              isStatic
-              imageSrc="/images/sites/vendo.jpeg"
-            >
+            <LinkPreview url="https://www.getvendo.com/" isStatic imageSrc="/images/sites/vendo.jpeg">
               <GradientText color="lightGreen" underline>
                 e-commerce startup
               </GradientText>

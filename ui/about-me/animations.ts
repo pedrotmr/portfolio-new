@@ -19,9 +19,7 @@ export const useAnimations = (scrollRef: RefObject<HTMLElement>) => {
     offset: ['start end', 'end start'],
   });
 
-  const allElementsPosition = useTransform(scrollYProgress, (pos) =>
-    pos <= 1 ? 'fixed' : 'relative',
-  );
+  const allElementsPosition = useTransform(scrollYProgress, (pos) => (pos <= 1 ? 'fixed' : 'relative'));
 
   const imageAnimations = {
     blur: useTransform(
@@ -94,22 +92,12 @@ export const useAnimations = (scrollRef: RefObject<HTMLElement>) => {
     ),
     opacity: useTransform(
       scrollYProgress,
-      [
-        time.imagePanRight,
-        time.imagePlaceLeft,
-        time.imagePanLeft,
-        time.imagePlaceRightSecond - 0.05,
-      ],
+      [time.imagePanRight, time.imagePlaceLeft, time.imagePanLeft, time.imagePlaceRightSecond - 0.05],
       [0, 1, 1, 0],
     ),
     blur: useTransform(
       scrollYProgress,
-      [
-        time.imagePanRight,
-        time.imagePlaceLeft,
-        time.imagePanLeft,
-        time.imagePlaceRightSecond - 0.05,
-      ],
+      [time.imagePanRight, time.imagePlaceLeft, time.imagePanLeft, time.imagePlaceRightSecond - 0.05],
       [30, 0, 0, 30],
     ),
   };

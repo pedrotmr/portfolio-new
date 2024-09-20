@@ -18,8 +18,7 @@ export const timelineData: TimelineEntry[] = [
     date: '2023 - 2024',
     color: 'sky',
     tags: ['React', 'Next.js', 'Chakra UI', 'React Query', 'Charts.js', 'Node.js'],
-    description:
-      'Hello Outbound is sales agency build by engineers, growth strategists, and copywriters.',
+    description: 'Hello Outbound is sales agency build by engineers, growth strategists, and copywriters.',
     bulletPoints: [
       'Led migration from Angular to React, boosting user experience and stability.',
       'Built performant, reusable React components aligned with Figma designs.',

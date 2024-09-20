@@ -3,11 +3,11 @@ import { RefObject } from 'react';
 
 const timing = {
   start: 0,
-  step1: 0.1,
-  step2: 0.28,
-  step3: 0.46,
-  step4: 0.64,
-  step5: 0.82,
+  step1: 0.2,
+  step2: 0.3,
+  step3: 0.45,
+  step4: 0.6,
+  step5: 0.8,
   end: 1,
 };
 
@@ -16,6 +16,8 @@ export const useAnimations = (scrollRef: RefObject<HTMLElement>) => {
     target: scrollRef,
     offset: ['start center', 'end end'],
   });
+
+  const position = useTransform(scrollYProgress, (pos) => (pos >= 1 ? 'relative' : 'sticky'));
 
   const y = useTransform(
     scrollYProgress,
@@ -46,6 +48,7 @@ export const useAnimations = (scrollRef: RefObject<HTMLElement>) => {
     filter: useMotionTemplate`blur(${blur}px)`,
     opacity,
     scale,
+    position,
   };
 
   const clip1 = useTransform(scrollYProgress, [timing.step1, timing.step2], [100, -50]);
