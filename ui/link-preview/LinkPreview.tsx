@@ -59,11 +59,7 @@ const LinkPreview = ({
           <Image src={src} width={width} height={height} priority={true} alt="hidden image" />
         </div>
       ) : null}
-      <HoverCardPrimitive.Root
-        openDelay={50}
-        closeDelay={100}
-        onOpenChange={(open) => setOpen(open)}
-      >
+      <HoverCardPrimitive.Root openDelay={50} closeDelay={100} onOpenChange={(open) => setOpen(open)}>
         <HoverCardPrimitive.Trigger
           href={url}
           target="_blank"
