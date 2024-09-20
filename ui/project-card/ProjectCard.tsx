@@ -5,7 +5,7 @@ import { ArrowUpRight } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRef } from 'react';
-import { Project } from '../(home)/projects/project-data';
+import { Project } from '../projects/project-data';
 
 type ProjectCardProps = {
   index: number;
@@ -15,13 +15,7 @@ type ProjectCardProps = {
   targetScale: number;
 };
 
-const ProjectCard = ({
-  index,
-  project,
-  containerProgress,
-  range,
-  targetScale,
-}: ProjectCardProps) => {
+const ProjectCard = ({ index, project, containerProgress, range, targetScale }: ProjectCardProps) => {
   const cardRef = useRef(null);
 
   const { scrollYProgress } = useScroll({
@@ -35,10 +29,9 @@ const ProjectCard = ({
   return (
     <motion.div
       ref={cardRef}
-      className="card-wrapper relative h-max w-full overflow-hidden rounded-3xl bg-gradient-to-b from-slate-700
-        to-slate-800 p-[1px] backdrop-blur-md transition-shadow will-change-transform before:absolute
-        before:left-0 before:top-0 before:h-full before:w-full before:animate-border-spin
-        before:content-['']"
+      className="card-wrapper relative h-max w-full overflow-hidden rounded-3xl bg-gradient-to-b from-slate-700 to-slate-800
+        p-[1px] backdrop-blur-md transition-shadow will-change-transform before:absolute before:left-0 before:top-0
+        before:h-full before:w-full before:animate-border-spin before:cursor-none before:content-['']"
       style={
         {
           scale: cardScale,
@@ -52,11 +45,7 @@ const ProjectCard = ({
       <div className="relative h-full w-full rounded-3xl bg-slate-800 p-12">
         <div className="grid h-full gap-16 md:grid-cols-2">
           <div className="flex flex-col gap-8">
-            <GradientText
-              color="silver"
-              className={`w-max pb-2 text-5xl ${avantGarde.className}`}
-              underline
-            >
+            <GradientText color="silver" className={`w-max pb-2 text-5xl ${avantGarde.className}`} underline>
               {project.name}
             </GradientText>
             <div className="space-y-4 text-base leading-relaxed">
