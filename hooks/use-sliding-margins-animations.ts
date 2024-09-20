@@ -24,14 +24,13 @@ export const useSlidingMarginsAnimatons = (scrollRef: RefObject<HTMLElement>) =>
 
   const { scrollYProgress: scrollYEnd } = useScroll({
     target: scrollRef,
-    offset: ['start end', 'end start'],
+    offset: ['end end', 'end center'],
   });
 
-  const endingMargin = useTransform(scrollYEnd, [0.66, 1], [0, margin]);
+  const endingMargin = useTransform(scrollYEnd, [0, 1], [0, margin]);
 
   const endMarginStyles = {
     borderRadius: `0 0 ${borderRadius}px ${borderRadius}px`,
-    marginTop: endingMargin,
     marginRight: endingMargin,
     marginLeft: endingMargin,
   };
