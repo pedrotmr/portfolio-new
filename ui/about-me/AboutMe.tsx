@@ -20,7 +20,7 @@ const AboutMe = () => {
             I'm a<GradientText color="purple">software developer</GradientText> <br />
             from Brazil with solid
             <br />
-            <GradientText color="orange">design chops.</GradientText>
+            <GradientText color="orange">design skills.</GradientText>
           </motion.p>
 
           <motion.p style={secondTextStyles} className="w-[40%] will-change-transform">
