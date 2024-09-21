@@ -4,8 +4,8 @@ import { RefObject } from 'react';
 const timing = {
   start: 0,
   step1: 0.2,
-  step2: 0.3,
-  step3: 0.45,
+  step2: 0.4,
+  step3: 0.5,
   step4: 0.6,
   step5: 0.8,
   end: 1,
