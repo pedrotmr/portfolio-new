@@ -14,7 +14,7 @@ const ClipTextExperience = () => {
   return (
     <motion.section
       ref={scrollRef}
-      className={`${avantGarde.className} mx-auto -mb-[22rem] h-[200dvh] bg-slate-900`}
+      className={`${avantGarde.className} mx-auto -mb-[22rem] h-[280dvh] bg-slate-900`}
     >
       <motion.div
         style={textStyle}
