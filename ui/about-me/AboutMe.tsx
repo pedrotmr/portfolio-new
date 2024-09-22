@@ -37,10 +37,9 @@ const AboutMe = () => {
           </motion.p>
 
           <motion.img
-            src="/images/pedro3.jpg"
+            src="/images/pedro.png"
             alt="pedro's image"
-            className="grayscales aspect-[3/4] h-auto w-[35%] cursor-none select-none rounded-md object-cover brightness-110
-              contrast-125 will-change-transform hover:scale-105"
+            className="aspect-[3/4] h-auto w-[35%] cursor-none select-none rounded-md object-cover will-change-transform"
             width={748}
             height={929}
             style={imageStyles}
