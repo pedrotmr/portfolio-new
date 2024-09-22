@@ -1,8 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  images: {
-    domains: ['api.microlink.io', 'assets.aceternity.com'],
-  },
+  images: {},
 };
 
 export default nextConfig;
