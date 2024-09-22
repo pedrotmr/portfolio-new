@@ -26,7 +26,7 @@ const HeroText = ({ scrollRef }: { scrollRef: RefObject<HTMLDivElement> }) => {
     >
       <MagneticWrapper ratio={4} className="w-max">
         <motion.div
-          className="mb-4 origin-bottom-left scale-50 cursor-grab active:cursor-grabbing sm:scale-100"
+          className="mb-4 origin-bottom-left scale-50 cursor-none sm:scale-100"
           drag
           dragSnapToOrigin
           dragPropagation
@@ -46,7 +46,7 @@ const HeroText = ({ scrollRef }: { scrollRef: RefObject<HTMLDivElement> }) => {
           initial={nameAnimation.initial}
           animate={nameAnimation.animate}
           transition={nameAnimation.transition}
-          className={`text-[clamp(12px,2vw,1.875rem)] leading-tight text-beige ${clashFont.className} `}
+          className={`select-none text-[clamp(12px,2vw,1.875rem)] leading-tight text-beige ${clashFont.className} `}
         >
           Hey, I'm Pedro <span className="inline-block origin-bottom-right animate-hand-wave">👋</span>
         </motion.h1>
