@@ -46,8 +46,8 @@ const Timeline = () => {
                     <div className={`flex items-end gap-1 font-normal ${avantGarde.className}`}>
                       {item.company_name}
                       <ArrowUpRight
-                        className="size-7 -translate-y-0.5 duration-300 group-hover:-translate-y-2 group-hover:translate-x-1
-                          group-hover:text-beige md:block"
+                        className="size-5 -translate-y-0.5 text-neutral-400 duration-300 group-hover:size-6 group-hover:-translate-y-2
+                          group-hover:translate-x-1 group-hover:text-beige md:block"
                       />
                     </div>
                   </GradientText>
