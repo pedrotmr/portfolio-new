@@ -14,6 +14,7 @@ ReactGA.initialize('G-4YSBBYPLQZ');
 const RootLayout = ({ children }: { children: ReactNode }) => {
   return (
     <html lang="en">
+      <meta name="theme-color" content="#0f172a" />
       <body
         className={`${interFont.className} relative bg-beige leading-relaxed text-slate-400 selection:bg-pinkLight
           selection:text-beige`}
