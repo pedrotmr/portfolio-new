@@ -31,6 +31,20 @@ body::-webkit-scrollbar-track {
   background: #0f172a;
 }
 
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari and Opera */
+}
+
+
+kbd {
+  @apply rounded-md bg-beige px-1 py-0.5 text-slate-900;
+}
+
 @layer utilities {
   .animation-delay-1 {
     animation-delay: 2s;

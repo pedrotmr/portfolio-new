@@ -1,6 +1,6 @@
 import { useSlidingMarginsAnimatons } from '@/hooks/use-sliding-margins-animations';
 import '@/styles/glitch.css';
-import { HeroText, TileGrid } from '@/ui';
+import { HeroText, ScrollOrShortcut, TileGrid } from '@/ui';
 import { motion } from 'framer-motion';
 import { useRef } from 'react';
 
@@ -15,6 +15,7 @@ const Header = () => {
       ref={scrollRef}
       style={initialMarginStyles}
     >
+      <ScrollOrShortcut />
       {scrollRef.current && (
         <>
           <HeroText scrollRef={scrollRef} />
