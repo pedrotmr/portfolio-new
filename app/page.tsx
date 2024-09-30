@@ -3,6 +3,7 @@
 import {
   AboutMe,
   ClipTextExperience,
+  CommandMenu,
   FooterCopyright,
   GradientCursorArea,
   Header,
@@ -13,6 +14,7 @@ import {
   StarsBackgroundArea,
   Timeline,
 } from '@/ui';
+import HorizontalScrollCarousel from '@/ui/timeline/HorizontalScroller';
 import { ReactLenis } from 'lenis/react';
 import ReactGA from 'react-ga4';
 
@@ -23,11 +25,13 @@ const Home = () => {
     <ReactLenis root>
       <InitialLoadingScreen />
       <ScrollPathBar />
+      <CommandMenu />
       <GradientCursorArea>
         <Header />
         <StarsBackgroundArea>
           <AboutMe />
           <ClipTextExperience />
+          {/* <HorizontalScrollCarousel /> */}
           <Timeline />
           <Projects />
         </StarsBackgroundArea>

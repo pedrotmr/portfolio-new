@@ -1,7 +1,8 @@
-'use client';
+// 'use client';
 
 export { default as AboutMe } from './about-me';
 export { default as ClipTextExperience } from './clip-text-experience';
+export { default as CommandMenu } from './command-menu';
 export { default as FlipStaggerText } from './flip-stagger-text';
 export { default as FooterCopyright } from './footer-copyright';
 export { default as GradientCursorArea } from './gradient-cursor-area';
@@ -14,9 +15,10 @@ export { default as LinkPreview } from './link-preview';
 export { default as MagneticWrapper } from './magnetic-wrapper';
 export { default as ProjectCard } from './project-card';
 export { default as Projects } from './projects';
+export { default as ScrollOrShortcut } from './scroll-or-shortcut';
 export { default as ScrollPathBar } from './scroll-path-bar';
 export { default as ShootingStars } from './shooting-stars';
-export { default as SocialMediaSection } from './social-media-section/SocialMediaSection';
+export { default as SocialMediaSection } from './social-media-section';
 export { default as StarsBackground } from './stars-background';
 export { default as StarsBackgroundArea } from './stars-background-area';
 export { default as TagList } from './tag-list';
