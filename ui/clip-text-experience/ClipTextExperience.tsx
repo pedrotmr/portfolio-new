@@ -18,7 +18,7 @@ const ClipTextExperience = () => {
     >
       <motion.div
         style={textStyle}
-        className="top-1/2 z-20 mx-auto flex justify-center text-left text-[clamp(2rem,3.6vw,3rem)] font-bold leading-normal
+        className="top-1/2 z-20 mx-auto flex justify-center text-left text-[clamp(2rem,3.8vw,7rem)] font-normal leading-normal
           text-beige will-change-transform"
       >
         <div className="relative z-20">
