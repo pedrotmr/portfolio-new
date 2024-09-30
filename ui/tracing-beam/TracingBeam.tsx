@@ -1,12 +1,13 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { RefObject, useEffect, useState } from 'react';
 
-interface TracingBeamProps {
+const TracingBeam = ({
+  containerRef,
+  isHorizontal = false,
+}: {
   containerRef: RefObject<HTMLElement>;
   isHorizontal?: boolean;
-}
-
-const TracingBeam = ({ containerRef, isHorizontal = false }: TracingBeamProps) => {
+}) => {
   const [size, setSize] = useState<number | string>(0);
 
   const { scrollYProgress } = useScroll({
@@ -29,30 +30,39 @@ const TracingBeam = ({ containerRef, isHorizontal = false }: TracingBeamProps) =
   }, [isHorizontal, containerRef]);
 
   const widthTransform = useTransform(scrollYProgress, [0, 1], ['0%', '100%']);
-  const lengthTransform = useTransform(scrollYProgress, [0, 1], [0, size]);
+  const heightTransform = useTransform(scrollYProgress, [0, 1], [0, size]);
   const opacityTransform = useTransform(scrollYProgress, [0, 0], [1, 1]);
 
+  const maskImage = isHorizontal
+    ? 'linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%)'
+    : 'linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%)';
+
   return (
-    <>
-      <span
-        style={isHorizontal ? { width: '100%' } : { height: size }}
-        className={`absolute ${isHorizontal ? '-bottom-2 right-0 h-[2px]' : 'left-5 top-0 w-[2px]'} overflow-hidden
-          bg-gradient-to-${isHorizontal ? 'r' : 't'} from-transparent from-[0%] via-neutral-700 to-transparent to-[99%]
-          [mask-image:linear-gradient(to_${isHorizontal ? 'right' : 'bottom'},transparent_0%,black_10%,black_90%,transparent_100%)] `}
-      >
-        <motion.span
-          style={
-            isHorizontal
-              ? { width: widthTransform, opacity: opacityTransform }
-              : { height: lengthTransform, opacity: opacityTransform }
-          }
-          className={`absolute ${isHorizontal ? 'inset-y-0 right-0 h-[2px]' : 'inset-x-0 top-0 w-[2px]'} rounded-full
-            bg-gradient-to-${isHorizontal ? 'r' : 't'} from-pink-500 from-[0%] via-blue-500 via-[10%] to-transparent
-            to-[99%]
-            [mask-image:linear-gradient(to_${isHorizontal ? 'right' : 'bottom'},transparent_0%,black_10%,black_90%,transparent_100%)]`}
-        />
-      </span>
-    </>
+    <span
+      className="absolute overflow-hidden"
+      style={{
+        maskImage,
+        background: isHorizontal
+          ? 'linear-gradient(to right, transparent 0%, #555 10%, transparent 90%)'
+          : 'linear-gradient(to top, transparent 0%, #555 10%, transparent 90%)',
+        ...(isHorizontal
+          ? { bottom: '0.5rem', right: 0, height: '2px', width: '100%' }
+          : { left: '1rem', top: 0, width: '2px', height: size }),
+      }}
+    >
+      <motion.span
+        className="absolute overflow-hidden rounded-full"
+        style={{
+          maskImage,
+          background: isHorizontal
+            ? 'linear-gradient(to right, #dd2a7b 0%, #3b82f6 10%, transparent 99%)'
+            : 'linear-gradient(to top, #dd2a7b 0%, #3b82f6 10%, transparent 99%)',
+          ...(isHorizontal
+            ? { insetY: 0, right: 0, height: '2px', width: widthTransform, opacity: opacityTransform }
+            : { insetX: 0, top: 0, width: '2px', height: heightTransform, opacity: opacityTransform }),
+        }}
+      />
+    </span>
   );
 };
 
