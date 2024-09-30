@@ -33,8 +33,8 @@ const Timeline = () => {
           {timelineData.map((item, index) => (
             <div key={index} className="mt-2 flex pb-28 md:gap-10">
               <div className="sticky top-40 z-30 flex w-full max-w-md flex-row items-center self-start">
-                <div className="absolute left-0 flex h-10 w-10 items-center justify-center rounded-full bg-neutral-600">
-                  <div className="border-neutral-00 h-4 w-4 rounded-full border bg-neutral-500 p-2" />
+                <div className="absolute left-0 flex size-8 items-center justify-center rounded-full bg-neutral-600">
+                  <div className="size-4 rounded-full border bg-neutral-500" />
                 </div>
                 <Link
                   href={item.company_url}
