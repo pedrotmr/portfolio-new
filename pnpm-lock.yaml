@@ -39,8 +39,8 @@ importers:
         specifier: ^5.3.0
         version: 5.3.0(react@18.3.1)
       react-shortcut-keys:
-        specifier: ^1.0.7
-        version: 1.0.7
+        specifier: ^1.0.9
+        version: 1.0.9
       tailwind-merge:
         specifier: ^2.4.0
         version: 2.5.2
@@ -1641,8 +1641,8 @@ packages:
   react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
 
-  react-shortcut-keys@1.0.7:
-    resolution: {integrity: sha512-CtHc3fjvxYH0RkLC83mIof1tKimChaUTz8p4c2cwAm1Wgs2gswAtIO8RcicwheQHLXPFMJfTKj0t6+WobLjntw==}
+  react-shortcut-keys@1.0.9:
+    resolution: {integrity: sha512-1jiqrr035P69aZ11EP7Irqzj5sMUhNutqptvVziauAfuQJl4HhuMRm9m6BzhgdAWUIQ6iiWsAApo2lebZySqGw==}
 
   react@17.0.2:
     resolution: {integrity: sha512-gnhPt75i/dq/z3/6q/0asP78D0u592D5L1pd7M8P+dck6Fu/jJeL6iVVK23fptSUZj8Vjf++7wXA8UNclGQcbA==}
@@ -3609,7 +3609,7 @@ snapshots:
 
   react-is@16.13.1: {}
 
-  react-shortcut-keys@1.0.7:
+  react-shortcut-keys@1.0.9:
     dependencies:
       react: 17.0.2
 
