@@ -32,12 +32,6 @@ body::-webkit-scrollbar-track {
 }
 
 @layer utilities {
-  .grid-cols-auto-fill-70 {
-    grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
-  }
-  .grid-rows-auto-fill-70 {
-    grid-template-rows: repeat(auto-fill, minmax(70px, 1fr));
-  }
   .animation-delay-1 {
     animation-delay: 2s;
   }
