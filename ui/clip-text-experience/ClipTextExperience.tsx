@@ -1,6 +1,6 @@
 'use client';
 
-import { GradientText, LinkPreview } from '@/ui';
+import { GradientText, HoverArrow, LinkPreview } from '@/ui';
 import { avantGarde } from '@/utils';
 import { motion, useMotionTemplate } from 'framer-motion';
 import { useRef } from 'react';
@@ -26,7 +26,10 @@ const ClipTextExperience = () => {
             Throughout my career, I've had the privilege
           </motion.div>
 
-          <motion.div style={{ clipPath: useMotionTemplate`inset(-280px ${clip2}% 0 -150px)` }}>
+          <motion.div
+            className="relative"
+            style={{ clipPath: useMotionTemplate`inset(-280px ${clip2}% 0 -150px)` }}
+          >
             of building software for a{' '}
             <LinkPreview
               url="https://app.gonnamakeit.com/"
@@ -37,6 +40,7 @@ const ClipTextExperience = () => {
                 NFT marketplace,
               </GradientText>
             </LinkPreview>
+            <HoverArrow className="right-5 top-5" />
           </motion.div>
 
           <motion.div style={{ clipPath: useMotionTemplate`inset(-280px ${clip3}% 0 -150px)` }}>
@@ -72,6 +76,7 @@ const ClipTextExperience = () => {
             company.
           </motion.div>
         </div>
+
         <div className="absolute top-0 opacity-20">
           <p>Throughout my career, I've had the privilege</p>
           <p>of building software for a NFT marketplace,</p>

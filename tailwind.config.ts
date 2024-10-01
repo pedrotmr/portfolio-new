@@ -44,11 +44,19 @@ const config: Config = {
           '0%': { transform: 'rotate(var(--x)) scale(3)' },
           '100%': { transform: 'rotate(var(--y)) scale(3)' },
         },
+        wiggle: {
+          '0%, 20%, 80%, 100%': { transform: 'rotate(0deg)' },
+          '30%, 60%': { transform: 'rotate(-2deg)' },
+          '40%, 70%': { transform: 'rotate(2deg)' },
+          '45%': { transform: 'rotate(-4deg)' },
+          '55%': { transform: 'rotate(4deg)' },
+        },
       },
       animation: {
         'ig-stroke': 'ig-stroke 15s ease-out alternate 3s',
         'hand-wave': 'hand-wave 5s ease-out infinite 3s',
         'border-spin': 'border-spin 5s linear infinite',
+        wiggle: 'wiggle 1.5s ease-in-out infinite',
       },
       gridTemplateColumns: {
         'auto-fill-70': 'repeat(auto-fill, minmax(70px, 1fr))',

@@ -2,12 +2,12 @@
 
 import useFitTextToContainer from '@/hooks/use-fit-text-to-container';
 import '@/styles/glitch.css';
-import { GradientText, IgProfilePicture, MagneticWrapper } from '@/ui';
+import { GradientText, HoverArrow, IgProfilePicture, MagneticWrapper } from '@/ui';
 import { clashFont, thunderFont } from '@/utils';
 import { motion } from 'framer-motion';
 import { RefObject } from 'react';
 import {
-  descriptionAnimation,
+  blurAnimation,
   nameAnimation,
   profilePictureAnimation,
   titleAnimation,
@@ -33,45 +33,38 @@ const HeroText = ({ scrollRef }: { scrollRef: RefObject<HTMLDivElement> }) => {
           dragElastic={0.5}
           dragTransition={{ bounceStiffness: 600, bounceDamping: 20 }}
         >
-          <IgProfilePicture
-            initial={profilePictureAnimation.initial}
-            animate={profilePictureAnimation.animate}
-            transition={profilePictureAnimation.transition}
-          />
+          <IgProfilePicture {...profilePictureAnimation} />
         </motion.div>
       </MagneticWrapper>
 
       <div className="mb-2 w-full overflow-hidden">
         <motion.h1
-          initial={nameAnimation.initial}
-          animate={nameAnimation.animate}
-          transition={nameAnimation.transition}
           className={`select-none text-[clamp(12px,2vw,1.875rem)] leading-tight text-beige ${clashFont.className} `}
+          {...nameAnimation}
         >
           Hey, I'm Pedro <span className="inline-block origin-bottom-right animate-hand-wave">👋</span>
         </motion.h1>
       </div>
 
-      <MagneticWrapper>
-        <div className="w-full cursor-none overflow-hidden">
-          <motion.h2
-            className={`glitch whitespace-nowrap font-bold leading-none tracking-normal text-beige ${thunderFont.className}`}
-            initial={titleAnimation.initial}
-            animate={titleAnimation.animate}
-            transition={titleAnimation.transition}
-            data-text="Frontend Developer"
-            ref={textRef}
-          >
-            Frontend Developer
-          </motion.h2>
-        </div>
-      </MagneticWrapper>
+      <div className="relative">
+        <MagneticWrapper>
+          <div className="relative w-full cursor-none overflow-hidden">
+            <motion.h2
+              className={`glitch whitespace-nowrap font-bold leading-none tracking-normal text-beige ${thunderFont.className}`}
+              data-text="Frontend Developer"
+              ref={textRef}
+              {...titleAnimation}
+            >
+              Frontend Developer
+            </motion.h2>
+          </div>
+        </MagneticWrapper>
+        <HoverArrow {...blurAnimation} />
+      </div>
 
       <motion.h3
-        initial={descriptionAnimation.initial}
-        animate={descriptionAnimation.animate}
-        transition={descriptionAnimation.transition}
         className={`text-[clamp(10px,2.8vw,2rem)] leading-tight ${clashFont.className} `}
+        {...blurAnimation}
       >
         I craft beautiful and engaging digital experiences, <br /> with a
         <GradientText color="purple">user driven mindset</GradientText> and a

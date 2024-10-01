@@ -83,7 +83,7 @@ export const titleAnimation: AnimationProps = {
   },
 };
 
-export const descriptionAnimation: AnimationProps = {
+export const blurAnimation: AnimationProps = {
   initial: {
     opacity: 0,
     filter: 'blur(150px)',

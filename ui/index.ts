@@ -9,6 +9,7 @@ export { default as GradientCursorArea } from './gradient-cursor-area';
 export { default as GradientText } from './gradient-text';
 export { default as Header } from './header';
 export { default as HeroText } from './hero-text';
+export { default as HoverArrow } from './hover-arrow';
 export { default as IgProfilePicture } from './ig-profile-picture';
 export { default as InitialLoadingScreen } from './initial-loading-screen';
 export { default as LinkPreview } from './link-preview';
