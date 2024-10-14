@@ -3,6 +3,7 @@
 export { default as AboutMe } from './about-me';
 export { default as ClipTextExperience } from './clip-text-experience';
 export { default as CommandMenu } from './command-menu';
+export { default as FadeUpComponent } from './fade-up-component';
 export { default as FlipStaggerText } from './flip-stagger-text';
 export { default as FooterCopyright } from './footer-copyright';
 export { default as GradientCursorArea } from './gradient-cursor-area';
