@@ -37,11 +37,11 @@ const AboutMe = () => {
           </motion.p>
 
           <motion.img
-            src="/images/pedro.png"
-            alt="pedro's image"
+            src="/images/pedro.webp"
+            alt="Portrait of Pedro Ramos in an office"
             className="aspect-[3/4] h-auto w-[35%] cursor-none select-none rounded-md object-cover will-change-transform"
-            width={748}
-            height={929}
+            width={1024}
+            height={1365}
             style={imageStyles}
           />
         </div>
