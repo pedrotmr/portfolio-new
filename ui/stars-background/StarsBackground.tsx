@@ -9,6 +9,7 @@ type StarsBackgroundProps = {
   twinkleProbability?: number;
   minTwinkleSpeed?: number;
   maxTwinkleSpeed?: number;
+  twinkle?: boolean;
   className?: string;
 };
 
@@ -26,6 +27,7 @@ export const StarsBackground = ({
   twinkleProbability = 0.7,
   minTwinkleSpeed = 2,
   maxTwinkleSpeed = 4,
+  twinkle = true,
   className,
 }: StarsBackgroundProps) => {
   const [stars, setStars] = useState<StarProps[]>([]);
@@ -64,20 +66,16 @@ export const StarsBackground = ({
     if (currentRef) {
       resizeObserver.observe(currentRef);
     }
-    return () => {
-      if (currentRef) {
-        resizeObserver.unobserve(currentRef);
-      }
-    };
+    return () => resizeObserver.disconnect();
   }, [starDensity, allStarsTwinkle, twinkleProbability, minTwinkleSpeed, maxTwinkleSpeed, generateStars]);
 
   return (
-    <div ref={containerRef} className={cn('absolute inset-0 h-full w-full', className)}>
+    <div ref={containerRef} aria-hidden="true" className={cn('absolute inset-0 h-full w-full', className)}>
       <svg preserveAspectRatio="none" className="h-full w-full bg-transparent">
         <rect width="100%" height="100%" fill="none" />
         {stars.map((star, index) => (
           <circle key={index} cx={star.x} cy={star.y} r={star.radius} fill="white" opacity={star.opacity}>
-            {star.twinkleSpeed !== null && (
+            {twinkle && star.twinkleSpeed !== null && (
               <animate
                 attributeName="opacity"
                 values={`${star.opacity};${star.opacity * 0.3};${star.opacity}`}

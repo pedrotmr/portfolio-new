@@ -20,7 +20,15 @@ const IgProfilePicture = ({ className, style, initial, animate, transition }: Ig
       animate={animate}
       transition={transition}
     >
-      <svg width="74" height="74" viewBox="0 0 74 74" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg
+        role="img"
+        aria-label="Pedro Ramos"
+        width="74"
+        height="74"
+        viewBox="0 0 74 74"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
         <circle cx="37" cy="37" r="34" stroke="url(#paint0_linear_658_19773)" strokeWidth="2.5"></circle>
         <defs>
           <linearGradient

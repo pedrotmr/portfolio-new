@@ -5,6 +5,8 @@ export type Project = {
   description: string[];
   tags: string[];
   image: string;
+  // Animated version of `image`. It plays only when motion is welcome and can be paused.
+  animatedImage?: string;
 };
 
 export const projects: Project[] = [
@@ -36,7 +38,8 @@ export const projects: Project[] = [
       'Collaborated with a team of five engineers developing the application from the ground up.',
     ],
     tags: ['JavaScript', 'React', 'Redux', 'Chakra UI', 'Truffle', 'Ganache', 'Moralis'],
-    image: '/images/projects/zims.gif',
+    image: '/images/projects/zims.png',
+    animatedImage: '/images/projects/zims.gif',
   },
   {
     name: 'News Aggregator',

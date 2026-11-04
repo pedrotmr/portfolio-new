@@ -14,15 +14,24 @@ import {
   StarsBackgroundArea,
   Timeline,
 } from '@/ui';
-import HorizontalScrollCarousel from '@/ui/timeline/HorizontalScroller';
+import { useEffect } from 'react';
 import { ReactLenis } from 'lenis/react';
+import useMotionCapabilities from '@/hooks/use-motion-capabilities';
+import 'lenis/dist/lenis.css';
 import ReactGA from 'react-ga4';
 
 const Home = () => {
-  ReactGA.send({ hitType: 'pageview', page: '/' });
+  const { finePointer, reduced } = useMotionCapabilities();
+  useEffect(() => {
+    ReactGA.initialize('G-4YSBBYPLQZ');
+    ReactGA.send({ hitType: 'pageview', page: '/' });
+  }, []);
 
   return (
-    <ReactLenis root>
+    <ReactLenis root options={{ smoothWheel: finePointer && !reduced, syncTouch: false }}>
+      <a href="#about" className="skip-link">
+        Skip to content
+      </a>
       <InitialLoadingScreen />
       <ScrollPathBar />
       <CommandMenu />
@@ -31,7 +40,6 @@ const Home = () => {
         <StarsBackgroundArea>
           <AboutMe />
           <ClipTextExperience />
-          {/* <HorizontalScrollCarousel /> */}
           <Timeline />
           <Projects />
         </StarsBackgroundArea>

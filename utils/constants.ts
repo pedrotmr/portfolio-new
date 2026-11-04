@@ -6,3 +6,6 @@ export const HEADER_ANIMATION_COLOR = 'rgba(106, 180, 216, 0.125)';
 // export const HEADER_ANIMATION_COLOR = 'rgba(78, 149, 233, 0.15)';
 
 export const BEIGE = '#EEE9DB';
+
+// Seconds until the hero starts entering, timed to the end of the intro screen.
+export const INTRO_DELAY = 2.4;
