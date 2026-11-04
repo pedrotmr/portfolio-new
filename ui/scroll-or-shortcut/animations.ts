@@ -1,4 +1,5 @@
-import { AnimationProps } from "framer-motion";
+import { INTRO_DELAY } from '@/utils/constants';
+import { AnimationProps } from 'framer-motion';
 
 export const scrollOrShortcutAnimation: AnimationProps = {
   initial: {
@@ -11,7 +12,7 @@ export const scrollOrShortcutAnimation: AnimationProps = {
   },
   transition: {
     duration: 1.6,
-    delay: 2.4,
+    delay: INTRO_DELAY,
     type: 'spring',
     stiffness: 100,
     damping: 30,

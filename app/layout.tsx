@@ -1,20 +1,21 @@
 import '@/styles/global.css';
 import { interFont } from '@/utils';
-import { Metadata } from 'next';
+import { Metadata, Viewport } from 'next';
 import { ReactNode } from 'react';
-import ReactGA from 'react-ga4';
 
 export const metadata: Metadata = {
   title: 'Pedro Ramos ⋅ Frontend Developer',
   description: "Pedro Ramos' Personal Porfolio",
 };
 
-ReactGA.initialize('G-4YSBBYPLQZ');
+export const viewport: Viewport = {
+  themeColor: '#0f172a',
+  viewportFit: 'cover',
+};
 
 const RootLayout = ({ children }: { children: ReactNode }) => {
   return (
     <html lang="en">
-      <meta name="theme-color" content="#0f172a" />
       <body
         className={`${interFont.className} relative bg-beige leading-relaxed text-slate-400 selection:bg-pinkLight
           selection:text-beige`}

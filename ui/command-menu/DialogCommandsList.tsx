@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { KeyboardEvent, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useCommandMenuStore } from './use-command-menu.store';
 
 const DialogCommandsList = () => {
@@ -11,14 +11,6 @@ const DialogCommandsList = () => {
   useEffect(() => {
     commandRefs.current[selectedIndex]?.focus();
   }, [selectedIndex]);
-
-  const preventTabOnLastItem = (e: KeyboardEvent<HTMLButtonElement>, index: number) => {
-    const isLastItem = index === filteredCommands.length - 1;
-    if (e.key === 'Tab' && isLastItem) {
-      e.preventDefault();
-      commandRefs.current[0]?.focus();
-    }
-  };
 
   const handleCommandClick = (command: (typeof filteredCommands)[0]) => {
     if (command.id === 'about' || command.id === 'projects') {
@@ -41,7 +33,6 @@ const DialogCommandsList = () => {
           key={command.id}
           className="group relative flex w-full cursor-pointer items-center rounded-md p-2 focus:outline-none"
           onClick={() => handleCommandClick(command)}
-          onKeyDown={(e) => preventTabOnLastItem(e, index)}
           onMouseEnter={() => setHoveredIndex(index)}
           onMouseLeave={() => setHoveredIndex(null)}
           onFocus={() => setHoveredIndex(index)}

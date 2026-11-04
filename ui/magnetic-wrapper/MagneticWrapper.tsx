@@ -1,7 +1,8 @@
+import useMotionCapabilities from '@/hooks/use-motion-capabilities';
 import '@/styles/glitch.css';
 import { cn } from '@/utils';
-import { motion } from 'framer-motion';
-import { MouseEvent, ReactNode, useState } from 'react';
+import { motion, useMotionTemplate, useMotionValue } from 'framer-motion';
+import { MouseEvent, ReactNode } from 'react';
 
 const MagneticWrapper = ({
   children,
@@ -12,36 +13,31 @@ const MagneticWrapper = ({
   className?: string;
   ratio?: number;
 }) => {
-  const [isHovering, setIsHovering] = useState(false);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const { reduced, finePointer } = useMotionCapabilities();
+  const enabled = finePointer && !reduced;
+
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const transform = useMotionTemplate`translate3d(${mouseX}px, ${mouseY}px, 0)`;
 
   const handleMouseMove = (event: MouseEvent<HTMLElement>) => {
-    const { clientX, clientY } = event;
+    if (!enabled) return;
     const rect = event.currentTarget.getBoundingClientRect();
-    const x = (clientX - (rect.left + rect.width / 2)) / ratio;
-    const y = (clientY - (rect.top + rect.height / 2)) / ratio;
-    setMousePosition({ x, y });
+    mouseX.set((event.clientX - (rect.left + rect.width / 2)) / ratio);
+    mouseY.set((event.clientY - (rect.top + rect.height / 2)) / ratio);
   };
-
-  const handleMouseEnter = () => setIsHovering(true);
 
   const handleMouseLeave = () => {
-    setIsHovering(false);
-    setMousePosition({ x: 0, y: 0 });
+    mouseX.set(0);
+    mouseY.set(0);
   };
-
-  const { x, y } = mousePosition;
 
   return (
     <motion.div
       onMouseMove={handleMouseMove}
-      onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       className={cn('relative select-none', className)}
-      style={{
-        transition: 'transform 0.1s ease-out',
-        transform: isHovering ? `translate3d(${x}px, ${y}px, 0) ` : 'translate3d(0px, 0px, 0) ',
-      }}
+      style={enabled ? { transform, transition: 'transform 0.1s ease-out' } : undefined}
     >
       {children}
     </motion.div>

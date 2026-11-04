@@ -1,7 +1,8 @@
 import { AnimationProps, useMotionTemplate, useScroll, useSpring, useTransform } from 'framer-motion';
+import { INTRO_DELAY } from '@/utils/constants';
 import { RefObject } from 'react';
 
-export const useAnimations = (scrollRef: RefObject<HTMLDivElement>) => {
+export const useAnimations = (scrollRef: RefObject<HTMLElement>, reduced = false) => {
   const { scrollYProgress } = useScroll({
     target: scrollRef,
     offset: ['end end', 'end center'],
@@ -19,6 +20,8 @@ export const useAnimations = (scrollRef: RefObject<HTMLDivElement>) => {
 
   const blur = useTransform(scrollYProgress, [0.3, 1], [0, 20]);
   const filter = useMotionTemplate`blur(${blur}px)`;
+
+  if (reduced) return {};
 
   const wrapperStyle = {
     y,
@@ -47,7 +50,7 @@ export const profilePictureAnimation: AnimationProps = {
     stiffness: 100,
     damping: 30,
     duration: 0.8,
-    delay: 2.5,
+    delay: INTRO_DELAY + 0.1,
   },
 };
 
@@ -60,7 +63,7 @@ export const nameAnimation: AnimationProps = {
   },
   transition: {
     duration: 0.8,
-    delay: 2.5,
+    delay: INTRO_DELAY + 0.1,
     type: 'spring',
     stiffness: 100,
     damping: 30,
@@ -76,7 +79,7 @@ export const titleAnimation: AnimationProps = {
   },
   transition: {
     duration: 0.5,
-    delay: 2.6,
+    delay: INTRO_DELAY + 0.2,
     type: 'spring',
     stiffness: 100,
     damping: 30,
@@ -94,7 +97,7 @@ export const blurAnimation: AnimationProps = {
   },
   transition: {
     duration: 0.6,
-    delay: 2.4,
+    delay: INTRO_DELAY,
     type: 'spring',
     stiffness: 100,
     damping: 30,

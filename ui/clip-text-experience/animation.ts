@@ -56,5 +56,12 @@ export const useAnimations = (scrollRef: RefObject<HTMLElement>) => {
   const clip3 = useTransform(scrollYProgress, [timing.step3, timing.step4], [100, -50]);
   const clip4 = useTransform(scrollYProgress, [timing.step4, timing.step5], [100, -50]);
 
-  return { textStyle, clip1, clip2, clip3, clip4 };
+  const clipPaths = [
+    useMotionTemplate`inset(-280px ${clip1}% 0 -150px)`,
+    useMotionTemplate`inset(-280px ${clip2}% 0 -150px)`,
+    useMotionTemplate`inset(-280px ${clip3}% 0 -150px)`,
+    useMotionTemplate`inset(-280px ${clip4}% 0 -150px)`,
+  ];
+
+  return { textStyle, clipPaths };
 };

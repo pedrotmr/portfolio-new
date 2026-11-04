@@ -15,7 +15,72 @@ html {
   scrollbar-color: var(--header-animation-color) #0f172a;
   scrollbar-width: thin;
   overscroll-behavior-x: none;
-  overflow-x: hidden;
+}
+
+/* The hero fills the visible screen. svh ignores the space mobile browser toolbars come and go in. */
+.h-stage {
+  height: 100vh;
+  height: 100svh;
+}
+
+.hero-compact {
+  height: auto;
+  min-height: 100svh;
+  gap: 48px;
+  padding-block: 64px 24px;
+}
+
+.hero-compact [data-hero-content] {
+  position: relative;
+  width: calc(100% - 55px);
+  margin-block: auto;
+}
+
+.hero-compact > button {
+  position: relative;
+  bottom: auto;
+  max-width: calc(100% - 32px);
+  flex-shrink: 0;
+}
+
+@layer base {
+  :focus-visible {
+    outline: 2px solid #f9a8d4;
+    outline-offset: 4px;
+  }
+}
+
+dialog :focus-visible,
+.skip-link:focus-visible,
+[aria-labelledby='contact-title'] :focus-visible,
+.button-3d:focus-visible {
+  outline-color: #0c4a6e;
+}
+
+@media (max-width: 639px) {
+  .hero-tagline .from-purple-500 {
+    --tw-gradient-from: #c084fc var(--tw-gradient-from-position);
+  }
+
+  .hero-tagline .from-orangeLight {
+    --tw-gradient-from: #fdba74 var(--tw-gradient-from-position);
+  }
+}
+
+.skip-link {
+  position: fixed;
+  top: max(12px, env(safe-area-inset-top));
+  left: 16px;
+  z-index: 100;
+  padding: 12px 20px;
+  border-radius: 12px;
+  color: #0f172a;
+  background: #eee9db;
+  transform: translateY(-200%);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
 }
 
 body::-webkit-scrollbar {
@@ -32,14 +97,13 @@ body::-webkit-scrollbar-track {
 }
 
 .no-scrollbar {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
 
 .no-scrollbar::-webkit-scrollbar {
-  display: none;  /* Chrome, Safari and Opera */
+  display: none; /* Chrome, Safari and Opera */
 }
-
 
 kbd {
   @apply rounded-md bg-beige px-1 py-0.5 text-slate-900;
@@ -60,7 +124,9 @@ kbd {
   }
   .grid-full {
     display: grid;
+    grid-template-columns: minmax(0, 1fr);
     & > * {
+      min-width: 0;
       grid-row: 1;
       grid-column: 1;
     }
@@ -68,6 +134,7 @@ kbd {
 }
 
 a.button-3d {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 12px;
@@ -102,7 +169,8 @@ a.button-3d {
     transform: rotate(0deg) skewX(-45deg);
   }
 
-  &:hover {
+  &:hover,
+  &:focus-visible {
     transform: rotate(-30deg) skew(25deg) translate(20px, -15px);
     box-shadow: -50px 50px 50px rgba(0, 0, 0, 0.5);
     background: #3b5998;
@@ -113,5 +181,156 @@ a.button-3d {
     &:after {
       background: #4a69ad;
     }
+  }
+}
+
+a.button-3d span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+/* Touch screens have no hover, so a key press sinks into its base instead of lifting. */
+@media (hover: none) {
+  a.button-3d {
+    transition: 0.18s;
+  }
+
+  a.button-3d:active {
+    transform: rotate(-30deg) skew(25deg) translate(-12px, 10px);
+    box-shadow: -6px 6px 6px 2px rgba(0, 0, 0, 0.45);
+    background: #3b5998;
+
+    &:before {
+      background: #365492;
+    }
+    &:after {
+      background: #4a69ad;
+    }
+  }
+}
+
+@media (max-width: 1023px) {
+  .projects-panel {
+    position: relative;
+    background: transparent;
+  }
+
+  /* Keep the panel above the contact backdrop without trapping the stars or sticky cards. */
+  .projects-panel::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    border-radius: inherit;
+    background: #0f172a;
+    pointer-events: none;
+  }
+
+  .contact-section {
+    z-index: 0;
+    margin-top: -28px;
+    padding-top: 28px;
+  }
+
+  .contact-body {
+    min-height: calc(100svh - 84px - env(safe-area-inset-bottom));
+    gap: clamp(20px, 4svh, 40px);
+    padding-block: clamp(24px, 5svh, 48px);
+  }
+
+  .contact-description {
+    line-height: 1.5;
+  }
+
+  .contact-links {
+    padding-block: 12px 20px;
+  }
+
+  .contact-links a.button-3d {
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+    width: clamp(64px, 20vw, 112px);
+    min-height: 64px;
+    height: auto;
+    padding: 8px 4px;
+    background: #596a80;
+    transform: rotate(-12deg) skew(8deg);
+    box-shadow: -8px 8px 8px 1px rgba(0, 0, 0, 0.4);
+
+    &:before {
+      top: 4px;
+      left: -8px;
+      width: 8px;
+    }
+
+    &:after {
+      bottom: -8px;
+      left: -4px;
+      height: 8px;
+    }
+
+    &:hover,
+    &:focus-visible {
+      transform: rotate(-12deg) skew(8deg) translate(4px, -4px);
+      background: #3b5998;
+      box-shadow: -12px 12px 12px 1px rgba(0, 0, 0, 0.4);
+    }
+
+    &:active {
+      transform: rotate(-12deg) skew(8deg) translate(-4px, 4px);
+      box-shadow: -4px 4px 4px rgba(0, 0, 0, 0.4);
+    }
+  }
+
+  .contact-links a.button-3d svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .contact-links a.button-3d span {
+    font-size: 0.75rem;
+    line-height: 1.25;
+    letter-spacing: 0.04em;
+  }
+
+  @media (max-height: 560px) {
+    .contact-body {
+      gap: 16px;
+      padding-block: 16px;
+    }
+  }
+}
+
+.glitch.is-glitching:before {
+  text-shadow: rgb(0, 255, 255) -1.5px 0px;
+  animation: 15s linear infinite alternate-reverse glitch-before;
+}
+
+.glitch.is-glitching:after {
+  text-shadow: #dd2a7b 3px 0px;
+  animation: 2s linear infinite alternate-reverse glitch-after;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    /* 0s, not a tiny duration: every element defaults to transition-property: all, and any
+       non-zero duration would make synchronous layout reads (like the fitted titles) see stale values. */
+    transition-duration: 0s !important;
+    transition-delay: 0s !important;
+    scroll-behavior: auto !important;
+  }
+
+  .glitch:hover:before,
+  .glitch:hover:after {
+    animation: none;
+  }
+
+  .intro-overlay {
+    display: none;
   }
 }

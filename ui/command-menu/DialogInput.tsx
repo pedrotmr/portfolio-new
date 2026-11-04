@@ -1,8 +1,16 @@
 import { Search } from 'lucide-react';
+import { useEffect, useRef } from 'react';
+import { FINE_POINTER_QUERY, useMediaMatch } from '@/hooks/use-motion-capabilities';
 import { useCommandMenuStore } from './use-command-menu.store';
 
 const DialogInput = () => {
   const { searchTerm, setSearchTerm } = useCommandMenuStore();
+  const autofocus = useMediaMatch(FINE_POINTER_QUERY);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (autofocus) inputRef.current?.focus();
+  }, [autofocus]);
 
   return (
     <div className="flex items-center border-b pb-2">
@@ -13,7 +21,7 @@ const DialogInput = () => {
         className="w-full bg-transparent text-gray-800 outline-none"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
-        autoFocus
+        ref={inputRef}
         tabIndex={0}
       />
     </div>

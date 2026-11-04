@@ -39,7 +39,7 @@ const commandList: Command[] = [
     name: 'Email',
     description: 'Let’s talk, the old-school way',
     icon: Mail,
-    action: () => (window.location.href = 'mailto:your@email.com'),
+    action: () => (window.location.href = 'mailto:peedrotr@gmail.com'),
   },
   { id: 'about', name: 'About Me', description: 'Get to know a bit about me', icon: User, action: () => {} },
   // {
@@ -55,12 +55,14 @@ type CommandMenuView = 'commands-list' | 'about' | 'projects';
 
 interface CommandMenuState {
   isOpen: boolean;
+  returnFocusTarget: HTMLElement | null;
   searchTerm: string;
   currentView: CommandMenuView;
   selectedIndex: number;
   filteredCommands: Command[];
-  openModal: () => void;
+  openModal: (returnFocusTarget?: HTMLElement | null) => void;
   closeModal: () => void;
+  clearReturnFocusTarget: () => void;
   setSearchTerm: (searchTerm: string) => void;
   setCurrentView: (view: CommandMenuView) => void;
   setSelectedIndex: (index: number) => void;
@@ -68,11 +70,22 @@ interface CommandMenuState {
 
 const useCommandMenuStore = create<CommandMenuState>((set) => ({
   isOpen: false,
+  returnFocusTarget: null,
   searchTerm: '',
   currentView: 'commands-list',
   selectedIndex: -1,
   filteredCommands: commandList,
-  openModal: () => set({ isOpen: true }),
+  openModal: (returnFocusTarget) =>
+    set({
+      isOpen: true,
+      returnFocusTarget:
+        returnFocusTarget ??
+        (typeof document !== 'undefined' &&
+        document.activeElement instanceof HTMLElement &&
+        document.activeElement !== document.body
+          ? document.activeElement
+          : null),
+    }),
   closeModal: () =>
     set({
       isOpen: false,
@@ -81,6 +94,7 @@ const useCommandMenuStore = create<CommandMenuState>((set) => ({
       searchTerm: '',
       filteredCommands: commandList,
     }),
+  clearReturnFocusTarget: () => set({ returnFocusTarget: null }),
   setSearchTerm: (searchTerm) =>
     set({
       searchTerm,
