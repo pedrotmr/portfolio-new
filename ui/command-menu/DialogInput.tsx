@@ -1,11 +1,11 @@
 import { Search } from 'lucide-react';
 import { useEffect, useRef } from 'react';
-import { useMediaMatch } from '@/hooks/use-motion-capabilities';
+import { FINE_POINTER_QUERY, useMediaMatch } from '@/hooks/use-motion-capabilities';
 import { useCommandMenuStore } from './use-command-menu.store';
 
 const DialogInput = () => {
   const { searchTerm, setSearchTerm } = useCommandMenuStore();
-  const autofocus = useMediaMatch('(min-width: 768px) and (hover: hover) and (pointer: fine)');
+  const autofocus = useMediaMatch(FINE_POINTER_QUERY);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
