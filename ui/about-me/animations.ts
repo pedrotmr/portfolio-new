@@ -59,7 +59,7 @@ export const useAnimations = (scrollRef: RefObject<HTMLElement>) => {
     scale: imageAnimations.scale,
     opacity: imageAnimations.opacity,
     position: allElementsPosition,
-    filter: useMotionTemplate`grayscale(100%) brightness(110%) contrast(125%) blur(${imageAnimations.blur}px)`,
+    filter: useMotionTemplate`blur(${imageAnimations.blur}px)`,
   };
 
   const firstTextAnimations = {
