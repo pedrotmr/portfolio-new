@@ -9,8 +9,8 @@ import { projects } from './project-data';
 
 const Projects = () => {
   // The desktop closing frame changes margins; keep the original title size while it closes.
-  const { containerRef, textRef } = useFitTextToContainer(false);
   const { reduced } = useMotionCapabilities();
+  const { containerRef, textRef } = useFitTextToContainer(false, reduced);
   const desktop = useMediaMatch('(min-width: 1024px)');
   const stacked = !reduced;
 

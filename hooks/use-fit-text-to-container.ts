@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-const useFitTextToContainer = (trackContainerWidth = true) => {
+const useFitTextToContainer = (trackContainerWidth = true, remeasureOnChange?: boolean) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
 
@@ -88,7 +88,7 @@ const useFitTextToContainer = (trackContainerWidth = true) => {
       window.removeEventListener('resize', scheduleResize);
       measure.remove();
     };
-  }, [trackContainerWidth]);
+  }, [trackContainerWidth, remeasureOnChange]);
 
   return { containerRef, textRef };
 };
