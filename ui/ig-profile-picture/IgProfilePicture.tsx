@@ -36,7 +36,7 @@ const IgProfilePicture = ({ className, style, initial, animate, transition }: Ig
             <stop offset="1" stopColor="#8134AF"></stop>
           </linearGradient>
         </defs>
-        <image x="7" y="7" width="60" height="60" href="/images/pedro-avatar.webp" clipPath="circle(30)" />
+        <image x="7" y="7" width="60" height="60" href="/images/pedro-avatar.webp" clipPath="circle(30px)" />
       </svg>
     </motion.div>
   );
