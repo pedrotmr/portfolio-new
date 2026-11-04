@@ -28,7 +28,7 @@ const ScrollOrShortcut = () => {
       onClick={(event) => {
         // Safari does not focus buttons on click, so focus it to give the dialog a place to return to.
         event.currentTarget.focus();
-        openModal();
+        openModal(event.currentTarget);
       }}
       className="absolute bottom-[max(2.5rem,env(safe-area-inset-bottom))] z-30 min-h-11 place-self-center rounded-2xl border
         border-beige/20 bg-transparent px-4 py-2 font-mono text-xs text-beige mix-blend-difference sm:bottom-32
@@ -42,7 +42,7 @@ const ScrollOrShortcut = () => {
           scroll down or press{' '}
           <span className="inline-flex gap-1">
             <kbd>{device === 'mac' ? '⌘' : 'ctrl'}</kbd>
-            <kbd>A</kbd>
+            <kbd>K</kbd>
           </span>{' '}
           for quick links
         </>

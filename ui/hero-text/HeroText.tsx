@@ -43,7 +43,7 @@ const HeroText = ({ style }: { style: MotionStyle }) => {
           className="mb-1 origin-bottom-left scale-75 cursor-none sm:mb-4 sm:scale-100
             [@media(max-width:1023px)_and_(max-height:560px)]:mb-0
             [@media(max-width:1023px)_and_(max-height:560px)]:scale-50"
-          drag={!reduced}
+          drag={finePointer && !reduced}
           dragSnapToOrigin
           dragPropagation
           dragElastic={0.5}

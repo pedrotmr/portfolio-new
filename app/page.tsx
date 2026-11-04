@@ -29,7 +29,7 @@ const Home = () => {
 
   return (
     <ReactLenis root options={{ smoothWheel: finePointer && !reduced, syncTouch: false }}>
-      <a href="#about" className="skip-link">
+      <a href="#main-content" className="skip-link">
         Skip to content
       </a>
       <InitialLoadingScreen />

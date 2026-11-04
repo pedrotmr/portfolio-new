@@ -3,7 +3,7 @@ import { ReactNode } from 'react';
 import { useShortcut } from 'react-shortcut-keys';
 import { useCommandMenuStore } from './use-command-menu.store';
 
-const DialogBody = ({ children }: { children: ReactNode }) => {
+const DialogBody = ({ children, ariaLabel }: { children: ReactNode; ariaLabel: string }) => {
   const { selectedIndex, setSelectedIndex, filteredCommands } = useCommandMenuStore();
 
   const handleKeyDown = useShortcut({
@@ -26,6 +26,9 @@ const DialogBody = ({ children }: { children: ReactNode }) => {
     <motion.div
       initial={{ scale: 0.8 }}
       animate={{ scale: 1 }}
+      role="dialog"
+      aria-modal="true"
+      aria-label={ariaLabel}
       className="relative h-96 w-full max-w-lg rounded-lg bg-gray-100 shadow-lg backdrop-blur-lg"
       onKeyDown={handleKeyDown}
     >

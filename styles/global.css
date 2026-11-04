@@ -69,7 +69,7 @@ dialog :focus-visible,
 
 .skip-link {
   position: fixed;
-  top: 12px;
+  top: max(12px, env(safe-area-inset-top));
   left: 16px;
   z-index: 100;
   padding: 12px 20px;

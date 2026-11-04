@@ -15,7 +15,13 @@ const Header = () => {
   const { initialMarginStyles } = useSlidingMarginsAnimatons(scrollRef);
   const heroStyle = useAnimations(scrollRef, reduced);
   const { scrollYProgress } = useScroll({ target: scrollRef, offset: ['end end', 'end center'] });
-  const tileOpacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
+  const tileOpacity = useTransform(scrollYProgress, [0, 1], reduced ? [1, 1] : [1, 0]);
+  const reducedHeaderStyle = {
+    marginTop: 40,
+    marginRight: 40,
+    marginLeft: 40,
+    borderRadius: '32px 32px 0 0',
+  };
   const compactHeroStyle = { y: 0, scale: 1, filter: 'blur(0px)', opacity: 1, position: 'static' as const };
 
   return (
@@ -23,7 +29,13 @@ const Header = () => {
       className={`h-stage relative flex flex-col items-center justify-center overflow-hidden bg-slate-900
         ${stage ? '' : 'hero-compact'}`}
       ref={scrollRef}
-      style={stage ? initialMarginStyles : { marginTop: 0, marginRight: 0, marginLeft: 0, borderRadius: 0 }}
+      style={
+        stage
+          ? reduced
+            ? reducedHeaderStyle
+            : initialMarginStyles
+          : { marginTop: 0, marginRight: 0, marginLeft: 0, borderRadius: 0 }
+      }
     >
       {/* The motion preference is only known after hydration. Remounting drops the intro and scroll styles cleanly. */}
       <HeroText key={reduced ? 'still' : 'moving'} style={stage ? heroStyle : compactHeroStyle} />

@@ -16,6 +16,12 @@ const Projects = () => {
 
   const scrollRef = useRef<HTMLDivElement>(null);
   const { endMarginStyles } = useSlidingMarginsAnimatons(scrollRef, stacked);
+  const reducedDesktopEndStyle = {
+    clipPath: 'none',
+    marginLeft: 40,
+    marginRight: 40,
+    borderRadius: '0 0 32px 32px',
+  };
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -28,7 +34,9 @@ const Projects = () => {
     <motion.section
       style={
         desktop
-          ? endMarginStyles
+          ? reduced
+            ? reducedDesktopEndStyle
+            : endMarginStyles
           : { clipPath: 'none', marginLeft: 0, marginRight: 0, borderRadius: '0 0 28px 28px' }
       }
       ref={scrollRef}

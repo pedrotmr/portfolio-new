@@ -1,6 +1,6 @@
 import useMotionCapabilities from '@/hooks/use-motion-capabilities';
 import { GradientText } from '@/ui';
-import { motion, useInView } from 'framer-motion';
+import { motion, useInView, type Transition } from 'framer-motion';
 import Image from 'next/image';
 import { ReactNode, useRef } from 'react';
 import { useAnimations } from './animations';
@@ -94,7 +94,7 @@ const AboutMeStage = () => {
 };
 
 const spring = { type: 'spring', stiffness: 90, damping: 24 } as const;
-const portraitEase = { duration: 1.1, ease: [0.22, 1, 0.36, 1] };
+const portraitEase: Transition = { duration: 1.1, ease: [0.22, 1, 0.36, 1] };
 
 // Mobile keeps the desktop idea: statements arrive from alternating sides and sharpen out of a blur,
 // while the portrait is unveiled between them. Each beat reverses when it leaves the viewport.

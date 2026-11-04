@@ -9,6 +9,7 @@ const useFitTextToContainer = (trackContainerWidth = true) => {
     const text = textRef.current;
     if (!container || !text) return;
 
+    let active = true;
     let frame = 0;
     // Measuring the live heading changes document height and makes scroll anchoring fight the frame animation.
     const measure = document.createElement('span');
@@ -25,6 +26,8 @@ const useFitTextToContainer = (trackContainerWidth = true) => {
     document.body.append(measure);
 
     const resizeText = () => {
+      if (!active) return;
+
       const styles = getComputedStyle(container);
       const available =
         container.clientWidth - parseFloat(styles.paddingLeft) - parseFloat(styles.paddingRight);
@@ -53,6 +56,8 @@ const useFitTextToContainer = (trackContainerWidth = true) => {
     };
 
     const scheduleResize = () => {
+      if (!active) return;
+
       cancelAnimationFrame(frame);
       frame = requestAnimationFrame(resizeText);
     };
@@ -64,6 +69,8 @@ const useFitTextToContainer = (trackContainerWidth = true) => {
     let lastWidth = container.clientWidth;
     let lastRootFont = getComputedStyle(document.documentElement).fontSize;
     const observer = new ResizeObserver(() => {
+      if (!active) return;
+
       const rootFont = getComputedStyle(document.documentElement).fontSize;
       if ((!trackContainerWidth || container.clientWidth === lastWidth) && rootFont === lastRootFont) return;
       lastWidth = container.clientWidth;
@@ -75,6 +82,7 @@ const useFitTextToContainer = (trackContainerWidth = true) => {
     if (!trackContainerWidth) window.addEventListener('resize', scheduleResize);
 
     return () => {
+      active = false;
       cancelAnimationFrame(frame);
       observer.disconnect();
       window.removeEventListener('resize', scheduleResize);

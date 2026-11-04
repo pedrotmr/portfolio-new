@@ -133,7 +133,7 @@ const ProjectMedia = ({ project }: { project: Project }) => {
           aria-label={playing ? `Pause ${project.name} animation` : `Play ${project.name} animation`}
           className="absolute bottom-3 right-3 grid size-11 place-items-center rounded-full bg-slate-900/75 text-beige
             backdrop-blur transition-colors hover:bg-slate-900 lg:opacity-0 lg:focus-visible:opacity-100
-            lg:group-hover/media:opacity-100"
+            lg:group-hover/media:opacity-100 [@media(hover:none)]:opacity-100"
         >
           {playing ? (
             <Pause aria-hidden="true" className="size-4" />

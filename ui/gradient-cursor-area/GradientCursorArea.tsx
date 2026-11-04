@@ -13,12 +13,14 @@ const GradientCursorArea = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <main id="main-content" onMouseMove={finePointer ? handleMouseMove : undefined}>
-      <motion.div
-        aria-hidden="true"
-        className="pointer-events-none fixed inset-0 z-10 transition duration-300"
-        style={cursorShadowStyle}
-      />
+    <main id="main-content" tabIndex={-1} onMouseMove={finePointer ? handleMouseMove : undefined}>
+      {finePointer && (
+        <motion.div
+          aria-hidden="true"
+          className="pointer-events-none fixed inset-0 z-10 transition duration-300"
+          style={cursorShadowStyle}
+        />
+      )}
       {children}
     </main>
   );

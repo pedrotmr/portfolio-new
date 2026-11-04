@@ -39,7 +39,7 @@ const InitialLoadingScreen = () => {
           initial={moveUpPageAnimtion.initial}
           exit={moveUpPageAnimtion.exit}
           transition={moveUpPageAnimtion.transition}
-          className="intro-overlay pointer-events-none fixed inset-0 z-50 flex items-center justify-center bg-slate-900"
+          className="intro-overlay pointer-events-auto fixed inset-0 z-50 flex items-center justify-center bg-slate-900"
         >
           <motion.p
             initial={fadeInTextAnimation.initial}

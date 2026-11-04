@@ -5,7 +5,15 @@ import Dialog from './Dialog';
 import { useCommandMenuStore } from './use-command-menu.store';
 
 const CommandMenu = () => {
-  const { isOpen, currentView, openModal, setCurrentView, closeModal } = useCommandMenuStore();
+  const {
+    isOpen,
+    currentView,
+    openModal,
+    setCurrentView,
+    closeModal,
+    returnFocusTarget,
+    clearReturnFocusTarget,
+  } = useCommandMenuStore();
   const pageLenis = useLenis();
 
   useEffect(() => {
@@ -51,15 +59,21 @@ const CommandMenu = () => {
     };
   }, [isOpen, pageLenis]);
 
+  useEffect(() => {
+    if (isOpen || !returnFocusTarget) return;
+    if (returnFocusTarget.isConnected) returnFocusTarget.focus();
+    clearReturnFocusTarget();
+  }, [isOpen, returnFocusTarget, clearReturnFocusTarget]);
+
   useShortcut({
     global: true,
-    keys: ['cmd+a', 'Escape'],
+    keys: ['cmd+k', 'Escape'],
     onKey: (key) => handleGlobalShortcut(key),
     options: { preventDefault: true },
   });
 
   const handleGlobalShortcut = (key: string) => {
-    if (key === 'cmd+a') {
+    if (key === 'cmd+k') {
       isOpen ? closeModal() : openModal();
     }
     if (key === 'Escape') {
@@ -68,11 +82,13 @@ const CommandMenu = () => {
   };
 
   if (!isOpen) return null;
+  const dialogLabel =
+    currentView === 'about' ? 'About me' : currentView === 'projects' ? 'Projects' : 'Quick links';
 
   return (
     <ReactLenis>
       <Dialog.Brackdrop>
-        <Dialog.Body>
+        <Dialog.Body ariaLabel={dialogLabel}>
           {currentView === 'commands-list' && (
             <>
               <Dialog.Input />
