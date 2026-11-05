@@ -2,7 +2,18 @@
 
 import { Canvas, useFrame, useLoader, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
-import { Component, Suspense, useMemo, useRef, type MutableRefObject, type ReactNode } from 'react';
+import {
+  Component,
+  Suspense,
+  useEffect,
+  useMemo,
+  useRef,
+  type MutableRefObject,
+  type ReactNode,
+} from 'react';
+
+// Leave room around the original portrait for its displaced silhouette.
+const canvasScale = 1.24;
 
 type PointerPosition = { x: number; y: number } | null;
 
@@ -11,6 +22,7 @@ type ImageRipplePortraitProps = {
   active: boolean;
   frameRef: MutableRefObject<HTMLDivElement | null>;
   pointerPositionRef: MutableRefObject<PointerPosition>;
+  onReady: (ready: boolean) => void;
 };
 
 useLoader.preload(THREE.TextureLoader, '/images/pedro.webp');
@@ -29,33 +41,54 @@ const fragmentShader = `
   uniform vec2 uPointer;
   uniform float uTime;
   uniform float uRippleStrength;
+  uniform vec2 uImageSize;
   varying vec2 vUv;
 
   void main() {
-    float distanceToPointer = distance(vUv, uPointer);
+    vec2 imageUv = (vUv - 0.5) * ${canvasScale} + 0.5;
+    float distanceToPointer = distance(imageUv, uPointer);
     float ring = sin(distanceToPointer * 56.0 - uTime * 10.0)
       * exp(-distanceToPointer * 7.0);
     float centerFade = smoothstep(0.0, 0.035, distanceToPointer);
-    vec2 direction = normalize(vUv - uPointer + vec2(0.00001));
-    vec2 distortedUv = clamp(
-      vUv + direction * ring * centerFade * uRippleStrength * 0.03,
-      vec2(0.0),
-      vec2(1.0)
-    );
-    gl_FragColor = texture2D(uTexture, distortedUv);
+    vec2 direction = normalize(imageUv - uPointer + vec2(0.00001));
+    vec2 distortedUv = imageUv + direction * ring * centerFade * uRippleStrength * 0.03;
+
+    // Warp the rounded image boundary too, instead of clamping it to a fixed frame.
+    vec2 corner = abs((distortedUv - 0.5) * uImageSize) - (uImageSize * 0.5 - 6.0);
+    float edge = length(max(corner, 0.0)) + min(max(corner.x, corner.y), 0.0) - 6.0;
+    float alpha = 1.0 - smoothstep(-0.75, 0.75, edge);
+    gl_FragColor = vec4(texture2D(uTexture, clamp(distortedUv, 0.0, 1.0)).rgb, alpha);
     #include <tonemapping_fragment>
     #include <colorspace_fragment>
   }
 `;
 
-const RipplePlane = ({ src, active, frameRef, pointerPositionRef }: ImageRipplePortraitProps) => {
+const RipplePlane = ({ src, active, frameRef, pointerPositionRef, onReady }: ImageRipplePortraitProps) => {
   const texture = useLoader(THREE.TextureLoader, src);
   const rippleStrength = useRef(0);
   const movementStrength = useRef(0.9);
   const lastPointerActivity = useRef(0);
   const pointerInside = useRef(false);
   const pointerUv = useRef(new THREE.Vector2(0.5, 0.5));
-  const { viewport } = useThree();
+  const { viewport, size, gl } = useThree();
+  const renderedFrames = useRef(0);
+  const onReadyRef = useRef(onReady);
+  onReadyRef.current = onReady;
+
+  useEffect(() => {
+    const onContextLost = () => onReadyRef.current(false);
+    const onContextRestored = () => {
+      renderedFrames.current = 0;
+    };
+    const domElement = gl.domElement;
+    domElement.addEventListener('webglcontextlost', onContextLost);
+    domElement.addEventListener('webglcontextrestored', onContextRestored);
+    return () => {
+      domElement.removeEventListener('webglcontextlost', onContextLost);
+      domElement.removeEventListener('webglcontextrestored', onContextRestored);
+      onReadyRef.current(false);
+    };
+  }, [gl]);
 
   texture.colorSpace = THREE.SRGBColorSpace;
   texture.minFilter = THREE.LinearMipmapLinearFilter;
@@ -67,11 +100,14 @@ const RipplePlane = ({ src, active, frameRef, pointerPositionRef }: ImageRippleP
       uPointer: { value: new THREE.Vector2(0.5, 0.5) },
       uTime: { value: 0 },
       uRippleStrength: { value: 0 },
+      uImageSize: { value: new THREE.Vector2() },
     }),
     [texture],
   );
 
   useFrame((_, delta) => {
+    if (++renderedFrames.current === 2) onReadyRef.current(true);
+    uniforms.uImageSize.value.set(size.width / canvasScale, size.height / canvasScale);
     const now = performance.now() / 1000;
     const position = pointerPositionRef.current;
     const bounds = active ? frameRef.current?.getBoundingClientRect() : null;
@@ -112,16 +148,28 @@ const RipplePlane = ({ src, active, frameRef, pointerPositionRef }: ImageRippleP
   return (
     <mesh>
       <planeGeometry args={[viewport.width, viewport.height]} />
-      <shaderMaterial uniforms={uniforms} vertexShader={vertexShader} fragmentShader={fragmentShader} />
+      <shaderMaterial
+        transparent
+        uniforms={uniforms}
+        vertexShader={vertexShader}
+        fragmentShader={fragmentShader}
+      />
     </mesh>
   );
 };
 
-class RippleFallback extends Component<{ children: ReactNode }, { failed: boolean }> {
+class RippleFallback extends Component<
+  { children: ReactNode; onReady: (ready: boolean) => void },
+  { failed: boolean }
+> {
   state = { failed: false };
 
   static getDerivedStateFromError() {
     return { failed: true };
+  }
+
+  componentDidCatch() {
+    this.props.onReady(false);
   }
 
   render() {
@@ -130,10 +178,17 @@ class RippleFallback extends Component<{ children: ReactNode }, { failed: boolea
 }
 
 const ImageRipplePortrait = (props: ImageRipplePortraitProps) => (
-  <RippleFallback>
+  <RippleFallback onReady={props.onReady}>
     <Canvas
       aria-hidden="true"
-      className="pointer-events-none !absolute inset-0 !h-full !w-full"
+      style={{
+        position: 'absolute',
+        left: '-12%',
+        top: '-12%',
+        width: '124%',
+        height: '124%',
+        pointerEvents: 'none',
+      }}
       dpr={[1, 1.5]}
       fallback={null}
       frameloop={props.active ? 'always' : 'demand'}
