@@ -334,15 +334,15 @@ export default async function OpenGraphImage() {
             style={{
               display: 'flex',
               alignItems: 'flex-start',
-              gap: 14,
+              gap: 6,
               marginTop: 22,
               marginLeft: 24,
             }}
           >
             <svg
-              viewBox="-1 -1 26 29"
-              width="38"
-              height="42"
+              viewBox="-3 -8 32 37"
+              width="46"
+              height="54"
               style={{ transform: 'scaleX(-1) rotate(-10deg)' }}
             >
               {/* Reverse the curl, then stretch around the tip to keep both endpoints in place. */}
