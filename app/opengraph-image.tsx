@@ -7,38 +7,16 @@ export const alt =
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
-export function generateImageMetadata() {
-  return [
-    {
-      id: 'about-portrait',
-      alt: 'Pedro Ramos, frontend developer, with the portrait used in the About Me section.',
-      size,
-      contentType,
-    },
-    {
-      id: 'old-portrait',
-      alt: 'Pedro Ramos, frontend developer, with the previous outdoor portrait.',
-      size,
-      contentType,
-    },
-  ];
-}
-
-export default async function OpenGraphImage({ id }: { id: string }) {
+export default async function OpenGraphImage() {
   // Load fonts and local assets directly from filesystem in Node runtime
   const avantFontPath = path.join(process.cwd(), 'public/fonts/avant-garde.ttf');
   const geistFontPath = path.join(process.cwd(), 'public/fonts/geist.otf');
-  const useOldPortrait = id === 'old-portrait';
-  const portraitPath = path.join(
-    process.cwd(),
-    useOldPortrait ? 'public/images/pedro.png' : 'public/images/pedro-about-og.jpg',
-  );
+  const portraitPath = path.join(process.cwd(), 'public/images/pedro-about-og.jpg');
 
   const avantData = fs.readFileSync(avantFontPath);
   const geistData = fs.readFileSync(geistFontPath);
   const portraitBuf = fs.readFileSync(portraitPath);
-  const portraitMime = useOldPortrait ? 'image/png' : 'image/jpeg';
-  const portraitBase64 = `data:${portraitMime};base64,${portraitBuf.toString('base64')}`;
+  const portraitBase64 = `data:image/jpeg;base64,${portraitBuf.toString('base64')}`;
 
   return new ImageResponse(
     (

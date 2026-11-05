@@ -5,6 +5,8 @@ import { ReactNode } from 'react';
 
 const title = 'Pedro Ramos ⋅ Frontend Developer';
 const description = "Pedro Ramos' personal portfolio.";
+const shareImageAlt =
+  'Pedro Ramos, frontend developer, with a portrait framed by a colorful orbital ring.';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://portfolio-new-one-eosin.vercel.app'),
@@ -14,20 +16,6 @@ export const metadata: Metadata = {
     type: 'website',
     title,
     description,
-    images: [
-      {
-        url: '/opengraph-image/about-portrait',
-        width: 1200,
-        height: 630,
-        alt: 'Pedro Ramos, frontend developer, with the portrait used in the About Me section.',
-      },
-      {
-        url: '/opengraph-image/old-portrait',
-        width: 1200,
-        height: 630,
-        alt: 'Pedro Ramos, frontend developer, with the previous outdoor portrait.',
-      },
-    ],
   },
   twitter: {
     card: 'summary_large_image',
@@ -35,8 +23,8 @@ export const metadata: Metadata = {
     description,
     images: [
       {
-        url: '/opengraph-image/about-portrait',
-        alt: 'Pedro Ramos, frontend developer, with the portrait used in the About Me section.',
+        url: '/opengraph-image',
+        alt: shareImageAlt,
       },
     ],
   },
