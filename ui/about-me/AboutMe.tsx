@@ -1,9 +1,12 @@
 import useMotionCapabilities from '@/hooks/use-motion-capabilities';
 import { GradientText } from '@/ui';
 import { motion, useInView, type Transition } from 'framer-motion';
+import dynamic from 'next/dynamic';
 import Image from 'next/image';
-import { ReactNode, useRef } from 'react';
+import { ReactNode, useEffect, useRef } from 'react';
 import { useAnimations } from './animations';
+
+const ImageRippleCanvas = dynamic(() => import('./ImageRipplePortrait'), { ssr: false });
 
 type Statement = (lineBreak: ReactNode) => ReactNode;
 
@@ -41,22 +44,53 @@ const portrait = {
 };
 
 const AboutMe = () => {
-  const { stage, reduced } = useMotionCapabilities();
+  const { stage, reduced, finePointer } = useMotionCapabilities();
 
   // Desktop keeps the original pinned scene; smaller screens and reduced motion use normal flow.
   return stage && !reduced ? (
-    <AboutMeStage />
+    <AboutMeStage finePointer={finePointer} />
   ) : (
     <AboutMeCompact key={reduced ? 'still' : 'moving'} reduced={reduced} />
   );
 };
 
-const AboutMeStage = () => {
+const AboutMeStage = ({ finePointer }: { finePointer: boolean }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const portraitRef = useRef<HTMLDivElement>(null);
+  const pointerPositionRef = useRef<{ x: number; y: number } | null>(null);
   const inView = useInView(scrollRef);
 
   const { imageStyles, firstTextStyles, secondTextStyles, thirdTextStyles } = useAnimations(scrollRef);
   const br = <br />;
+
+  useEffect(() => {
+    if (!finePointer) return;
+
+    const rememberPointer = (event: MouseEvent) => {
+      if (!('pointerType' in event) || event.pointerType !== 'touch') {
+        pointerPositionRef.current = { x: event.clientX, y: event.clientY };
+      }
+    };
+    const clearPointer = () => {
+      pointerPositionRef.current = null;
+    };
+    const clearPointerOnExit = (event: PointerEvent) => {
+      if (event.relatedTarget === null) clearPointer();
+    };
+
+    void import('./ImageRipplePortrait');
+    window.addEventListener('pointermove', rememberPointer, { passive: true });
+    window.addEventListener('wheel', rememberPointer, { passive: true });
+    window.addEventListener('pointerout', clearPointerOnExit, { passive: true });
+    window.addEventListener('blur', clearPointer);
+
+    return () => {
+      window.removeEventListener('pointermove', rememberPointer);
+      window.removeEventListener('wheel', rememberPointer);
+      window.removeEventListener('pointerout', clearPointerOnExit);
+      window.removeEventListener('blur', clearPointer);
+    };
+  }, [finePointer]);
 
   return (
     <section
@@ -65,30 +99,43 @@ const AboutMeStage = () => {
       ref={scrollRef}
       className="relative h-[300dvh] w-full overflow-x-clip bg-slate-900"
     >
-      {inView && (
-        <div
-          className="sticky top-1/2 z-20 m-auto flex max-w-6xl -translate-y-1/2 items-center justify-center gap-20
-            text-[clamp(10px,3vw,2.25rem)] font-bold leading-tight text-beige"
+      <div
+        style={{ visibility: inView ? 'visible' : 'hidden' }}
+        className="sticky top-1/2 z-20 m-auto flex max-w-6xl -translate-y-1/2 items-center justify-center gap-20
+          text-[clamp(10px,3vw,2.25rem)] font-bold leading-tight text-beige"
+      >
+        <motion.p style={firstTextStyles} className="w-[41%] will-change-transform">
+          {statements[0](br)}
+        </motion.p>
+
+        <motion.p style={secondTextStyles} className="w-[40%] will-change-transform">
+          {statements[1](br)}
+        </motion.p>
+
+        <motion.p style={thirdTextStyles} className="w-[42%] will-change-transform">
+          {statements[2](br)}
+        </motion.p>
+
+        <motion.div
+          ref={portraitRef}
+          className="relative aspect-[3/4] w-[35%] cursor-none select-none overflow-hidden rounded-md will-change-transform"
+          style={imageStyles}
         >
-          <motion.p style={firstTextStyles} className="w-[41%] will-change-transform">
-            {statements[0](br)}
-          </motion.p>
-
-          <motion.p style={secondTextStyles} className="w-[40%] will-change-transform">
-            {statements[1](br)}
-          </motion.p>
-
-          <motion.p style={thirdTextStyles} className="w-[42%] will-change-transform">
-            {statements[2](br)}
-          </motion.p>
-
-          <motion.img
+          <img
             {...portrait}
-            className="aspect-[3/4] h-auto w-[35%] cursor-none select-none rounded-md object-cover object-top will-change-transform"
-            style={imageStyles}
+            draggable={false}
+            className="absolute inset-0 h-full w-full select-none rounded-md object-cover object-top"
           />
-        </div>
-      )}
+          {finePointer && (
+            <ImageRippleCanvas
+              active={inView}
+              src={portrait.src}
+              frameRef={portraitRef}
+              pointerPositionRef={pointerPositionRef}
+            />
+          )}
+        </motion.div>
+      </div>
     </section>
   );
 };
