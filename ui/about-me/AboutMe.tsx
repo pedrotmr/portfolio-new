@@ -3,7 +3,7 @@ import { GradientText } from '@/ui';
 import { motion, useInView, type Transition } from 'framer-motion';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
-import { ReactNode, useEffect, useRef } from 'react';
+import { ReactNode, useEffect, useRef, useState } from 'react';
 import { useAnimations } from './animations';
 
 const ImageRippleCanvas = dynamic(() => import('./ImageRipplePortrait'), { ssr: false });
@@ -58,6 +58,7 @@ const AboutMeStage = ({ finePointer }: { finePointer: boolean }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const portraitRef = useRef<HTMLDivElement>(null);
   const pointerPositionRef = useRef<{ x: number; y: number } | null>(null);
+  const [rippleReady, setRippleReady] = useState(false);
   const inView = useInView(scrollRef);
 
   const { imageStyles, firstTextStyles, secondTextStyles, thirdTextStyles } = useAnimations(scrollRef);
@@ -118,13 +119,14 @@ const AboutMeStage = ({ finePointer }: { finePointer: boolean }) => {
 
         <motion.div
           ref={portraitRef}
-          className="relative aspect-[3/4] w-[35%] cursor-none select-none overflow-hidden rounded-md will-change-transform"
+          className="relative aspect-[3/4] w-[35%] cursor-none select-none rounded-md will-change-transform"
           style={imageStyles}
         >
           <img
             {...portrait}
             draggable={false}
             className="absolute inset-0 h-full w-full select-none rounded-md object-cover object-top"
+            style={{ opacity: finePointer && rippleReady ? 0 : 1 }}
           />
           {finePointer && (
             <ImageRippleCanvas
@@ -132,6 +134,7 @@ const AboutMeStage = ({ finePointer }: { finePointer: boolean }) => {
               src={portrait.src}
               frameRef={portraitRef}
               pointerPositionRef={pointerPositionRef}
+              onReady={setRippleReady}
             />
           )}
         </motion.div>
