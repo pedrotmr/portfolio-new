@@ -16,10 +16,16 @@ export const metadata: Metadata = {
     description,
     images: [
       {
-        url: '/opengraph-image',
+        url: '/opengraph-image/about-portrait',
         width: 1200,
         height: 630,
-        alt: 'Pedro Ramos, frontend developer — kinetic contact sheet of project screenshots from Juicy, Zims, News Aggregator, Crypto Tools, and React Shortcut Keys.',
+        alt: 'Pedro Ramos, frontend developer, with the portrait used in the About Me section.',
+      },
+      {
+        url: '/opengraph-image/old-portrait',
+        width: 1200,
+        height: 630,
+        alt: 'Pedro Ramos, frontend developer, with the previous outdoor portrait.',
       },
     ],
   },
@@ -29,8 +35,8 @@ export const metadata: Metadata = {
     description,
     images: [
       {
-        url: '/opengraph-image',
-        alt: 'Pedro Ramos, frontend developer — kinetic contact sheet of project screenshots from Juicy, Zims, News Aggregator, Crypto Tools, and React Shortcut Keys.',
+        url: '/opengraph-image/about-portrait',
+        alt: 'Pedro Ramos, frontend developer, with the portrait used in the About Me section.',
       },
     ],
   },

@@ -1,83 +1,44 @@
-import { readFile } from 'fs/promises';
-import { join } from 'path';
+import fs from 'node:fs';
+import path from 'node:path';
 import { ImageResponse } from 'next/og';
 
 export const alt =
-  'Pedro Ramos, frontend developer — kinetic contact sheet of project screenshots from Juicy, Zims, News Aggregator, Crypto Tools, and React Shortcut Keys.';
+  'Pedro Ramos, frontend developer, with a portrait framed by a colorful orbital ring.';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
-type Frame = {
-  src: string;
-  mime: 'image/png';
-  left: number;
-  top: number;
-  width: number;
-  height: number;
-  rotate: number;
-  objectPosition: string;
-};
-
-const frames: Frame[] = [
-  {
-    src: 'images/projects/juicy.png',
-    mime: 'image/png',
-    left: -90,
-    top: -70,
-    width: 580,
-    height: 380,
-    rotate: -9,
-    objectPosition: 'center 32%',
-  },
-  {
-    src: 'images/projects/zims.png',
-    mime: 'image/png',
-    left: 340,
-    top: -90,
-    width: 430,
-    height: 280,
-    rotate: 7,
-    objectPosition: 'center 45%',
-  },
-  {
-    src: 'images/projects/crypto-tools.png',
-    mime: 'image/png',
-    left: 740,
-    top: -40,
-    width: 560,
-    height: 360,
-    rotate: -5,
-    objectPosition: 'center 15%',
-  },
-  {
-    src: 'images/projects/news-aggregator.png',
-    mime: 'image/png',
-    left: -110,
-    top: 300,
-    width: 620,
-    height: 400,
-    rotate: 6,
-    objectPosition: 'center top',
-  },
-  {
-    src: 'images/projects/react-shortcut-keys.png',
-    mime: 'image/png',
-    left: 680,
-    top: 310,
-    width: 600,
-    height: 400,
-    rotate: -8,
-    objectPosition: 'left top',
-  },
-];
-
-async function loadDataUrl(relativePath: string, mime: string) {
-  const bytes = await readFile(join(process.cwd(), 'public', relativePath));
-  return `data:${mime};base64,${bytes.toString('base64')}`;
+export function generateImageMetadata() {
+  return [
+    {
+      id: 'about-portrait',
+      alt: 'Pedro Ramos, frontend developer, with the portrait used in the About Me section.',
+      size,
+      contentType,
+    },
+    {
+      id: 'old-portrait',
+      alt: 'Pedro Ramos, frontend developer, with the previous outdoor portrait.',
+      size,
+      contentType,
+    },
+  ];
 }
 
-export default async function OpenGraphImage() {
-  const images = await Promise.all(frames.map((frame) => loadDataUrl(frame.src, frame.mime)));
+export default async function OpenGraphImage({ id }: { id: string }) {
+  // Load fonts and local assets directly from filesystem in Node runtime
+  const avantFontPath = path.join(process.cwd(), 'public/fonts/avant-garde.ttf');
+  const geistFontPath = path.join(process.cwd(), 'public/fonts/geist.otf');
+  const useOldPortrait = id === 'old-portrait';
+  const portraitPath = path.join(
+    process.cwd(),
+    useOldPortrait ? 'public/images/pedro.png' : 'public/images/pedro-about-og.jpg',
+  );
+
+  const avantData = fs.readFileSync(avantFontPath);
+  const geistData = fs.readFileSync(geistFontPath);
+  const portraitBuf = fs.readFileSync(portraitPath);
+  const portraitMime = useOldPortrait ? 'image/png' : 'image/jpeg';
+  const portraitBase64 = `data:${portraitMime};base64,${portraitBuf.toString('base64')}`;
 
   return new ImageResponse(
     (
@@ -87,176 +48,471 @@ export default async function OpenGraphImage() {
           height: '100%',
           display: 'flex',
           position: 'relative',
+          backgroundColor: '#08090d',
           overflow: 'hidden',
-          backgroundColor: '#080807',
-          color: '#eee9db',
-          fontFamily: 'sans-serif',
+          color: '#EEE9DB',
+          fontFamily: 'Geist, sans-serif',
         }}
       >
-        {/* Contact-sheet collage — uneven crops, not a card grid */}
-        {frames.map((frame, index) => (
-          <div
-            key={frame.src}
-            style={{
-              position: 'absolute',
-              left: frame.left,
-              top: frame.top,
-              width: frame.width,
-              height: frame.height,
-              display: 'flex',
-              overflow: 'hidden',
-              transform: `rotate(${frame.rotate}deg)`,
-              border: '3px solid #eee9db',
-              boxShadow: '0 18px 40px rgba(0,0,0,0.55)',
-            }}
-          >
-            {/* Satori renders raw image elements in generated OG images. */}
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={images[index]}
-              alt=""
-              width={frame.width}
-              height={frame.height}
-              style={{
-                width: '100%',
-                height: '100%',
-                objectFit: 'cover',
-                objectPosition: frame.objectPosition,
-              }}
-            />
-          </div>
-        ))}
-
-        {/* Soft vignette so the name plate pops without a generic gradient wash */}
+        {/* Technical background blueprint grid */}
         <div
           style={{
             position: 'absolute',
-            inset: 0,
-            display: 'flex',
-            backgroundColor: 'rgba(8, 8, 7, 0.16)',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundImage:
+              'linear-gradient(to right, rgba(238, 233, 219, 0.04) 1px, transparent 1px), linear-gradient(to bottom, rgba(238, 233, 219, 0.04) 1px, transparent 1px)',
+            backgroundSize: '48px 48px',
           }}
         />
 
-        {/* Film-edge ticks — contact-sheet craft cue, not a tracked eyebrow */}
+        {/* Radial ambient warmth behind the halo */}
         <div
           style={{
             position: 'absolute',
-            left: 18,
+            top: 30,
+            right: 50,
+            width: 600,
+            height: 600,
+            borderRadius: 999,
+            background:
+              'radial-gradient(circle, rgba(221, 42, 123, 0.28) 0%, rgba(245, 133, 41, 0.16) 40%, transparent 70%)',
+          }}
+        />
+
+        {/* Corner registration crosshairs for frontend precision craft */}
+        <div
+          style={{
+            position: 'absolute',
             top: 24,
-            bottom: 24,
-            width: 18,
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
+            left: 24,
+            color: 'rgba(238, 233, 219, 0.25)',
+            fontSize: 16,
+            fontFamily: 'Geist, monospace',
           }}
         >
-          {Array.from({ length: 9 }).map((_, i) => (
-            <div
-              key={`l-${i}`}
-              style={{
-                width: 18,
-                height: 28,
-                backgroundColor: '#eee9db',
-                opacity: 0.88,
-              }}
-            />
-          ))}
+          +
         </div>
         <div
           style={{
             position: 'absolute',
-            right: 18,
             top: 24,
-            bottom: 24,
-            width: 18,
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
+            right: 24,
+            color: 'rgba(238, 233, 219, 0.25)',
+            fontSize: 16,
+            fontFamily: 'Geist, monospace',
           }}
         >
-          {Array.from({ length: 9 }).map((_, i) => (
-            <div
-              key={`r-${i}`}
-              style={{
-                width: 18,
-                height: 28,
-                backgroundColor: '#eee9db',
-                opacity: 0.88,
-              }}
-            />
-          ))}
+          +
+        </div>
+        <div
+          style={{
+            position: 'absolute',
+            bottom: 24,
+            left: 24,
+            color: 'rgba(238, 233, 219, 0.25)',
+            fontSize: 16,
+            fontFamily: 'Geist, monospace',
+          }}
+        >
+          +
+        </div>
+        <div
+          style={{
+            position: 'absolute',
+            bottom: 24,
+            right: 24,
+            color: 'rgba(238, 233, 219, 0.25)',
+            fontSize: 16,
+            fontFamily: 'Geist, monospace',
+          }}
+        >
+          +
         </div>
 
-        {/* Name plate — sharp, oversized, thumbnail-legible */}
+        {/* Top Header Bar */}
         <div
           style={{
             position: 'absolute',
-            left: 88,
-            width: 760,
-            top: 188,
+            top: 36,
+            left: 54,
+            right: 54,
             display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'flex-start',
-            justifyContent: 'center',
-            padding: '32px 44px 34px',
-            backgroundColor: '#eee9db',
-            border: '5px solid #080807',
-            transform: 'rotate(-2deg)',
-            boxShadow: '12px 18px 0 #cd486b',
+            justifyContent: 'space-between',
+            alignItems: 'center',
           }}
         >
+          {/* Left: Live status tag */}
           <div
             style={{
               display: 'flex',
-              flexDirection: 'row',
-              alignItems: 'baseline',
-              gap: 24,
-              fontSize: 96,
-              fontWeight: 800,
-              letterSpacing: -2.4,
-              lineHeight: 0.92,
-              color: '#080807',
-            }}
-          >
-            <span>Pedro</span>
-            <span style={{ color: '#cd486b' }}>Ramos</span>
-          </div>
-          <div
-            style={{
-              display: 'flex',
-              marginTop: 14,
-              fontSize: 36,
+              alignItems: 'center',
+              gap: 10,
+              padding: '8px 16px',
+              borderRadius: 999,
+              backgroundColor: 'rgba(238, 233, 219, 0.06)',
+              border: '1px solid rgba(238, 233, 219, 0.14)',
+              fontSize: 16,
               fontWeight: 600,
-              letterSpacing: -0.4,
-              color: '#141516',
+              letterSpacing: '0.04em',
+              color: '#EEE9DB',
             }}
           >
-            Frontend Developer
+            <div
+              style={{
+                width: 8,
+                height: 8,
+                borderRadius: 999,
+                backgroundColor: '#F58529',
+                boxShadow: '0 0 10px #F58529',
+              }}
+            />
+            <span>@pedrotmr</span>
+            <span style={{ opacity: 0.35 }}>·</span>
+            <span style={{ color: '#F58529' }}>interactive portfolio</span>
+          </div>
+
+          {/* Right: Technical Viewport coordinates badge */}
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 8,
+              fontSize: 15,
+              color: 'rgba(238, 233, 219, 0.55)',
+              fontFamily: 'Geist, monospace',
+            }}
+          >
+            <span style={{ color: '#A9B388' }}>UI · Motion · WebGL</span>
           </div>
         </div>
 
-        {/* Frame index chip — print-shop delight */}
+        {/* Graphic Motif: The Oversized Instagram Story Gradient Ring */}
         <div
           style={{
             position: 'absolute',
-            right: 64,
-            bottom: 36,
+            top: 75,
+            right: 80,
+            width: 480,
+            height: 480,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <svg width="480" height="480" viewBox="0 0 480 480" fill="none">
+            <defs>
+              <linearGradient id="ogRingGrad" x1="20" y1="20" x2="460" y2="460" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stopColor="#F58529" />
+                <stop offset="48%" stopColor="#DD2A7B" />
+                <stop offset="100%" stopColor="#8134AF" />
+              </linearGradient>
+            </defs>
+            {/* Outer dashed orbit */}
+            <circle
+              cx="240"
+              cy="240"
+              r="232"
+              stroke="rgba(238, 233, 219, 0.12)"
+              strokeWidth="1.5"
+              strokeDasharray="6 6"
+            />
+            {/* Main vibrant gradient halo */}
+            <circle cx="240" cy="240" r="214" stroke="url(#ogRingGrad)" strokeWidth="10" />
+            {/* Orbital coordinate node at 45 degrees */}
+            <circle cx="404" cy="76" r="6" fill="#F58529" />
+          </svg>
+        </div>
+
+        {/* Pedro's Cutout Portrait (breaking out and overlapping the ring) */}
+        <div
+          style={{
+            position: 'absolute',
+            bottom: 0,
+            right: 110,
+            width: 420,
+            height: 525,
+            display: 'flex',
+          }}
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={portraitBase64}
+            alt="Pedro Ramos portrait"
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'contain',
+              objectPosition: 'bottom center',
+            }}
+          />
+        </div>
+
+        {/* Left Column Content: Giant Name, Inverted Role Pill, Deliberate Craft */}
+        <div
+          style={{
+            position: 'absolute',
+            top: 122,
+            left: 54,
+            width: 660,
+            display: 'flex',
+            flexDirection: 'column',
+          }}
+        >
+          {/* Name in massive bold AvantGarde display lettering */}
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              fontFamily: 'AvantGarde, sans-serif',
+              fontWeight: 700,
+              fontSize: 102,
+              lineHeight: 0.88,
+              letterSpacing: '-0.04em',
+              color: '#EEE9DB',
+            }}
+          >
+            <div>PEDRO</div>
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: 4 }}>
+              <span>RAMOS</span>
+              <span style={{ color: '#DD2A7B', fontSize: 108 }}>.</span>
+            </div>
+          </div>
+
+          {/* Inverted High-Contrast Role Pill (Instantly readable at thumbnail scale) */}
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 16,
+              marginTop: 26,
+            }}
+          >
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 14,
+                padding: '12px 28px',
+                borderRadius: 999,
+                backgroundColor: '#EEE9DB',
+                boxShadow: '0 12px 36px rgba(0, 0, 0, 0.5)',
+              }}
+            >
+              {/* Code tag indicator */}
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  width: 24,
+                  height: 24,
+                  borderRadius: 6,
+                  backgroundColor: '#08090d',
+                  color: '#F58529',
+                  fontSize: 14,
+                  fontWeight: 800,
+                  fontFamily: 'Geist, monospace',
+                }}
+              >
+                {'</>'}
+              </div>
+              <span
+                style={{
+                  fontFamily: 'Geist, sans-serif',
+                  fontSize: 27,
+                  fontWeight: 800,
+                  letterSpacing: '0.04em',
+                  color: '#08090d',
+                }}
+              >
+                FRONTEND DEVELOPER
+              </span>
+            </div>
+
+            {/* Active Craft Badge */}
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 8,
+                padding: '8px 16px',
+                borderRadius: 999,
+                backgroundColor: 'rgba(221, 42, 123, 0.16)',
+                border: '1px solid rgba(221, 42, 123, 0.38)',
+                fontSize: 16,
+                fontWeight: 600,
+                color: '#FFA2C7',
+              }}
+            >
+              <span>UI + Motion Craft</span>
+            </div>
+          </div>
+
+          {/* Delight Layer: Hand-drawn Annotation from Pedro's site */}
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'flex-start',
+              gap: 14,
+              marginTop: 22,
+              marginLeft: 24,
+            }}
+          >
+            <svg
+              viewBox="0 0 24 27.176"
+              width="38"
+              height="42"
+              style={{
+                transform: 'rotate(-10deg)',
+              }}
+            >
+              <path
+                fill="#F58529"
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="m12.849 7.741 1.668-1.968a7.6 7.6 0 0 0-1.668 1.968m-4.672 3.183c.723-.678 1.415-1.374 2.204-1.963-.93.439-1.591 1.182-2.204 1.963m3.561 1.381c.186.333.376.168.555.027.606-.477.652-1.183.689-1.859.027-.493-.007-1.008-.262-1.463-.097-.173-.222-.284-.374-.032-.414.687-.726 1.411-.784 2.221-.028.386.018.766.176 1.105m-1.134-2.952c-.553.284-.984.731-1.424 1.159-1.9 1.852-3.092 4.12-3.919 6.614-.552 1.666-.941 3.368-1.27 5.087-.03.157-.055.317-.163.443-.122.142-.237.192-.283-.053-.011-.061.031-.148-.081-.122-.387.089-.436-.202-.504-.454-.127-.472-.039-.952.001-1.423.113-1.319.277-2.635.611-3.918.311-1.191.791-2.323 1.302-3.442.325-.712.666-1.432 1.214-1.985.364-.367.56-.833.912-1.196.675-.697 1.355-1.383 2.172-1.918.673-.44 1.409-.681 2.213-.684a.72.72 0 0 0 .611-.301 45 45 0 0 1 1.288-1.584c.712-.842 1.554-1.567 2.419-2.254 1.38-1.097 2.85-2.041 4.533-2.613.989-.336 1.986-.604 3.041-.316.278.076.521.196.665.464.062.115.076.222-.008.334-.099.132-.164.045-.274-.005-.752-.344-1.457-.039-2.16.195-1.938.643-3.566 1.801-5.111 3.094a21.4 21.4 0 0 0-3.202 3.304c-.075.097-.212.172-.024.31.658.481.994 1.169 1.133 1.946.215 1.199.096 2.34-.798 3.266-.48.498-.972.532-1.594.236-1.582-.752-1.887-2.371-1.37-3.743l.139-.368z"
+              />
+              <path
+                fill="#F58529"
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M4.496 24.376c-.552.601-1.01 1.264-1.331 2.014zm-3.028-2.027c.397.725.664 1.505.96 2.272.044.115.036.272.221.288.178.015.224-.132.277-.238.291-.579.736-1.039 1.124-1.546.246-.32.432-.689.695-1.009.404-.494.771-1.019 1.14-1.541.187-.264.49-.429.583-.78.091-.345.365-.415.843-.205.244.108.443.323.313.634a4.3 4.3 0 0 1-.391.737c-1.025 1.518-2.063 3.027-3.09 4.544-.231.34-.438.697-.653 1.048-.389.639-.678.695-1.314.294-.494-.311-.767-.741-.883-1.308-.224-1.092-.479-2.178-.906-3.214-.086-.208-.2-.403-.294-.607-.109-.236-.037-.355.232-.334.596.046.69.124 1.144.964"
+              />
+            </svg>
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                marginTop: 4,
+              }}
+            >
+              <span
+                style={{
+                  fontFamily: 'Geist, sans-serif',
+                  fontSize: 18,
+                  fontWeight: 600,
+                  color: '#F58529',
+                  letterSpacing: '0.01em',
+                }}
+              >
+                blending technical engineering with serious design taste
+              </span>
+              <span
+                style={{
+                  fontSize: 15,
+                  color: 'rgba(238, 233, 219, 0.55)',
+                  marginTop: 3,
+                }}
+              >
+                physics-based interactions · ripple shaders · polished micro-details
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* Live Cursor Element hovering between text and portrait */}
+        <div
+          style={{
+            position: 'absolute',
+            top: 260,
+            right: 485,
             display: 'flex',
             alignItems: 'center',
             gap: 10,
-            padding: '10px 16px',
-            backgroundColor: '#cd486b',
-            color: '#eee9db',
-            fontSize: 22,
-            fontWeight: 700,
-            letterSpacing: 0.5,
-            transform: 'rotate(2deg)',
           }}
         >
-          5 selects · @pedrotmr
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+            <path
+              d="M3 3l7 18 3-7 7-3L3 3z"
+              fill="#EEE9DB"
+              stroke="#08090d"
+              strokeWidth="1.5"
+              strokeLinejoin="round"
+            />
+          </svg>
+          <div
+            style={{
+              padding: '6px 14px',
+              borderRadius: 8,
+              backgroundColor: '#08090d',
+              border: '1.5px solid #F58529',
+              color: '#EEE9DB',
+              fontSize: 13,
+              fontWeight: 700,
+              fontFamily: 'Geist, monospace',
+              boxShadow: '0 8px 20px rgba(0,0,0,0.6)',
+            }}
+          >
+            {'<PedroRamos />'}
+          </div>
+        </div>
+
+        {/* Bottom Craft Bar */}
+        <div
+          style={{
+            position: 'absolute',
+            bottom: 28,
+            left: 54,
+            right: 54,
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            borderTop: '1px solid rgba(238, 233, 219, 0.12)',
+            paddingTop: 16,
+            fontSize: 15,
+            fontFamily: 'Geist, monospace',
+            color: 'rgba(238, 233, 219, 0.65)',
+          }}
+        >
+          <div
+            style={{
+              display: 'flex',
+              gap: 18,
+            }}
+          >
+            <span>React</span>
+            <span style={{ opacity: 0.3 }}>·</span>
+            <span>TypeScript</span>
+            <span style={{ opacity: 0.3 }}>·</span>
+            <span>Next.js</span>
+            <span style={{ opacity: 0.3 }}>·</span>
+            <span>Framer Motion</span>
+            <span style={{ opacity: 0.3 }}>·</span>
+            <span>Three.js / Shaders</span>
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 12,
+            }}
+          >
+            <span style={{ color: '#EEE9DB' }}>@pedrotmr</span>
+            <span style={{ opacity: 0.3 }}>·</span>
+            <span>Brazil / Remote</span>
+          </div>
         </div>
       </div>
     ),
-    size,
+    {
+      ...size,
+      fonts: [
+        {
+          name: 'AvantGarde',
+          data: avantData,
+          weight: 700,
+          style: 'normal',
+        },
+        {
+          name: 'Geist',
+          data: geistData,
+          weight: 400,
+          style: 'normal',
+        },
+      ],
+    },
   );
 }
