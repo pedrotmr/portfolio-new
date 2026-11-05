@@ -72,20 +72,23 @@ const RipplePlane = ({ src, active, frameRef, pointerPositionRef, onReady }: Ima
   const pointerUv = useRef(new THREE.Vector2(0.5, 0.5));
   const { viewport, size, gl } = useThree();
   const renderedFrames = useRef(0);
+  const onReadyRef = useRef(onReady);
+  onReadyRef.current = onReady;
 
   useEffect(() => {
-    const onContextLost = () => onReady(false);
+    const onContextLost = () => onReadyRef.current(false);
     const onContextRestored = () => {
       renderedFrames.current = 0;
     };
-    gl.domElement.addEventListener('webglcontextlost', onContextLost);
-    gl.domElement.addEventListener('webglcontextrestored', onContextRestored);
+    const domElement = gl.domElement;
+    domElement.addEventListener('webglcontextlost', onContextLost);
+    domElement.addEventListener('webglcontextrestored', onContextRestored);
     return () => {
-      gl.domElement.removeEventListener('webglcontextlost', onContextLost);
-      gl.domElement.removeEventListener('webglcontextrestored', onContextRestored);
-      onReady(false);
+      domElement.removeEventListener('webglcontextlost', onContextLost);
+      domElement.removeEventListener('webglcontextrestored', onContextRestored);
+      onReadyRef.current(false);
     };
-  }, [gl, onReady]);
+  }, [gl]);
 
   texture.colorSpace = THREE.SRGBColorSpace;
   texture.minFilter = THREE.LinearMipmapLinearFilter;
@@ -103,7 +106,7 @@ const RipplePlane = ({ src, active, frameRef, pointerPositionRef, onReady }: Ima
   );
 
   useFrame((_, delta) => {
-    if (++renderedFrames.current === 2) onReady(true);
+    if (++renderedFrames.current === 2) onReadyRef.current(true);
     uniforms.uImageSize.value.set(size.width / canvasScale, size.height / canvasScale);
     const now = performance.now() / 1000;
     const position = pointerPositionRef.current;
