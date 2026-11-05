@@ -1,43 +1,83 @@
+import { readFile } from 'fs/promises';
+import { join } from 'path';
 import { ImageResponse } from 'next/og';
 
-export const alt = 'Pedro Ramos, a frontend developer, in a navy and beige share card.';
+export const alt =
+  'Pedro Ramos, frontend developer — kinetic contact sheet of project screenshots from Juicy, Zims, News Aggregator, Crypto Tools, and React Shortcut Keys.';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
-const siteUrl = process.env.VERCEL_URL
-  ? `https://${process.env.VERCEL_URL}`
-  : (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://portfolio-new-one-eosin.vercel.app');
+type Frame = {
+  src: string;
+  mime: 'image/png';
+  left: number;
+  top: number;
+  width: number;
+  height: number;
+  rotate: number;
+  objectPosition: string;
+};
 
-export function generateImageMetadata() {
-  return [
-    {
-      id: 'portrait',
-      alt: 'Pedro Ramos, frontend developer, with his portrait.',
-      size,
-      contentType,
-    },
-    {
-      id: 'name-only',
-      alt: 'Pedro Ramos, frontend developer, in a name-only share card.',
-      size,
-      contentType,
-    },
-  ];
+const frames: Frame[] = [
+  {
+    src: 'images/projects/juicy.png',
+    mime: 'image/png',
+    left: -90,
+    top: -70,
+    width: 580,
+    height: 380,
+    rotate: -9,
+    objectPosition: 'center 32%',
+  },
+  {
+    src: 'images/projects/zims.png',
+    mime: 'image/png',
+    left: 340,
+    top: -90,
+    width: 430,
+    height: 280,
+    rotate: 7,
+    objectPosition: 'center 45%',
+  },
+  {
+    src: 'images/projects/crypto-tools.png',
+    mime: 'image/png',
+    left: 740,
+    top: -40,
+    width: 560,
+    height: 360,
+    rotate: -5,
+    objectPosition: 'center 15%',
+  },
+  {
+    src: 'images/projects/news-aggregator.png',
+    mime: 'image/png',
+    left: -110,
+    top: 300,
+    width: 620,
+    height: 400,
+    rotate: 6,
+    objectPosition: 'center top',
+  },
+  {
+    src: 'images/projects/react-shortcut-keys.png',
+    mime: 'image/png',
+    left: 680,
+    top: 310,
+    width: 600,
+    height: 400,
+    rotate: -8,
+    objectPosition: 'left top',
+  },
+];
+
+async function loadDataUrl(relativePath: string, mime: string) {
+  const bytes = await readFile(join(process.cwd(), 'public', relativePath));
+  return `data:${mime};base64,${bytes.toString('base64')}`;
 }
 
-export default async function OpenGraphImage({ id }: { id: string }) {
-  const showPortrait = id === 'portrait';
-  let portraitData: string | undefined;
-
-  if (showPortrait) {
-    const response = await fetch(new URL('/images/pedro-avatar-og.jpg', siteUrl));
-    if (!response.ok) {
-      throw new Error(`Could not load share card portrait: ${response.status}`);
-    }
-    const bytes = new Uint8Array(await response.arrayBuffer());
-    const binary = Array.from(bytes, (byte) => String.fromCharCode(byte)).join('');
-    portraitData = `data:image/jpeg;base64,${btoa(binary)}`;
-  }
+export default async function OpenGraphImage() {
+  const images = await Promise.all(frames.map((frame) => loadDataUrl(frame.src, frame.mime)));
 
   return new ImageResponse(
     (
@@ -46,70 +86,136 @@ export default async function OpenGraphImage({ id }: { id: string }) {
           width: '100%',
           height: '100%',
           display: 'flex',
-          alignItems: 'center',
           position: 'relative',
           overflow: 'hidden',
-          padding: '72px',
-          backgroundColor: '#0f172a',
-          backgroundImage:
-            'radial-gradient(circle at 85% 18%, rgba(205, 72, 107, 0.32), transparent 30%), linear-gradient(135deg, #0f172a 0%, #111c34 100%)',
+          backgroundColor: '#080807',
           color: '#eee9db',
           fontFamily: 'sans-serif',
         }}
       >
+        {/* Contact-sheet collage — uneven crops, not a card grid */}
+        {frames.map((frame, index) => (
+          <div
+            key={frame.src}
+            style={{
+              position: 'absolute',
+              left: frame.left,
+              top: frame.top,
+              width: frame.width,
+              height: frame.height,
+              display: 'flex',
+              overflow: 'hidden',
+              transform: `rotate(${frame.rotate}deg)`,
+              border: '3px solid #eee9db',
+              boxShadow: '0 18px 40px rgba(0,0,0,0.55)',
+            }}
+          >
+            {/* Satori renders raw image elements in generated OG images. */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={images[index]}
+              alt=""
+              width={frame.width}
+              height={frame.height}
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                objectPosition: frame.objectPosition,
+              }}
+            />
+          </div>
+        ))}
+
+        {/* Soft vignette so the name plate pops without a generic gradient wash */}
         <div
           style={{
             position: 'absolute',
-            top: 54,
-            left: 54,
-            width: 1092,
-            height: 522,
+            inset: 0,
             display: 'flex',
-            border: '1px solid rgba(238, 233, 219, 0.16)',
-            borderRadius: 24,
+            backgroundColor: 'rgba(8, 8, 7, 0.16)',
           }}
         />
+
+        {/* Film-edge ticks — contact-sheet craft cue, not a tracked eyebrow */}
         <div
           style={{
+            position: 'absolute',
+            left: 18,
+            top: 24,
+            bottom: 24,
+            width: 18,
             display: 'flex',
             flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: showPortrait ? 'flex-start' : 'center',
-            width: showPortrait ? 680 : 1000,
-            height: '100%',
-            zIndex: 1,
-            textAlign: showPortrait ? 'left' : 'center',
+            justifyContent: 'space-between',
           }}
         >
-          <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 28 }}>
+          {Array.from({ length: 9 }).map((_, i) => (
             <div
+              key={`l-${i}`}
               style={{
-                width: 12,
-                height: 12,
-                borderRadius: 999,
-                backgroundColor: '#cd486b',
+                width: 18,
+                height: 28,
+                backgroundColor: '#eee9db',
+                opacity: 0.88,
               }}
             />
-            <span
+          ))}
+        </div>
+        <div
+          style={{
+            position: 'absolute',
+            right: 18,
+            top: 24,
+            bottom: 24,
+            width: 18,
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+          }}
+        >
+          {Array.from({ length: 9 }).map((_, i) => (
+            <div
+              key={`r-${i}`}
               style={{
-                color: '#d7d2c5',
-                fontSize: 22,
-                fontWeight: 600,
-                letterSpacing: 5,
+                width: 18,
+                height: 28,
+                backgroundColor: '#eee9db',
+                opacity: 0.88,
               }}
-            >
-              PORTFOLIO
-            </span>
-          </div>
+            />
+          ))}
+        </div>
+
+        {/* Name plate — sharp, oversized, thumbnail-legible */}
+        <div
+          style={{
+            position: 'absolute',
+            left: 88,
+            width: 760,
+            top: 188,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'flex-start',
+            justifyContent: 'center',
+            padding: '32px 44px 34px',
+            backgroundColor: '#eee9db',
+            border: '5px solid #080807',
+            transform: 'rotate(-2deg)',
+            boxShadow: '12px 18px 0 #cd486b',
+          }}
+        >
           <div
             style={{
               display: 'flex',
-              flexDirection: showPortrait ? 'column' : 'row',
-              gap: showPortrait ? 0 : 24,
-              fontSize: showPortrait ? 92 : 104,
-              fontWeight: 700,
-              letterSpacing: -4,
-              lineHeight: 1.04,
+              flexDirection: 'row',
+              alignItems: 'baseline',
+              gap: 24,
+              fontSize: 96,
+              fontWeight: 800,
+              letterSpacing: -2.4,
+              lineHeight: 0.92,
+              color: '#080807',
             }}
           >
             <span>Pedro</span>
@@ -118,62 +224,36 @@ export default async function OpenGraphImage({ id }: { id: string }) {
           <div
             style={{
               display: 'flex',
-              color: '#b8c3d4',
-              fontSize: 32,
-              fontWeight: 400,
-              marginTop: 24,
+              marginTop: 14,
+              fontSize: 36,
+              fontWeight: 600,
+              letterSpacing: -0.4,
+              color: '#141516',
             }}
           >
             Frontend Developer
           </div>
-          <div
-            style={{
-              display: 'flex',
-              width: 84,
-              height: 4,
-              borderRadius: 8,
-              backgroundColor: '#cd486b',
-              marginTop: 38,
-            }}
-          />
         </div>
-        {showPortrait && portraitData ? (
-          <div
-            style={{
-              display: 'flex',
-              width: 316,
-              height: 396,
-              marginLeft: 24,
-              border: '8px solid rgba(238, 233, 219, 0.9)',
-              borderRadius: 22,
-              overflow: 'hidden',
-              transform: 'rotate(3deg)',
-              boxShadow: '0 24px 70px rgba(0, 0, 0, 0.28)',
-            }}
-          >
-            {/* Satori renders raw image elements in generated OG images. */}
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={portraitData}
-              alt="Portrait of Pedro Ramos"
-              width="316"
-              height="396"
-              style={{ objectFit: 'cover', objectPosition: 'center 35%' }}
-            />
-          </div>
-        ) : null}
+
+        {/* Frame index chip — print-shop delight */}
         <div
           style={{
             position: 'absolute',
-            right: 78,
-            bottom: 72,
+            right: 64,
+            bottom: 36,
             display: 'flex',
-            color: 'rgba(238, 233, 219, 0.66)',
-            fontSize: 19,
-            letterSpacing: 2,
+            alignItems: 'center',
+            gap: 10,
+            padding: '10px 16px',
+            backgroundColor: '#cd486b',
+            color: '#eee9db',
+            fontSize: 22,
+            fontWeight: 700,
+            letterSpacing: 0.5,
+            transform: 'rotate(2deg)',
           }}
         >
-          @pedrotmr
+          5 selects · @pedrotmr
         </div>
       </div>
     ),
