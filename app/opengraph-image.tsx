@@ -10,11 +10,13 @@ export const contentType = 'image/png';
 export default async function OpenGraphImage() {
   // Load fonts and local assets directly from filesystem in Node runtime
   const avantFontPath = path.join(process.cwd(), 'public/fonts/avant-garde.ttf');
-  const geistFontPath = path.join(process.cwd(), 'public/fonts/geist.otf');
+  const geistRegularPath = path.join(process.cwd(), 'public/fonts/geist-regular.ttf');
+  const geistBoldPath = path.join(process.cwd(), 'public/fonts/geist.otf');
   const portraitPath = path.join(process.cwd(), 'public/images/pedro-about-og.jpg');
 
   const avantData = fs.readFileSync(avantFontPath);
-  const geistData = fs.readFileSync(geistFontPath);
+  const geistRegularData = fs.readFileSync(geistRegularPath);
+  const geistBoldData = fs.readFileSync(geistBoldPath);
   const portraitBuf = fs.readFileSync(portraitPath);
   const portraitBase64 = `data:image/jpeg;base64,${portraitBuf.toString('base64')}`;
 
@@ -115,8 +117,8 @@ export default async function OpenGraphImage() {
           style={{
             position: 'absolute',
             top: 36,
-            left: 54,
-            right: 54,
+            left: 48,
+            right: 48,
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
@@ -156,14 +158,16 @@ export default async function OpenGraphImage() {
           <div
             style={{
               display: 'flex',
-              alignItems: 'center',
-              gap: 8,
-              fontSize: 15,
+              flexDirection: 'column',
+              alignItems: 'flex-end',
+              gap: 4,
+              fontSize: 16,
               color: 'rgba(238, 233, 219, 0.55)',
               fontFamily: 'Geist, monospace',
             }}
           >
-            <span style={{ color: '#A9B388' }}>UI · Motion · WebGL</span>
+            <span style={{ color: 'rgba(238, 233, 219, 0.65)' }}>UI · Motion · WebGL</span>
+            <span style={{ fontSize: 14 }}>Brazil / Remote</span>
           </div>
         </div>
 
@@ -199,20 +203,25 @@ export default async function OpenGraphImage() {
             />
             {/* Main vibrant gradient halo */}
             <circle cx="240" cy="240" r="214" stroke="url(#ogRingGrad)" strokeWidth="10" />
-            {/* Orbital coordinate node at 45 degrees */}
-            <circle cx="404" cy="76" r="6" fill="#F58529" />
+            {/* Orbital coordinate node on the exposed top arc */}
+            <circle cx="240" cy="26" r="6" fill="#F58529" />
           </svg>
         </div>
 
-        {/* Pedro's Cutout Portrait (breaking out and overlapping the ring) */}
+        {/* Portrait framed over the orbital ring */}
         <div
           style={{
             position: 'absolute',
             bottom: 0,
-            right: 110,
-            width: 420,
-            height: 525,
+            right: 127,
+            width: 386,
+            height: 514,
             display: 'flex',
+            overflow: 'hidden',
+            borderRadius: '16px 16px 0 0',
+            borderTop: '1px solid rgba(238, 233, 219, 0.22)',
+            borderLeft: '1px solid rgba(238, 233, 219, 0.14)',
+            backgroundColor: 'rgba(8, 9, 13, 0.16)',
           }}
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -226,6 +235,17 @@ export default async function OpenGraphImage() {
               objectPosition: 'bottom center',
             }}
           />
+          <div
+            style={{
+              position: 'absolute',
+              left: 0,
+              right: 0,
+              bottom: 0,
+              height: 170,
+              backgroundImage:
+                'linear-gradient(to bottom, rgba(8, 9, 13, 0) 0%, rgba(8, 9, 13, 0.94) 100%)',
+            }}
+          />
         </div>
 
         {/* Left Column Content: Giant Name, Inverted Role Pill, Deliberate Craft */}
@@ -233,7 +253,7 @@ export default async function OpenGraphImage() {
           style={{
             position: 'absolute',
             top: 122,
-            left: 54,
+            left: 48,
             width: 660,
             display: 'flex',
             flexDirection: 'column',
@@ -253,9 +273,9 @@ export default async function OpenGraphImage() {
             }}
           >
             <div>PEDRO</div>
-            <div style={{ display: 'flex', alignItems: 'baseline', gap: 4 }}>
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: 0 }}>
               <span>RAMOS</span>
-              <span style={{ color: '#DD2A7B', fontSize: 108 }}>.</span>
+              <span style={{ color: '#DD2A7B', fontSize: 108, marginLeft: -5 }}>.</span>
             </div>
           </div>
 
@@ -273,7 +293,7 @@ export default async function OpenGraphImage() {
                 display: 'flex',
                 alignItems: 'center',
                 gap: 14,
-                padding: '12px 28px',
+                padding: '12px 22px',
                 borderRadius: 999,
                 backgroundColor: '#EEE9DB',
                 boxShadow: '0 12px 36px rgba(0, 0, 0, 0.5)',
@@ -300,9 +320,9 @@ export default async function OpenGraphImage() {
               <span
                 style={{
                   fontFamily: 'Geist, sans-serif',
-                  fontSize: 27,
+                  fontSize: 26,
                   fontWeight: 800,
-                  letterSpacing: '0.04em',
+                  letterSpacing: '0.01em',
                   color: '#08090d',
                 }}
               >
@@ -316,11 +336,11 @@ export default async function OpenGraphImage() {
                 display: 'flex',
                 alignItems: 'center',
                 gap: 8,
-                padding: '8px 16px',
+                padding: '8px 12px',
                 borderRadius: 999,
                 backgroundColor: 'rgba(221, 42, 123, 0.16)',
                 border: '1px solid rgba(221, 42, 123, 0.38)',
-                fontSize: 16,
+                fontSize: 15,
                 fontWeight: 600,
                 color: '#FFA2C7',
               }}
@@ -336,7 +356,7 @@ export default async function OpenGraphImage() {
               alignItems: 'flex-start',
               gap: 6,
               marginTop: 22,
-              marginLeft: 24,
+              marginLeft: 8,
             }}
           >
             <svg
@@ -383,7 +403,7 @@ export default async function OpenGraphImage() {
               </span>
               <span
                 style={{
-                  fontSize: 16,
+                  fontSize: 17,
                   color: 'rgba(238, 233, 219, 0.72)',
                   marginTop: 3,
                 }}
@@ -435,14 +455,13 @@ export default async function OpenGraphImage() {
           style={{
             position: 'absolute',
             bottom: 28,
-            left: 54,
-            right: 54,
+            left: 48,
+            right: 48,
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-            borderTop: '1px solid rgba(238, 233, 219, 0.12)',
-            paddingTop: 16,
-            fontSize: 15,
+            fontSize: 16,
+            fontWeight: 400,
             fontFamily: 'Geist, monospace',
             color: 'rgba(238, 233, 219, 0.65)',
           }}
@@ -451,6 +470,8 @@ export default async function OpenGraphImage() {
             style={{
               display: 'flex',
               gap: 18,
+              borderTop: '1px solid rgba(238, 233, 219, 0.12)',
+              paddingTop: 16,
             }}
           >
             <span>React</span>
@@ -463,17 +484,22 @@ export default async function OpenGraphImage() {
             <span style={{ opacity: 0.3 }}>·</span>
             <span>Three.js / Shaders</span>
           </div>
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 12,
-            }}
-          >
-            <span style={{ color: '#EEE9DB' }}>@pedrotmr</span>
-            <span style={{ opacity: 0.3 }}>·</span>
-            <span>Brazil / Remote</span>
-          </div>
+        </div>
+        <div
+          style={{
+            position: 'absolute',
+            bottom: 28,
+            right: 127,
+            width: 386,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: 16,
+            fontFamily: 'Geist, monospace',
+            color: '#EEE9DB',
+          }}
+        >
+          @pedrotmr
         </div>
       </div>
     ),
@@ -488,8 +514,14 @@ export default async function OpenGraphImage() {
         },
         {
           name: 'Geist',
-          data: geistData,
+          data: geistRegularData,
           weight: 400,
+          style: 'normal',
+        },
+        {
+          name: 'Geist',
+          data: geistBoldData,
+          weight: 700,
           style: 'normal',
         },
       ],
