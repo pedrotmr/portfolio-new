@@ -484,19 +484,22 @@ export default async function OpenGraphImage() {
             <span style={{ opacity: 0.3 }}>·</span>
             <span>Three.js / Shaders</span>
           </div>
-          <div
-            style={{
-              position: 'absolute',
-              left: 639,
-              width: 386,
-              bottom: 0,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            <span style={{ color: '#EEE9DB' }}>@pedrotmr</span>
-          </div>
+        </div>
+        <div
+          style={{
+            position: 'absolute',
+            bottom: 28,
+            right: 127,
+            width: 386,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: 16,
+            fontFamily: 'Geist, monospace',
+            color: '#EEE9DB',
+          }}
+        >
+          @pedrotmr
         </div>
       </div>
     ),
