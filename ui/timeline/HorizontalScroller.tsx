@@ -5,7 +5,7 @@ import TracingBeam from '../tracing-beam';
 const HorizontalScrollCarousel = () => {
   const targetRef = useRef<HTMLDivElement | null>(null);
   const beamRef = useRef<HTMLDivElement | null>(null);
-  
+
   const { scrollYProgress } = useScroll({
     target: targetRef,
     offset: ['start start', 'end end'],

@@ -2,8 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { ImageResponse } from 'next/og';
 
-export const alt =
-  'Pedro Ramos, frontend developer, with a portrait framed by a colorful orbital ring.';
+export const alt = 'Pedro Ramos, frontend developer, with a portrait framed by a colorful orbital ring.';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
@@ -186,7 +185,14 @@ export default async function OpenGraphImage() {
         >
           <svg width="480" height="480" viewBox="0 0 480 480" fill="none">
             <defs>
-              <linearGradient id="ogRingGrad" x1="20" y1="20" x2="460" y2="460" gradientUnits="userSpaceOnUse">
+              <linearGradient
+                id="ogRingGrad"
+                x1="20"
+                y1="20"
+                x2="460"
+                y2="460"
+                gradientUnits="userSpaceOnUse"
+              >
                 <stop offset="0%" stopColor="#F58529" />
                 <stop offset="48%" stopColor="#DD2A7B" />
                 <stop offset="100%" stopColor="#8134AF" />
@@ -242,8 +248,7 @@ export default async function OpenGraphImage() {
               right: 0,
               bottom: 0,
               height: 170,
-              backgroundImage:
-                'linear-gradient(to bottom, rgba(8, 9, 13, 0) 0%, rgba(8, 9, 13, 0.94) 100%)',
+              backgroundImage: 'linear-gradient(to bottom, rgba(8, 9, 13, 0) 0%, rgba(8, 9, 13, 0.94) 100%)',
             }}
           />
         </div>

@@ -11,7 +11,9 @@
     "start": "next start",
     "lint": "next lint",
     "lint:fix": "eslint . --fix",
-    "prettier": "prettier --write ."
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@radix-ui/react-hover-card": "^1.1.1",
@@ -39,6 +41,7 @@
     "@typescript-eslint/parser": "^8.4.0",
     "eslint": "^8",
     "eslint-config-next": "14.2.3",
+    "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-readable-tailwind": "^1.8.0",
     "postcss": "^8",
     "prettier": "^3.3.1",
