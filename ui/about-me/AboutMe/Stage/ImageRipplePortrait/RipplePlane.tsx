@@ -1,6 +1,7 @@
 import { useFrame, useLoader, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 import { useEffect, useMemo, useRef } from 'react';
+import { portrait } from '../../../about-me-content';
 import { canvasScale } from './constants';
 import type { ImageRipplePortraitProps } from './types';
 
@@ -40,7 +41,7 @@ const fragmentShader = `
   }
 `;
 
-useLoader.preload(THREE.TextureLoader, '/images/pedro.webp');
+useLoader.preload(THREE.TextureLoader, portrait.src);
 
 export default function RipplePlane({
   src,
