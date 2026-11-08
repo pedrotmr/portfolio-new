@@ -1,4 +1,8 @@
-import BackgroundDecorations from './OpenGraphImageGraphic/BackgroundDecorations';
+import {
+  AmbientGlow,
+  BackgroundGrid,
+  CornerRegistrationMark,
+} from './OpenGraphImageGraphic/BackgroundDecorations';
 import CraftBar from './OpenGraphImageGraphic/CraftBar';
 import GradientRing from './OpenGraphImageGraphic/GradientRing';
 import Header from './OpenGraphImageGraphic/Header';
@@ -24,7 +28,12 @@ export default function OpenGraphImageGraphic({ portraitBase64 }: OpenGraphImage
         fontFamily: 'Geist, sans-serif',
       }}
     >
-      <BackgroundDecorations />
+      <BackgroundGrid />
+      <AmbientGlow />
+      <CornerRegistrationMark corner="top-left" />
+      <CornerRegistrationMark corner="top-right" />
+      <CornerRegistrationMark corner="bottom-left" />
+      <CornerRegistrationMark corner="bottom-right" />
       <Header />
       <GradientRing />
       <Portrait portraitBase64={portraitBase64} />
