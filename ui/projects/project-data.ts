@@ -1,4 +1,4 @@
-export type Project = {
+export interface Project {
   name: string;
   github: string;
   link?: string;
@@ -7,7 +7,7 @@ export type Project = {
   image: string;
   // Animated version of `image`. It plays only when motion is welcome and can be paused.
   animatedImage?: string;
-};
+}
 
 export const projects: Project[] = [
   {

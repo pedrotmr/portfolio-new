@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { useCommandMenuStore } from './use-command-menu.store';
+import { useCommandMenuStore } from '../../../use-command-menu.store';
 
 const DialogProjects = () => {
   const { setCurrentView } = useCommandMenuStore();

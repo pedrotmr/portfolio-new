@@ -1,15 +1,17 @@
 import { Search } from 'lucide-react';
 import { useEffect, useRef } from 'react';
 import { FINE_POINTER_QUERY, useMediaMatch } from '@/hooks/use-motion-capabilities';
-import { useCommandMenuStore } from './use-command-menu.store';
+import { useCommandMenuStore } from '../../../use-command-menu.store';
 
-const DialogInput = () => {
+export default function DialogInput() {
   const { searchTerm, setSearchTerm } = useCommandMenuStore();
   const autofocus = useMediaMatch(FINE_POINTER_QUERY);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    if (autofocus) inputRef.current?.focus();
+    if (autofocus) {
+      inputRef.current?.focus();
+    }
   }, [autofocus]);
 
   return (
@@ -26,6 +28,4 @@ const DialogInput = () => {
       />
     </div>
   );
-};
-
-export default DialogInput;
+}

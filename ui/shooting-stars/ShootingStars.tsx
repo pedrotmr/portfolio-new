@@ -3,17 +3,22 @@
 import { cn } from '@/utils';
 import { useEffect, useRef } from 'react';
 
-interface ShootingStarsProps {
+interface ShootingStarsAnimationProps {
   minSpeed?: number;
   maxSpeed?: number;
   minDelay?: number;
   maxDelay?: number;
+}
+
+interface ShootingStarsAppearanceProps {
   starColor?: string;
   trailColor?: string;
   starWidth?: number;
   starHeight?: number;
   className?: string;
 }
+
+type ShootingStarsProps = ShootingStarsAnimationProps & ShootingStarsAppearanceProps;
 
 const getRandomStartPoint = () => {
   const side = Math.floor(Math.random() * 4);
@@ -32,7 +37,7 @@ const getRandomStartPoint = () => {
 };
 
 // One star at a time, moved directly on the SVG node so the animation never re-renders React.
-const ShootingStars = ({
+export default function ShootingStars({
   minSpeed = 10,
   maxSpeed = 30,
   minDelay = 3000,
@@ -42,12 +47,15 @@ const ShootingStars = ({
   starWidth = 10,
   starHeight = 1,
   className,
-}: ShootingStarsProps) => {
+}: ShootingStarsProps) {
   const rectRef = useRef<SVGRectElement>(null);
 
   useEffect(() => {
     const rect = rectRef.current;
-    if (!rect) return;
+
+    if (!rect) {
+      return;
+    }
 
     let frame = 0;
     let timeout: ReturnType<typeof setTimeout>;
@@ -63,6 +71,7 @@ const ShootingStars = ({
       const step = () => {
         x += speed * Math.cos(radians);
         y += speed * Math.sin(radians);
+
         distance += speed;
         const width = starWidth * (1 + distance / 100);
 
@@ -102,6 +111,4 @@ const ShootingStars = ({
       </defs>
     </svg>
   );
-};
-
-export default ShootingStars;
+}

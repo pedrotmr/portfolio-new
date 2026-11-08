@@ -3,23 +3,23 @@
 import { motion } from 'framer-motion';
 import { ReactNode } from 'react';
 
-type FadeUpComponentProps = {
+interface FadeUpComponentProps {
   className?: string;
   amount?: number | 'some' | 'all';
   once?: boolean;
   duration?: number;
   delay?: number;
   children: ReactNode;
-};
+}
 
-const FadeUpComponent = ({
+export default function FadeUpComponent({
   className = '',
   children,
   amount = 1,
   once = true,
   duration = 0.3,
   delay = 0,
-}: FadeUpComponentProps) => {
+}: FadeUpComponentProps) {
   return (
     <motion.div
       className={className}
@@ -31,6 +31,4 @@ const FadeUpComponent = ({
       {children}
     </motion.div>
   );
-};
-
-export default FadeUpComponent;
+}

@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { MouseEvent, ReactNode } from 'react';
-import { useCommandMenuStore } from './use-command-menu.store';
+import { useCommandMenuStore } from '../../use-command-menu.store';
 
 const DialogBrackdrop = ({ children }: { children: ReactNode }) => {
   const { closeModal } = useCommandMenuStore();

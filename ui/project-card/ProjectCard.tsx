@@ -1,14 +1,14 @@
-import useMotionCapabilities from '@/hooks/use-motion-capabilities';
+import { motion, MotionValue, useTransform } from 'framer-motion';
+import { ArrowUpRight } from 'lucide-react';
+import Link from 'next/link';
+import { CSSProperties } from 'react';
 import { GradientText, TagList } from '@/ui';
 import { avantGarde } from '@/utils';
-import { motion, MotionValue, useTransform } from 'framer-motion';
-import { ArrowUpRight, Pause, Play } from 'lucide-react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { CSSProperties, ReactNode, useState } from 'react';
 import { Project } from '../projects/project-data';
+import ProjectLink from './ProjectCard/ProjectLink';
+import ProjectMedia from './ProjectCard/ProjectMedia';
 
-type ProjectCardProps = {
+interface ProjectCardProps {
   index: number;
   project: Project;
   stacked: boolean;
@@ -16,9 +16,9 @@ type ProjectCardProps = {
   containerProgress: MotionValue<number>;
   range: [number, number];
   targetScale: number;
-};
+}
 
-const ProjectCard = ({
+export default function ProjectCard({
   index,
   project,
   stacked,
@@ -26,7 +26,7 @@ const ProjectCard = ({
   containerProgress,
   range,
   targetScale,
-}: ProjectCardProps) => {
+}: ProjectCardProps) {
   const cardScale = useTransform(containerProgress, range, [1, targetScale]);
 
   return (
@@ -87,63 +87,4 @@ const ProjectCard = ({
       </div>
     </motion.article>
   );
-};
-
-const ProjectLink = ({ href, children }: { href: string; children: ReactNode }) => (
-  <Link
-    href={href}
-    target="_blank"
-    rel="noopener noreferrer"
-    className="group flex min-h-11 items-center gap-1 underline underline-offset-4 hover:text-beige"
-  >
-    {children}
-    <ArrowUpRight
-      aria-hidden="true"
-      className="size-5 duration-300 group-hover:-translate-y-1 group-hover:translate-x-0.5 group-hover:text-beige"
-    />
-  </Link>
-);
-
-const ProjectMedia = ({ project }: { project: Project }) => {
-  const { reduced, finePointer } = useMotionCapabilities();
-  const [choice, setChoice] = useState<boolean | null>(null);
-
-  // A looping GIF plays by default only on desktop with motion allowed. Everyone can pause or play it.
-  const playing = Boolean(project.animatedImage) && (choice ?? (finePointer && !reduced));
-  const src = playing && project.animatedImage ? project.animatedImage : project.image;
-
-  return (
-    <div
-      className="group/media relative order-first h-max w-full self-center overflow-hidden rounded-2xl sm:rounded-3xl
-        md:order-none"
-    >
-      <Image
-        src={src}
-        alt={`${project.name} screenshot`}
-        className="aspect-[3/2] h-auto w-full object-cover"
-        height={1000}
-        width={1000}
-        sizes="(min-width: 768px) 45vw, 90vw"
-        unoptimized={src.endsWith('.gif')}
-      />
-      {project.animatedImage && (
-        <button
-          type="button"
-          onClick={() => setChoice(!playing)}
-          aria-label={playing ? `Pause ${project.name} animation` : `Play ${project.name} animation`}
-          className="absolute bottom-3 right-3 grid size-11 place-items-center rounded-full bg-slate-900/75 text-beige
-            backdrop-blur transition-colors hover:bg-slate-900 lg:opacity-0 lg:focus-visible:opacity-100
-            lg:group-hover/media:opacity-100 [@media(hover:none)]:opacity-100"
-        >
-          {playing ? (
-            <Pause aria-hidden="true" className="size-4" />
-          ) : (
-            <Play aria-hidden="true" className="size-4" />
-          )}
-        </button>
-      )}
-    </div>
-  );
-};
-
-export default ProjectCard;
+}

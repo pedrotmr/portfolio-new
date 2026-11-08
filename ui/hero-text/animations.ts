@@ -21,7 +21,9 @@ export const useAnimations = (scrollRef: RefObject<HTMLElement>, reduced = false
   const blur = useTransform(scrollYProgress, [0.3, 1], [0, 20]);
   const filter = useMotionTemplate`blur(${blur}px)`;
 
-  if (reduced) return {};
+  if (reduced) {
+    return {};
+  }
 
   const wrapperStyle = {
     y,

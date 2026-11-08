@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { ReactLenis } from 'lenis/react';
 import { ArrowLeftIcon } from 'lucide-react';
-import { useCommandMenuStore } from './use-command-menu.store';
+import { useCommandMenuStore } from '../../../use-command-menu.store';
 
 const DialogAboutMe = () => {
   const { setCurrentView } = useCommandMenuStore();

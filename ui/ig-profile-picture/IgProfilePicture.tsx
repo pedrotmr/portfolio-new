@@ -3,15 +3,21 @@
 import { cn } from '@/utils';
 import { AnimationProps, motion } from 'framer-motion';
 
-type IgProfilePictureProps = {
+interface IgProfilePictureProps {
   className?: string;
   style?: any;
   initial?: AnimationProps['initial'];
   animate?: AnimationProps['animate'];
   transition?: AnimationProps['transition'];
-};
+}
 
-const IgProfilePicture = ({ className, style, initial, animate, transition }: IgProfilePictureProps) => {
+export default function IgProfilePicture({
+  className,
+  style,
+  initial,
+  animate,
+  transition,
+}: IgProfilePictureProps) {
   return (
     <motion.div
       className={cn('relative z-20 w-max animate-ig-stroke', className)}
@@ -48,6 +54,4 @@ const IgProfilePicture = ({ className, style, initial, animate, transition }: Ig
       </svg>
     </motion.div>
   );
-};
-
-export default IgProfilePicture;
+}

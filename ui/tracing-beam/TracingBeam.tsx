@@ -1,13 +1,12 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { RefObject, useEffect, useState } from 'react';
 
-const TracingBeam = ({
-  containerRef,
-  isHorizontal = false,
-}: {
+interface TracingBeamProps {
   containerRef: RefObject<HTMLElement>;
   isHorizontal?: boolean;
-}) => {
+}
+
+export default function TracingBeam({ containerRef, isHorizontal = false }: TracingBeamProps) {
   const [size, setSize] = useState<number | string>(0);
 
   const { scrollYProgress } = useScroll({
@@ -16,7 +15,9 @@ const TracingBeam = ({
   });
 
   useEffect(() => {
-    if (isHorizontal) return;
+    if (isHorizontal) {
+      return;
+    }
 
     const getHeight = () => {
       if (containerRef.current) {
@@ -24,6 +25,7 @@ const TracingBeam = ({
         setSize(isHorizontal ? '100%' : height);
       }
     };
+
     getHeight();
     window.addEventListener('resize', getHeight);
     return () => window.removeEventListener('resize', getHeight);
@@ -64,6 +66,4 @@ const TracingBeam = ({
       />
     </span>
   );
-};
-
-export default TracingBeam;
+}

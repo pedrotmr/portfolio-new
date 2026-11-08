@@ -3,7 +3,11 @@ import { motion } from 'framer-motion';
 const DURATION = 0.25;
 const STAGGER = 0.025;
 
-const FlipStaggerText = ({ children }: { children: string }) => {
+interface FlipStaggerTextProps {
+  children: string;
+}
+
+export default function FlipStaggerText({ children }: FlipStaggerTextProps) {
   return (
     <motion.p
       initial="initial"
@@ -54,5 +58,4 @@ const FlipStaggerText = ({ children }: { children: string }) => {
       </div>
     </motion.p>
   );
-};
-export default FlipStaggerText;
+}

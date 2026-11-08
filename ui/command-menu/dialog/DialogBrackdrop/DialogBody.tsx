@@ -2,15 +2,23 @@ import { motion } from 'framer-motion';
 import { KeyboardEvent, ReactNode, useEffect, useRef } from 'react';
 import { useShortcut } from 'react-shortcut-keys';
 import { FINE_POINTER_QUERY, useMediaMatch } from '@/hooks/use-motion-capabilities';
-import { useCommandMenuStore } from './use-command-menu.store';
+import { useCommandMenuStore } from '../../use-command-menu.store';
 
-const DialogBody = ({ children, ariaLabel }: { children: ReactNode; ariaLabel: string }) => {
+interface DialogBodyProps {
+  children: ReactNode;
+  ariaLabel: string;
+}
+
+export default function DialogBody({ children, ariaLabel }: DialogBodyProps) {
   const { selectedIndex, setSelectedIndex, filteredCommands, currentView } = useCommandMenuStore();
   const finePointer = useMediaMatch(FINE_POINTER_QUERY);
   const dialogRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (finePointer && currentView === 'commands-list') return;
+    if (finePointer && currentView === 'commands-list') {
+      return;
+    }
+
     dialogRef.current?.focus();
   }, [finePointer, currentView]);
 
@@ -22,10 +30,15 @@ const DialogBody = ({ children, ariaLabel }: { children: ReactNode; ariaLabel: s
 
   const handleShortcut = (key: string) => {
     const size = filteredCommands.length;
-    if (size === 0) return;
+
+    if (size === 0) {
+      return;
+    }
+
     if (key === 'ArrowDown') {
       return setSelectedIndex((selectedIndex + 1) % size);
     }
+
     if (key === 'ArrowUp') {
       return setSelectedIndex((selectedIndex - 1 + size) % size);
     }
@@ -33,10 +46,16 @@ const DialogBody = ({ children, ariaLabel }: { children: ReactNode; ariaLabel: s
 
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     handleArrowKeys?.(event);
-    if (event.key !== 'Tab') return;
+
+    if (event.key !== 'Tab') {
+      return;
+    }
 
     const dialog = dialogRef.current;
-    if (!dialog) return;
+
+    if (!dialog) {
+      return;
+    }
 
     const focusable = Array.from(
       dialog.querySelectorAll<HTMLElement>(
@@ -55,6 +74,7 @@ const DialogBody = ({ children, ariaLabel }: { children: ReactNode; ariaLabel: s
     if (focusable.length === 0) {
       event.preventDefault();
       dialog.focus();
+
       return;
     }
 
@@ -88,6 +108,4 @@ const DialogBody = ({ children, ariaLabel }: { children: ReactNode; ariaLabel: s
       <div className="p-4">{children}</div>
     </motion.div>
   );
-};
-
-export default DialogBody;
+}

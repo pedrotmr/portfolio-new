@@ -3,7 +3,7 @@
 import { cn } from '@/utils';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-type StarsBackgroundProps = {
+interface StarsBackgroundProps {
   starDensity?: number;
   allStarsTwinkle?: boolean;
   twinkleProbability?: number;
@@ -11,17 +11,17 @@ type StarsBackgroundProps = {
   maxTwinkleSpeed?: number;
   twinkle?: boolean;
   className?: string;
-};
+}
 
-type StarProps = {
+interface StarProps {
   x: number;
   y: number;
   radius: number;
   opacity: number;
   twinkleSpeed: number | null;
-};
+}
 
-export const StarsBackground = ({
+export function StarsBackground({
   starDensity = 0.00003,
   allStarsTwinkle = true,
   twinkleProbability = 0.7,
@@ -29,7 +29,7 @@ export const StarsBackground = ({
   maxTwinkleSpeed = 4,
   twinkle = true,
   className,
-}: StarsBackgroundProps) => {
+}: StarsBackgroundProps) {
   const [stars, setStars] = useState<StarProps[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -37,6 +37,7 @@ export const StarsBackground = ({
     (width: number, height: number): StarProps[] => {
       const area = width * height;
       const numStars = Math.floor(area * starDensity);
+
       return Array.from({ length: numStars }, () => {
         const shouldTwinkle = allStarsTwinkle || Math.random() < twinkleProbability;
         return {
@@ -60,12 +61,15 @@ export const StarsBackground = ({
         setStars(generateStars(width, height));
       }
     };
+
     updateStars();
     const resizeObserver = new ResizeObserver(updateStars);
     const currentRef = containerRef.current;
+
     if (currentRef) {
       resizeObserver.observe(currentRef);
     }
+
     return () => resizeObserver.disconnect();
   }, [starDensity, allStarsTwinkle, twinkleProbability, minTwinkleSpeed, maxTwinkleSpeed, generateStars]);
 
@@ -88,6 +92,6 @@ export const StarsBackground = ({
       </svg>
     </div>
   );
-};
+}
 
 export default StarsBackground;

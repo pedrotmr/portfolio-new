@@ -10,7 +10,10 @@ import { motion } from 'framer-motion';
 import { ReactNode, useRef } from 'react';
 import { useAnimations } from './animation';
 
-type Line = { ghost: string; content: ReactNode };
+interface Line {
+  ghost: string;
+  content: ReactNode;
+}
 
 const lines: Line[] = [
   {
@@ -66,7 +69,7 @@ const lines: Line[] = [
   },
 ];
 
-const ClipTextExperience = () => {
+export default function ClipTextExperience() {
   const scrollRef = useRef<HTMLDivElement>(null);
   const { reduced } = useMotionCapabilities();
 
@@ -104,6 +107,4 @@ const ClipTextExperience = () => {
       </motion.div>
     </motion.section>
   );
-};
-
-export default ClipTextExperience;
+}

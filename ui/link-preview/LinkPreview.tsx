@@ -1,4 +1,5 @@
 'use client';
+
 import * as HoverCardPrimitive from '@radix-ui/react-hover-card';
 import { AnimatePresence, motion } from 'framer-motion';
 import Image from 'next/image';
@@ -15,32 +16,31 @@ type LinkPreviewProps = {
   height?: number;
 } & ({ isStatic: true; imageSrc: string } | { isStatic?: false; imageSrc?: never });
 
-const LinkPreview = ({
+const getPreviewUrl = (url: string, width: number, height: number) => {
+  const params = encode({
+    url,
+    screenshot: true,
+    meta: false,
+    embed: 'screenshot.url',
+    colorScheme: 'dark',
+    'viewport.isMobile': true,
+    'viewport.deviceScaleFactor': 1,
+    'viewport.width': width * 3,
+    'viewport.height': height * 3,
+  });
+
+  return `https://api.microlink.io/?${params}`;
+};
+
+export default function LinkPreview({
   children,
   url,
   width = 300,
   height = 168,
   isStatic = false,
   imageSrc = '',
-}: LinkPreviewProps) => {
-  let src;
-
-  if (!isStatic) {
-    const params = encode({
-      url,
-      screenshot: true,
-      meta: false,
-      embed: 'screenshot.url',
-      colorScheme: 'dark',
-      'viewport.isMobile': true,
-      'viewport.deviceScaleFactor': 1,
-      'viewport.width': width * 3,
-      'viewport.height': height * 3,
-    });
-    src = `https://api.microlink.io/?${params}`;
-  } else {
-    src = imageSrc;
-  }
+}: LinkPreviewProps) {
+  const src = isStatic ? imageSrc : getPreviewUrl(url, width, height);
 
   const [isOpen, setOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
@@ -107,6 +107,4 @@ const LinkPreview = ({
       </HoverCardPrimitive.Root>
     </>
   );
-};
-
-export default LinkPreview;
+}

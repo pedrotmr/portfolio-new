@@ -6,7 +6,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { fadeInTextAnimation, getSvgPathAnimation, moveUpPageAnimtion } from './animations';
 
-const InitialLoadingScreen = () => {
+export default function InitialLoadingScreen() {
   const reduced = useMediaMatch(REDUCED_MOTION_QUERY);
   const [isLoading, setIsLoading] = useState(true);
   const [dimension, setDimension] = useState({ width: 0, height: 0 });
@@ -29,7 +29,9 @@ const InitialLoadingScreen = () => {
   }, []);
 
   // With reduced motion the intro never plays and the page is usable at once.
-  if (reduced) return null;
+  if (reduced) {
+    return null;
+  }
 
   return (
     <AnimatePresence>
@@ -64,6 +66,4 @@ const InitialLoadingScreen = () => {
       )}
     </AnimatePresence>
   );
-};
-
-export default InitialLoadingScreen;
+}
