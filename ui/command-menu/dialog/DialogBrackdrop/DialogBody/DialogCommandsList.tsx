@@ -39,9 +39,7 @@ export default function DialogCommandsList() {
           onBlur={() => setHoveredIndex(null)}
           tabIndex={0}
           ref={(el) => {
-            if (el) {
-              commandRefs.current[index] = el;
-            }
+            commandRefs.current[index] = el;
           }}
         >
           <command.icon className="mr-3 size-5 text-gray-500" />
