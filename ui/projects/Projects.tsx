@@ -4,16 +4,16 @@ import { useSlidingMarginsAnimatons } from '@/hooks/use-sliding-margins-animatio
 import { MagneticWrapper, ProjectCard, TracingBeam } from '@/ui';
 import { cn, thunderFont } from '@/utils';
 import { motion, useInView, useScroll } from 'framer-motion';
-import { ReactNode, useEffect, useRef } from 'react';
+import { useRef } from 'react';
+import ProjectStackItem from './Projects/ProjectStackItem';
 import { projects } from './project-data';
 
-const Projects = () => {
+export default function Projects() {
   // The desktop closing frame changes margins; keep the original title size while it closes.
   const { reduced } = useMotionCapabilities();
   const { containerRef, textRef } = useFitTextToContainer(false, reduced);
   const desktop = useMediaMatch('(min-width: 1024px)');
   const stacked = !reduced;
-
   const scrollRef = useRef<HTMLDivElement>(null);
   const { endMarginStyles } = useSlidingMarginsAnimatons(scrollRef, stacked);
   const reducedDesktopEndStyle = {
@@ -21,6 +21,20 @@ const Projects = () => {
     marginLeft: 40,
     marginRight: 40,
     borderRadius: '0 0 32px 32px',
+  };
+
+  const mobileEndStyle = { clipPath: 'none', marginLeft: 0, marginRight: 0, borderRadius: '0 0 28px 28px' };
+
+  const getPanelStyle = () => {
+    if (!desktop) {
+      return mobileEndStyle;
+    }
+
+    if (reduced) {
+      return reducedDesktopEndStyle;
+    }
+
+    return endMarginStyles;
   };
 
   const { scrollYProgress } = useScroll({
@@ -32,13 +46,7 @@ const Projects = () => {
 
   return (
     <motion.section
-      style={
-        desktop
-          ? reduced
-            ? reducedDesktopEndStyle
-            : endMarginStyles
-          : { clipPath: 'none', marginLeft: 0, marginRight: 0, borderRadius: '0 0 28px 28px' }
-      }
+      style={getPanelStyle()}
       ref={scrollRef}
       aria-labelledby="projects-title"
       className="projects-panel bg-slate-900 px-5 pb-16 sm:px-8 lg:overflow-x-clip lg:px-0 lg:pb-0"
@@ -76,55 +84,4 @@ const Projects = () => {
       </motion.div>
     </motion.section>
   );
-};
-
-const ProjectStackItem = ({
-  children,
-  stacked,
-  desktop,
-  index,
-}: {
-  children: ReactNode;
-  stacked: boolean;
-  desktop: boolean;
-  index: number;
-}) => {
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!stacked || desktop) return;
-    const row = ref.current;
-    const card = row?.firstElementChild as HTMLElement | null;
-    if (!row || !card) return;
-    const measure = () => row.style.setProperty('--project-height', `${card.offsetHeight}px`);
-    measure();
-    const observer = new ResizeObserver(measure);
-    observer.observe(card);
-    return () => observer.disconnect();
-  }, [stacked, desktop]);
-
-  return (
-    <div
-      ref={ref}
-      data-project-stack-item
-      className={cn(
-        'w-full',
-        stacked
-          ? desktop
-            ? 'sticky top-[12%] flex h-[88dvh] flex-col justify-start'
-            : 'sticky self-start [&:has(:focus-visible)]:z-40'
-          : undefined,
-      )}
-      // Tall cards scroll fully into view before pinning their bottom edge; no inner scrolling.
-      style={
-        stacked && !desktop
-          ? { top: `min(calc(12svh + ${index * 8}px), calc(100svh - var(--project-height, 0px) - 24px))` }
-          : undefined
-      }
-    >
-      {children}
-    </div>
-  );
-};
-
-export default Projects;
+}

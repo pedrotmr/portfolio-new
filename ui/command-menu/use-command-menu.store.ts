@@ -3,13 +3,13 @@
 import { Download, Github, Linkedin, Mail, User } from 'lucide-react';
 import { create } from 'zustand';
 
-type Command = {
+interface Command {
   id: string;
   name: string;
   description: string;
   icon: any;
   action: () => void;
-};
+}
 
 const commandList: Command[] = [
   {
@@ -53,13 +53,16 @@ const commandList: Command[] = [
 
 type CommandMenuView = 'commands-list' | 'about' | 'projects';
 
-interface CommandMenuState {
+interface CommandMenuData {
   isOpen: boolean;
   returnFocusTarget: HTMLElement | null;
   searchTerm: string;
   currentView: CommandMenuView;
   selectedIndex: number;
   filteredCommands: Command[];
+}
+
+interface CommandMenuActions {
   openModal: (returnFocusTarget?: HTMLElement | null) => void;
   closeModal: () => void;
   clearReturnFocusTarget: () => void;
@@ -67,6 +70,8 @@ interface CommandMenuState {
   setCurrentView: (view: CommandMenuView) => void;
   setSelectedIndex: (index: number) => void;
 }
+
+type CommandMenuState = CommandMenuData & CommandMenuActions;
 
 const useCommandMenuStore = create<CommandMenuState>((set) => ({
   isOpen: false,

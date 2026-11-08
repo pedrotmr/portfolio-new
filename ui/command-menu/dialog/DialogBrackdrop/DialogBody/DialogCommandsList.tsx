@@ -1,16 +1,12 @@
 import { motion } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
-import { useCommandMenuStore } from './use-command-menu.store';
+import { useCommandMenuStore } from '../../../use-command-menu.store';
 
-const DialogCommandsList = () => {
+export default function DialogCommandsList() {
   const { selectedIndex, setCurrentView, closeModal, filteredCommands } = useCommandMenuStore();
 
   const commandRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-
-  useEffect(() => {
-    commandRefs.current[selectedIndex]?.focus();
-  }, [selectedIndex]);
 
   const handleCommandClick = (command: (typeof filteredCommands)[0]) => {
     if (command.id === 'about' || command.id === 'projects') {
@@ -20,6 +16,10 @@ const DialogCommandsList = () => {
       closeModal();
     }
   };
+
+  useEffect(() => {
+    commandRefs.current[selectedIndex]?.focus();
+  }, [selectedIndex]);
 
   return (
     <motion.div
@@ -39,7 +39,9 @@ const DialogCommandsList = () => {
           onBlur={() => setHoveredIndex(null)}
           tabIndex={0}
           ref={(el) => {
-            if (el) commandRefs.current[index] = el;
+            if (el) {
+              commandRefs.current[index] = el;
+            }
           }}
         >
           <command.icon className="mr-3 size-5 text-gray-500" />
@@ -61,6 +63,4 @@ const DialogCommandsList = () => {
       ))}
     </motion.div>
   );
-};
-
-export default DialogCommandsList;
+}

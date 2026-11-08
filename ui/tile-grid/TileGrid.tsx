@@ -13,21 +13,30 @@ const gridLines = {
     'linear-gradient(currentcolor 1px, transparent 1px), linear-gradient(to right, currentcolor 1px, transparent 1px)',
 };
 
-function calculateTileCount() {
+const calculateTileCount = () => {
   const columns = Math.ceil(window.innerWidth / TILE_SIZE);
   const rows = Math.ceil(window.innerHeight / TILE_SIZE);
   return columns * rows;
+};
+
+interface TileGridProps {
+  opacity: MotionValue<number>;
 }
 
-const TileGrid = ({ opacity }: { opacity: MotionValue<number> }) => {
+export default function TileGrid({ opacity }: TileGridProps) {
   const { finePointer } = useMotionCapabilities();
   const [tileCount, setTileCount] = useState(0);
 
   useEffect(() => {
     // Hover tiles only make sense with a mouse. Touch screens get the same grid drawn in CSS.
-    if (!finePointer) return;
+    if (!finePointer) {
+      return;
+    }
+
     const handleResize = () => setTileCount(calculateTileCount());
+
     handleResize();
+
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, [finePointer]);
@@ -62,6 +71,4 @@ const TileGrid = ({ opacity }: { opacity: MotionValue<number> }) => {
       )}
     </motion.div>
   );
-};
-
-export default TileGrid;
+}

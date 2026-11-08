@@ -1,31 +1,8 @@
-'use client';
-
-import { Canvas, useFrame, useLoader, useThree } from '@react-three/fiber';
+import { useFrame, useLoader, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
-import {
-  Component,
-  Suspense,
-  useEffect,
-  useMemo,
-  useRef,
-  type MutableRefObject,
-  type ReactNode,
-} from 'react';
-
-// Leave room around the original portrait for its displaced silhouette.
-const canvasScale = 1.24;
-
-type PointerPosition = { x: number; y: number } | null;
-
-type ImageRipplePortraitProps = {
-  src: string;
-  active: boolean;
-  frameRef: MutableRefObject<HTMLDivElement | null>;
-  pointerPositionRef: MutableRefObject<PointerPosition>;
-  onReady: (ready: boolean) => void;
-};
-
-useLoader.preload(THREE.TextureLoader, '/images/pedro.webp');
+import { useEffect, useMemo, useRef } from 'react';
+import { canvasScale } from './constants';
+import type { ImageRipplePortraitProps } from './types';
 
 const vertexShader = `
   varying vec2 vUv;
@@ -63,26 +40,41 @@ const fragmentShader = `
   }
 `;
 
-const RipplePlane = ({ src, active, frameRef, pointerPositionRef, onReady }: ImageRipplePortraitProps) => {
+useLoader.preload(THREE.TextureLoader, '/images/pedro.webp');
+
+export default function RipplePlane({
+  src,
+  active,
+  frameRef,
+  pointerPositionRef,
+  onReady,
+}: ImageRipplePortraitProps) {
   const texture = useLoader(THREE.TextureLoader, src);
   const rippleStrength = useRef(0);
   const movementStrength = useRef(0.9);
   const lastPointerActivity = useRef(0);
+
   const pointerInside = useRef(false);
   const pointerUv = useRef(new THREE.Vector2(0.5, 0.5));
+
   const { viewport, size, gl } = useThree();
   const renderedFrames = useRef(0);
   const onReadyRef = useRef(onReady);
+
   onReadyRef.current = onReady;
 
   useEffect(() => {
     const onContextLost = () => onReadyRef.current(false);
+
     const onContextRestored = () => {
       renderedFrames.current = 0;
     };
+
     const domElement = gl.domElement;
+
     domElement.addEventListener('webglcontextlost', onContextLost);
     domElement.addEventListener('webglcontextrestored', onContextRestored);
+
     return () => {
       domElement.removeEventListener('webglcontextlost', onContextLost);
       domElement.removeEventListener('webglcontextrestored', onContextRestored);
@@ -106,7 +98,10 @@ const RipplePlane = ({ src, active, frameRef, pointerPositionRef, onReady }: Ima
   );
 
   useFrame((_, delta) => {
-    if (++renderedFrames.current === 2) onReadyRef.current(true);
+    if (++renderedFrames.current === 2) {
+      onReadyRef.current(true);
+    }
+
     uniforms.uImageSize.value.set(size.width / canvasScale, size.height / canvasScale);
     const now = performance.now() / 1000;
     const position = pointerPositionRef.current;
@@ -128,13 +123,16 @@ const RipplePlane = ({ src, active, frameRef, pointerPositionRef, onReady }: Ima
         1 - (position.y - bounds.top) / bounds.height,
       );
       const movement = uniforms.uPointer.value.distanceTo(pointerUv.current);
+
       if (!pointerInside.current || movement > 0.0001) {
         movementStrength.current = THREE.MathUtils.clamp(0.9 + movement * 5, 0.9, 1.25);
         rippleStrength.current = movementStrength.current;
         lastPointerActivity.current = now;
       }
+
       uniforms.uPointer.value.copy(pointerUv.current);
     }
+
     pointerInside.current = inside;
 
     const target = inside && now - lastPointerActivity.current < 2.25 ? movementStrength.current : 0;
@@ -156,52 +154,4 @@ const RipplePlane = ({ src, active, frameRef, pointerPositionRef, onReady }: Ima
       />
     </mesh>
   );
-};
-
-class RippleFallback extends Component<
-  { children: ReactNode; onReady: (ready: boolean) => void },
-  { failed: boolean }
-> {
-  state = { failed: false };
-
-  static getDerivedStateFromError() {
-    return { failed: true };
-  }
-
-  componentDidCatch() {
-    this.props.onReady(false);
-  }
-
-  render() {
-    return this.state.failed ? null : this.props.children;
-  }
 }
-
-const ImageRipplePortrait = (props: ImageRipplePortraitProps) => (
-  <RippleFallback onReady={props.onReady}>
-    <Canvas
-      aria-hidden="true"
-      style={{
-        position: 'absolute',
-        left: '-12%',
-        top: '-12%',
-        width: '124%',
-        height: '124%',
-        pointerEvents: 'none',
-      }}
-      dpr={[1, 1.5]}
-      fallback={null}
-      frameloop={props.active ? 'always' : 'demand'}
-      resize={{ scroll: false, offsetSize: true, debounce: 0 }}
-      gl={{ alpha: true, antialias: true, powerPreference: 'low-power' }}
-      orthographic
-      camera={{ position: [0, 0, 1], zoom: 1 }}
-    >
-      <Suspense fallback={null}>
-        <RipplePlane {...props} />
-      </Suspense>
-    </Canvas>
-  </RippleFallback>
-);
-
-export default ImageRipplePortrait;

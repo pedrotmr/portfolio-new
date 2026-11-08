@@ -12,7 +12,11 @@ import { blurAnimation, nameAnimation, profilePictureAnimation, titleAnimation }
 const GLITCH_MS = 1400;
 
 // The scroll-driven exit (`style`) is built in Header, which owns the element it tracks.
-const HeroText = ({ style }: { style: MotionStyle }) => {
+interface HeroTextProps {
+  style: MotionStyle;
+}
+
+export default function HeroText({ style }: HeroTextProps) {
   const { reduced, finePointer } = useMotionCapabilities();
   const { containerRef, textRef } = useFitTextToContainer();
 
@@ -22,7 +26,10 @@ const HeroText = ({ style }: { style: MotionStyle }) => {
   useEffect(() => () => clearTimeout(glitchTimer.current), []);
 
   const playGlitch = () => {
-    if (finePointer || reduced) return;
+    if (finePointer || reduced) {
+      return;
+    }
+
     setIsGlitching(true);
     clearTimeout(glitchTimer.current);
     glitchTimer.current = setTimeout(() => setIsGlitching(false), GLITCH_MS);
@@ -96,6 +103,4 @@ const HeroText = ({ style }: { style: MotionStyle }) => {
       </motion.p>
     </motion.div>
   );
-};
-
-export default HeroText;
+}

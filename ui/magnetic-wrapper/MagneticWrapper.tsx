@@ -4,15 +4,13 @@ import { cn } from '@/utils';
 import { motion, useMotionTemplate, useMotionValue } from 'framer-motion';
 import { MouseEvent, ReactNode } from 'react';
 
-const MagneticWrapper = ({
-  children,
-  className,
-  ratio = 20,
-}: {
+interface MagneticWrapperProps {
   children: ReactNode;
   className?: string;
   ratio?: number;
-}) => {
+}
+
+export default function MagneticWrapper({ children, className, ratio = 20 }: MagneticWrapperProps) {
   const { reduced, finePointer } = useMotionCapabilities();
   const enabled = finePointer && !reduced;
 
@@ -21,7 +19,10 @@ const MagneticWrapper = ({
   const transform = useMotionTemplate`translate3d(${mouseX}px, ${mouseY}px, 0)`;
 
   const handleMouseMove = (event: MouseEvent<HTMLElement>) => {
-    if (!enabled) return;
+    if (!enabled) {
+      return;
+    }
+
     const rect = event.currentTarget.getBoundingClientRect();
     mouseX.set((event.clientX - (rect.left + rect.width / 2)) / ratio);
     mouseY.set((event.clientY - (rect.top + rect.height / 2)) / ratio);
@@ -42,6 +43,4 @@ const MagneticWrapper = ({
       {children}
     </motion.div>
   );
-};
-
-export default MagneticWrapper;
+}

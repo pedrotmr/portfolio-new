@@ -1,14 +1,17 @@
-type TimelineEntry = {
+interface TimelineContent {
+  description: string;
+  bulletPoints?: string[];
+  tags: string[];
+  imageUrls?: string[];
+}
+
+interface TimelineEntry extends TimelineContent {
   company_name: string;
   position: string;
   company_url: string;
   date: string;
   color: 'purple' | 'orange' | 'yellow' | 'sky' | 'green' | 'lightGreen' | 'pink';
-  description: string;
-  bulletPoints?: string[];
-  tags: string[];
-  imageUrls?: string[];
-};
+}
 
 export const timelineData: TimelineEntry[] = [
   {

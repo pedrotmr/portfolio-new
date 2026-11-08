@@ -7,7 +7,7 @@ import { scrollOrShortcutAnimation } from './animations';
 
 type Device = 'mac' | 'pc' | 'touch';
 
-const ScrollOrShortcut = () => {
+export default function ScrollOrShortcut() {
   const [device, setDevice] = useState<Device | null>(null);
   const [reduced, setReduced] = useState(false);
   const { openModal } = useCommandMenuStore();
@@ -15,11 +15,25 @@ const ScrollOrShortcut = () => {
   useEffect(() => {
     const touch = window.matchMedia('(hover: none)').matches;
     const mac = /Mac|iPhone|iPad/i.test(navigator.userAgent);
-    setDevice(touch ? 'touch' : mac ? 'mac' : 'pc');
+    let detectedDevice: Device = 'pc';
+
+    if (mac) {
+      detectedDevice = 'mac';
+    }
+
+    if (touch) {
+      detectedDevice = 'touch';
+    }
+
+    setDevice(detectedDevice);
     setReduced(window.matchMedia('(prefers-reduced-motion: reduce)').matches);
   }, []);
 
-  if (!device) return null;
+  if (!device) {
+    return null;
+  }
+
+  const shortcutKey = device === 'mac' ? '⌘' : 'ctrl';
 
   return (
     <motion.button
@@ -41,7 +55,7 @@ const ScrollOrShortcut = () => {
         <>
           scroll down or press{' '}
           <span className="inline-flex gap-1">
-            <kbd>{device === 'mac' ? '⌘' : 'ctrl'}</kbd>
+            <kbd>{shortcutKey}</kbd>
             <kbd>K</kbd>
           </span>{' '}
           for quick links
@@ -49,6 +63,4 @@ const ScrollOrShortcut = () => {
       )}
     </motion.button>
   );
-};
-
-export default ScrollOrShortcut;
+}

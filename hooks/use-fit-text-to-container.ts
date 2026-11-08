@@ -7,7 +7,10 @@ const useFitTextToContainer = (trackContainerWidth = true, remeasureOnChange?: b
   useEffect(() => {
     const container = containerRef.current;
     const text = textRef.current;
-    if (!container || !text) return;
+
+    if (!container || !text) {
+      return;
+    }
 
     let active = true;
     let frame = 0;
@@ -26,12 +29,17 @@ const useFitTextToContainer = (trackContainerWidth = true, remeasureOnChange?: b
     document.body.append(measure);
 
     const resizeText = () => {
-      if (!active) return;
+      if (!active) {
+        return;
+      }
 
       const styles = getComputedStyle(container);
       const available =
         container.clientWidth - parseFloat(styles.paddingLeft) - parseFloat(styles.paddingRight);
-      if (available <= 0) return;
+
+      if (available <= 0) {
+        return;
+      }
 
       const textStyles = getComputedStyle(text);
       measure.textContent = text.textContent;
@@ -42,6 +50,7 @@ const useFitTextToContainer = (trackContainerWidth = true, remeasureOnChange?: b
 
       let min = 1;
       let max = 2500;
+
       while (min <= max) {
         const mid = Math.floor((min + max) / 2);
         measure.style.fontSize = mid + 'px';
@@ -52,34 +61,52 @@ const useFitTextToContainer = (trackContainerWidth = true, remeasureOnChange?: b
           max = mid - 1;
         }
       }
+
       text.style.fontSize = max + 'px';
     };
 
     const scheduleResize = () => {
-      if (!active) return;
+      if (!active) {
+        return;
+      }
 
       cancelAnimationFrame(frame);
       frame = requestAnimationFrame(resizeText);
     };
 
     resizeText();
+
     // The display fonts load after the first measure, so measure again once they are ready.
     document.fonts?.ready.then(scheduleResize);
 
     let lastWidth = container.clientWidth;
     let lastRootFont = getComputedStyle(document.documentElement).fontSize;
+
     const observer = new ResizeObserver(() => {
-      if (!active) return;
+      if (!active) {
+        return;
+      }
 
       const rootFont = getComputedStyle(document.documentElement).fontSize;
-      if ((!trackContainerWidth || container.clientWidth === lastWidth) && rootFont === lastRootFont) return;
+
+      if ((!trackContainerWidth || container.clientWidth === lastWidth) && rootFont === lastRootFont) {
+        return;
+      }
+
       lastWidth = container.clientWidth;
       lastRootFont = rootFont;
       scheduleResize();
     });
-    if (trackContainerWidth) observer.observe(container);
+
+    if (trackContainerWidth) {
+      observer.observe(container);
+    }
+
     observer.observe(document.documentElement);
-    if (!trackContainerWidth) window.addEventListener('resize', scheduleResize);
+
+    if (!trackContainerWidth) {
+      window.addEventListener('resize', scheduleResize);
+    }
 
     return () => {
       active = false;
